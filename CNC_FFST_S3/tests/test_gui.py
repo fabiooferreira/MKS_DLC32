@@ -52,10 +52,8 @@ class RawPort:
             elif data==b'?':self.rx.put(b'<Idle|MPos:1,2,3,4|WCO:0,0,0,0|FS:0,0>\n')
             elif data in [b'!',b'\x84',b'\x85']:pass
             else:
-                for line in data.splitlines():
-                    result=self.lib.host_line(line)
-                    for response in self.lib.host_output().splitlines():self.rx.put(response+b'\n')
-                    self.rx.put(b'ok\n' if result==0 else ('error:'+str(result)+'\n').encode())
+                self.lib.host_serial_bytes(data,len(data))
+                for response in self.lib.host_output().splitlines():self.rx.put(response+b'\n')
         return len(data)
 
 def main(builder_path):
@@ -63,7 +61,7 @@ def main(builder_path):
     try:
         with tempfile.TemporaryDirectory(prefix='ffst-s3-gui-') as directory:
             base=Path(directory);identity=base/'identity.json'
-            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.0','app_image_sha256':HASH}))
+            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.1','app_image_sha256':HASH}))
             def open_fn(page):
                 def connect(name,baud):
                     AuthTests.lib.host_init();raw=RawPort(AuthTests.lib);ports.append(raw)

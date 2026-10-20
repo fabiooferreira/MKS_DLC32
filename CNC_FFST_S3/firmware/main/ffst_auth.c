@@ -114,6 +114,8 @@ bool IRAM_ATTR ffst_auth_realtime_allowed(uint8_t c)
 {
     if(ffst_auth_trusted()) return true;
     if(c==0x18) { ffst_auth_reset();return true; }
+    // Line terminators are data for the parser, never an authorization bypass.
+    if(c=='\r'||c=='\n') return true;
     // Status, stop/hold/door/jog-cancel remain public; start and tool toggles do not.
     if(c=='?'||c=='!'||c==CMD_SAFETY_DOOR||c==CMD_JOG_CANCEL||c==CMD_STOP||
        c==CMD_STATUS_REPORT_ALL||c==CMD_STATUS_REPORT||c==CMD_FEED_HOLD) return true;

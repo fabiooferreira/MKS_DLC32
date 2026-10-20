@@ -1,0 +1,33 @@
+test_serial_line_endings_reach_command_parser (__main__.AuthTests.test_serial_line_endings_reach_command_parser) ... FAIL
+test_serial_identification_remains_available_in_estop (__main__.AuthTests.test_serial_identification_remains_available_in_estop) ... FAIL
+test_serial_handshake_keeps_unsigned_motion_blocked (__main__.AuthTests.test_serial_handshake_keeps_unsigned_motion_blocked) ... FAIL
+
+======================================================================
+FAIL: test_serial_line_endings_reach_command_parser (__main__.AuthTests.test_serial_line_endings_reach_command_parser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_auth.py", line 60, in test_serial_line_endings_reach_command_parser
+    self.assertIn('[FFFW:',self.serial_line('$FFINFO',ending))
+AssertionError: '[FFFW:' not found in ''
+
+======================================================================
+FAIL: test_serial_identification_remains_available_in_estop (__main__.AuthTests.test_serial_identification_remains_available_in_estop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_auth.py", line 64, in test_serial_identification_remains_available_in_estop
+    self.assertIn('[FFFW:',self.serial_line('$FFINFO'))
+AssertionError: '[FFFW:' not found in ''
+
+======================================================================
+FAIL: test_serial_handshake_keeps_unsigned_motion_blocked (__main__.AuthTests.test_serial_handshake_keeps_unsigned_motion_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_auth.py", line 71, in test_serial_handshake_keeps_unsigned_motion_blocked
+    self.assertIsNotNone(match);nonce=match[1]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.153s
+
+FAILED (failures=3)

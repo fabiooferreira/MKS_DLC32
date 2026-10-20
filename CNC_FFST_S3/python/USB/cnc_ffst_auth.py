@@ -20,7 +20,7 @@ KEY_SUFFIX = b':FFST_KEY_END'
 
 def load_key(path=None):
     # The matching firmware BIN is bundled as EXE data, so there is no external key file.
-    path = Path(path or Path(__file__).with_name('CNC_FFST_S3_0.1.0_USB_FULL_16MB.bin'))
+    path = Path(path or Path(__file__).with_name('CNC_FFST_S3_0.1.1_USB_FULL_16MB.bin'))
     try:
         data = path.read_bytes()
         index = data.find(KEY_PREFIX)
@@ -67,12 +67,12 @@ def exchange(port, command, timeout=8):
                 raise RuntimeError('Firmware não corresponde à edição de chave fixa.')
             stage = command.split('=', 1)[0]
             raise RuntimeError(f'A placa recusou a autenticação: etapa {stage}, resposta {line}. '
-                               'Confira se o BIN CNC_FFST-S3-0.1.0 correspondente está gravado.')
+                               'Confira se o BIN CNC_FFST-S3-0.1.1 correspondente está gravado.')
         if line == 'ok':
             return lines
     stage = command.split('=', 1)[0]
     raise TimeoutError(f'A placa não respondeu na etapa {stage}. '
-                       'Confira o BIN CNC_FFST-S3-0.1.0, a porta e 115200 baud.')
+                       'Confira o BIN CNC_FFST-S3-0.1.1, a porta e 115200 baud.')
 
 
 class SignedPort:

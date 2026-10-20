@@ -6,9 +6,9 @@
 #include "grbl/hal.h"
 #endif
 #ifdef CNC_FFST_PROTECTED
-#define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.2.0-PROTECTED"
+#define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.2.1-PROTECTED"
 #else
-#define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.1.0"
+#define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.1.1"
 #endif
 void ffst_auth_init(void);
 bool ffst_auth_trusted(void);

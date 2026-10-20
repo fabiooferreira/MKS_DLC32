@@ -230,10 +230,10 @@ Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/cmock/libcmock.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/address.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/async.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/block.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/asio/libasio.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/asio/libasio.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/coap_asn1.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/coap_cache.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/asio/libasio.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/asio/libasio.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/coap_debug.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/coap_event.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/coap_hashkey.o
@@ -254,9 +254,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/str.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/subscribe.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/coap/libcoap/src/uri.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/commands.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/esp_console_repl.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/coap/libcoap.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/coap/libcoap.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/esp_console_repl.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/split_argv.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/argtable3/argtable3.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/console/linenoise/linenoise.o
@@ -301,9 +301,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/driver/esp32s3/rtc_tempsensor.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/esp32s3/esp_efuse_table.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/esp32s3/esp_efuse_fields.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/esp32s3/esp_efuse_rtc_calib.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/esp32s3/esp_efuse_utility.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/driver/libdriver.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/driver/libdriver.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/esp32s3/esp_efuse_utility.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/src/esp_efuse_api.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/src/esp_efuse_fields.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/efuse/src/esp_efuse_utility.o
@@ -316,10 +316,10 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp-tls/esp_tls_error_capture.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp-tls/esp_tls_mbedtls.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_adc_cal/esp_adc_cal_common.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_adc_cal/esp32s3/esp_adc_cal.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_adc_cal/libesp_adc_cal.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_adc_cal/libesp_adc_cal.a
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp-tls/libesp-tls.a
+Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_adc_cal/libesp_adc_cal.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp-tls/libesp-tls.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_adc_cal/libesp_adc_cal.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_common/src/esp_err_to_name.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_eth/src/esp_eth.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_common/libesp_common.a
@@ -413,9 +413,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_lcd/src/esp_lcd_panel_st7789.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_lcd/src/esp_lcd_panel_ops.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_lcd/src/esp_lcd_rgb_panel.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_local_ctrl/src/esp_local_ctrl.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_local_ctrl/src/esp_local_ctrl_handler.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_lcd/libesp_lcd.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_lcd/libesp_lcd.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_local_ctrl/src/esp_local_ctrl_handler.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_local_ctrl/proto-c/esp_local_ctrl.pb-c.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_netif/esp_netif_handlers.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_local_ctrl/libesp_local_ctrl.a
@@ -496,9 +496,9 @@ Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_timer/libesp_timer.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/coexist.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/mesh_event.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/smartconfig.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/smartconfig_ack.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_websocket_client/libesp_websocket_client.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/esp_websocket_client/libesp_websocket_client.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/smartconfig_ack.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/wifi_init.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/wifi_default.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/esp_wifi/src/wifi_netif.o
@@ -660,9 +660,9 @@ Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/heap/libheap.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/heap/libheap.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/json/cJSON/cJSON_Utils.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/json/libjson.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/json/libjson.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_auth/crypto_auth.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_auth/hmacsha256/auth_hmacsha256.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/libsodium/libsodium/src/libsodium/crypto_auth/hmacsha512/auth_hmacsha512.o
@@ -865,23 +865,23 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/lwip/apps/ping/ping_sock.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/lwip/apps/dhcpserver/dhcpserver.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/esp_crt_bundle/esp_crt_bundle.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/.pio/build/cnc_ffst_s3_n16r8_uart/x509_crt_bundle.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/lwip/liblwip.a
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/libmbedtls.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/lwip/liblwip.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/libmbedtls.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mdns/mdns.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/lwip/liblwip.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/lwip/liblwip.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mdns/mdns_networking_lwip.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mdns/mdns_console.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mqtt/esp-mqtt/mqtt_client.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mqtt/esp-mqtt/lib/mqtt_msg.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mqtt/esp-mqtt/lib/mqtt_outbox.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mqtt/esp-mqtt/lib/platform_esp32_idf.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mdns/libmdns.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mdns/libmdns.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mqtt/esp-mqtt/lib/platform_esp32_idf.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/abort.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/assert.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mqtt/libmqtt.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mqtt/libmqtt.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/assert.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/heap.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/locks.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/newlib/poll.o
@@ -936,9 +936,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/nvs_flash/src/nvs_partition_lookup.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/nvs_flash/src/nvs_partition_manager.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/nvs_flash/src/nvs_types.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_cert.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_lib.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/nvs_flash/libnvs_flash.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/nvs_flash/libnvs_flash.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_lib.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_methods.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_pkey.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_bio.o
@@ -948,9 +948,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/library/ssl_x509.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/platform/ssl_pm.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/openssl/platform/ssl_port.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/perfmon/xtensa_perfmon_access.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/perfmon/xtensa_perfmon_apis.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/openssl/libopenssl.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/openssl/libopenssl.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/perfmon/xtensa_perfmon_apis.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/perfmon/xtensa_perfmon_masks.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/protobuf-c/protobuf-c/protobuf-c/protobuf-c.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/perfmon/libperfmon.a
@@ -983,9 +983,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/sdmmc/sdmmc_sd.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/lldesc.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/soc_include_legacy_warn.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/adc_periph.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/dedic_gpio_periph.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/sdmmc/libsdmmc.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/sdmmc/libsdmmc.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/dedic_gpio_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/gdma_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/gpio_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/soc/esp32s3/i2c_periph.o
@@ -1046,11 +1046,11 @@ Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/spiffs/libspiffs.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/tcp_transport/transport_internal.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/tcp_transport/transport_ws.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/tcpip_adapter/tcpip_adapter_compat.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcp_transport/libtcp_transport.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcp_transport/libtcp_transport.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/ulp/ulp.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcpip_adapter/libtcpip_adapter.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcpip_adapter/libtcpip_adapter.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/ulp/ulp.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcp_transport/libtcp_transport.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/tcp_transport/libtcp_transport.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/ulp/ulp_macro.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/unity/unity/src/unity.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/ulp/libulp.a
@@ -1284,9 +1284,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/ssl_tls13_ke
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/port/mbedtls_debug.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/port/net_sockets.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/certs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/pkcs11.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/mbedtls/library/libmbedtls.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/mbedtls/library/libmbedtls.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/pkcs11.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509_create.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509_crl.o
@@ -1295,10 +1295,10 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509_csr.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509write_crt.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/mbedtls/mbedtls/library/x509write_csr.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/hal/wdt_hal_iram.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/hal/mpu_hal.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/mbedtls/library/libmbedx509.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/esp-idf/mbedtls/mbedtls/library/libmbedx509.a
 Generating project linker script .pio/build/cnc_ffst_s3_n16r8_uart/sections.ld
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/hal/mpu_hal.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/hal/cpu_hal.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/hal/libhal.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/hal/libhal.a
@@ -1355,8 +1355,8 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_hw_support/port/esp32
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_hw_support/port/esp32s3/chip_info.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_crc.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/esp_hw_support/libesp_hw_support.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_sys.o
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/esp_hw_support/libesp_hw_support.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_sys.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_uart.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_tjpgd.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp_rom/patches/esp_rom_efuse.o
@@ -1386,8 +1386,8 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/ledc_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/mcpwm_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/pcnt_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/rmt_periph.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/micro-ecc/libmicro-ecc.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/rtc_io_periph.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/micro-ecc/libmicro-ecc.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/micro-ecc/libmicro-ecc.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/sdio_slave_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/soc/esp32s3/sdmmc_periph.o
@@ -1407,9 +1407,9 @@ Indexing .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/spi_flash/libspi_f
 Compiling .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/xtensa/xt_trax.o
 Generating partitions .pio/build/cnc_ffst_s3_n16r8_uart/partitions.bin
 Archiving .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/xtensa/libxtensa.a
+Generating an empty partition .pio/build/cnc_ffst_s3_n16r8_uart/ota_data_initial.bin
 Indexing .pio/build/cnc_ffst_s3_n16r8_uart/bootloader/esp-idf/xtensa/libxtensa.a
 Linking .pio/build/cnc_ffst_s3_n16r8_uart/bootloader.elf
-Generating an empty partition .pio/build/cnc_ffst_s3_n16r8_uart/ota_data_initial.bin
 Building .pio/build/cnc_ffst_s3_n16r8_uart/bootloader.bin
 esptool.py v4.4
 Creating esp32s3 image...
@@ -1420,15 +1420,15 @@ Retrieving maximum program size .pio/build/cnc_ffst_s3_n16r8_uart/firmware.elf
 Checking size .pio/build/cnc_ffst_s3_n16r8_uart/firmware.elf
 Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
 RAM:   [=         ]   8.0% (used 26376 bytes from 327680 bytes)
-Flash: [=         ]   6.5% (used 409973 bytes from 6291456 bytes)
+Flash: [=         ]   6.5% (used 409981 bytes from 6291456 bytes)
 Building .pio/build/cnc_ffst_s3_n16r8_uart/firmware.bin
 esptool.py v4.4
 Creating esp32s3 image...
 Merged 2 ELF sections
 Successfully created esp32s3 image.
-========================= [SUCCESS] Took 73.95 seconds =========================
+========================= [SUCCESS] Took 76.38 seconds =========================
 
 Environment             Status    Duration
 ----------------------  --------  ------------
-cnc_ffst_s3_n16r8_uart  SUCCESS   00:01:13.955
-========================= 1 succeeded in 00:01:13.955 =========================
+cnc_ffst_s3_n16r8_uart  SUCCESS   00:01:16.377
+========================= 1 succeeded in 00:01:16.377 =========================

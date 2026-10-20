@@ -1,10 +1,12 @@
-# CNC_FFST S3 — firmware 0.1.0 e placa-base R2
+# CNC_FFST S3 — firmware 0.1.1 e placa-base R2
 
-[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.0.zip)
+[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.1.zip)
 
-[Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote UART 0.1.0 abaixo continua sendo o modo reversível sem proteção de leitura.
+[Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote de correção UART 0.1.1 fornece o modo reversível, sem proteção de leitura.
 
-[**Baixar somente o programa Fabricação Fresa Laser — UART reversível 0.1.0**](artifacts/CNC_FFST_S3_Fabricacao_Fresa_Laser_UART.zip)
+[**Baixar correção de conexão — BIN UART reversível 0.1.1 + Fabricação Fresa Laser**](artifacts/CNC_FFST_S3_UART_0.1.1_Correcao.zip)
+
+**Correção 0.1.1:** o filtro serial descartava CR/LF e impedia concluir comandos, inclusive `$FFINFO`, mesmo com mensagens de emergência sendo transmitidas. Use o pacote de correção com BIN e Python correspondentes. A emergência continua bloqueando movimentos; a correção não altera GPIOs ou proteções. [Detalhes e limites](docs/CORRECAO_SERIAL_0.1.1.md).
 
 [**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
@@ -12,7 +14,7 @@ Proposta de esquema funcional para revisão visual: placa-base (carrier) onde se
 
 **Ainda não é esquema liberado para fabricação.** Não há PCB roteada ou arquivo KiCad/netlist. Há agora firmware compilado para testes de bancada, sem validação física.
 
-[**Baixar firmware + Python único — USB/serial (principal)**](artifacts/CNC_FFST_S3_0.1.0_UART_Pacote.zip)
+O pacote UART 0.1.0 anterior foi substituído pelo pacote de correção acima.
 
 [Instruções de gravação, compilação e limitações](docs/FIRMWARE_S3.md). A USB nativa é uma alternativa separada; grave somente o perfil da porta escolhida. Autenticação HMAC preservada; Wi-Fi e criptografia da flash não estão ativados nesta versão de bancada.
 

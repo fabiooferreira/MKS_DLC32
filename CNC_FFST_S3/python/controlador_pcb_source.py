@@ -54,7 +54,7 @@ def icon_path(saved_path):
     return RESOURCE_DIR / filename
 
 
-APP_VERSION = 'S3 0.1.0 — Controlador PCB autenticado'
+APP_VERSION = 'S3 0.1.1 — Controlador PCB autenticado'
 DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
     {'name': 'Laser OFF', 'command': 'M5'},
     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}

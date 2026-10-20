@@ -15,7 +15,7 @@ import textwrap
 import zlib
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='CNC_FFST-S3-0.1.0'
+VERSION='CNC_FFST-S3-0.1.1'
 
 def image_digest(data):
     if len(data)<24 or data[0]!=0xe9 or data[23]!=1 or struct.unpack_from('<H',data,12)[0]!=9:
@@ -36,7 +36,7 @@ def image_digest(data):
 def package(profile):
     profile=profile.upper();environment='cnc_ffst_s3_n16r8_'+profile.lower()
     protected=profile=='PROTECTED'
-    version='CNC_FFST-S3-0.2.0-PROTECTED' if protected else VERSION
+    version='CNC_FFST-S3-0.2.1-PROTECTED' if protected else VERSION
     table_offset,ota_offset,app_offset=(0x20000,0x25000,0x30000) if protected else (0x8000,0xd000,0x10000)
     built=ROOT/'firmware/.pio/build'/environment
     destination=ROOT/'artifacts'/profile
@@ -51,7 +51,7 @@ def package(profile):
             if flag not in config.splitlines():raise ValueError('Protected config missing: '+flag)
         if 'CONFIG_SECURE_DISABLE_ROM_DL_MODE=y' in config.splitlines():raise ValueError('Updates require secure download mode')
     destination.mkdir(parents=True,exist_ok=True)
-    name=f'CNC_FFST_S3_{"0.2.0" if protected else "0.1.0"}_{profile}_FULL_16MB.bin'
+    name=f'CNC_FFST_S3_{"0.2.1" if protected else "0.1.1"}_{profile}_FULL_16MB.bin'
     boot_file,app_file=built/'bootloader.bin',built/'firmware.bin'
     if protected:
         key=Path(os.environ.get('FFST_SIGNING_KEY',str(ROOT/'firmware/ffst_secure_boot_signing_key.pem')))
@@ -131,7 +131,7 @@ open_authenticated = _ffst_auth.open_authenticated
 SAFE_REALTIME = _ffst_auth.SAFE_REALTIME
 '''
     app_source=(ROOT/'python/controlador_pcb_source.py').read_text()
-    if protected:app_source=app_source.replace('S3 0.1.0 — Controlador PCB autenticado','S3 0.2.0 protegido — Controlador PCB autenticado')
+    if protected:app_source=app_source.replace('S3 0.1.1 — Controlador PCB autenticado','S3 0.2.1 protegido — Controlador PCB autenticado')
     original='from cnc_ffst_auth import open_authenticated, SAFE_REALTIME'
     if original not in app_source:raise ValueError('Client auth import not found')
     app_source=app_source.replace(original,factory)

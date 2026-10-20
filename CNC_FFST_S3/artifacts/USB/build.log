@@ -300,9 +300,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/driver/esp32s3/touch_sensor.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/driver/esp32s3/rtc_tempsensor.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/esp32s3/esp_efuse_table.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/esp32s3/esp_efuse_fields.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/esp32s3/esp_efuse_rtc_calib.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/driver/libdriver.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/driver/libdriver.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/esp32s3/esp_efuse_rtc_calib.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/esp32s3/esp_efuse_utility.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/src/esp_efuse_api.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/efuse/src/esp_efuse_fields.o
@@ -317,10 +317,10 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp-tls/esp_tls_mbedtls.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_adc_cal/esp_adc_cal_common.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_adc_cal/esp32s3/esp_adc_cal.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_adc_cal/libesp_adc_cal.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_adc_cal/libesp_adc_cal.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_common/src/esp_err_to_name.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp-tls/libesp-tls.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_adc_cal/libesp_adc_cal.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp-tls/libesp-tls.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_common/src/esp_err_to_name.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_eth/src/esp_eth.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_common/libesp_common.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_common/libesp_common.a
@@ -447,16 +447,16 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_rom/patches/esp_rom_efuse.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_rom/patches/esp_rom_longjmp.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_rom/libesp_rom.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_rom/libesp_rom.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_serial_slave_link/essl.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_ringbuf/libesp_ringbuf.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_ringbuf/libesp_ringbuf.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_serial_slave_link/essl.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_serial_slave_link/essl_sdio.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_serial_slave_link/essl_spi.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/esp_err.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/crosscore_int.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_serial_slave_link/libesp_serial_slave_link.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/freertos_hooks.o
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_serial_slave_link/libesp_serial_slave_link.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/freertos_hooks.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/int_wdt.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/panic.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_system/esp_system.o
@@ -495,10 +495,10 @@ Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_timer/libesp_timer.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_timer/libesp_timer.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/coexist.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/mesh_event.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/smartconfig.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/smartconfig_ack.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_websocket_client/libesp_websocket_client.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/esp_websocket_client/libesp_websocket_client.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/smartconfig.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/smartconfig_ack.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/wifi_init.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/wifi_default.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/esp_wifi/src/wifi_netif.o
@@ -661,9 +661,9 @@ Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/heap/libheap.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/json/cJSON/cJSON_Utils.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_auth/crypto_auth.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/json/libjson.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/json/libjson.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_auth/crypto_auth.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_auth/hmacsha256/auth_hmacsha256.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_auth/hmacsha512/auth_hmacsha512.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/libsodium/libsodium/src/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256.o
@@ -864,24 +864,24 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/lwip/apps/ping/ping.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/lwip/apps/ping/ping_sock.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/lwip/apps/dhcpserver/dhcpserver.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mbedtls/esp_crt_bundle/esp_crt_bundle.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/.pio/build/cnc_ffst_s3_n16r8_usb/x509_crt_bundle.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/lwip/liblwip.a
-Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/libmbedtls.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/libmbedtls.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/.pio/build/cnc_ffst_s3_n16r8_usb/x509_crt_bundle.o
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/lwip/liblwip.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mdns/mdns.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/libmbedtls.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/libmbedtls.a
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mdns/mdns_networking_lwip.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mdns/mdns_console.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mqtt/esp-mqtt/mqtt_client.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mqtt/esp-mqtt/lib/mqtt_msg.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mqtt/esp-mqtt/lib/mqtt_outbox.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mqtt/esp-mqtt/lib/platform_esp32_idf.o
-Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mqtt/libmqtt.a
-Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mqtt/libmqtt.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/abort.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/assert.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mdns/libmdns.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mdns/libmdns.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/abort.o
+Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mqtt/libmqtt.a
+Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mqtt/libmqtt.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/assert.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/heap.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/locks.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/newlib/poll.o
@@ -936,9 +936,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/nvs_flash/src/nvs_partition_lookup.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/nvs_flash/src/nvs_partition_manager.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/nvs_flash/src/nvs_types.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_cert.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_lib.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/nvs_flash/libnvs_flash.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/nvs_flash/libnvs_flash.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_lib.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_methods.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_pkey.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_bio.o
@@ -948,9 +948,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/library/ssl_x509.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/platform/ssl_pm.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/openssl/platform/ssl_port.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/perfmon/xtensa_perfmon_access.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/perfmon/xtensa_perfmon_apis.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/openssl/libopenssl.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/openssl/libopenssl.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/perfmon/xtensa_perfmon_apis.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/perfmon/xtensa_perfmon_masks.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/protobuf-c/protobuf-c/protobuf-c/protobuf-c.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/perfmon/libperfmon.a
@@ -983,9 +983,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/sdmmc/sdmmc_sd.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/lldesc.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/soc_include_legacy_warn.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/adc_periph.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/dedic_gpio_periph.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/sdmmc/libsdmmc.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/sdmmc/libsdmmc.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/dedic_gpio_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/gdma_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/gpio_periph.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/soc/esp32s3/i2c_periph.o
@@ -1040,9 +1040,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/spiffs/spiffs/src/spiffs_gc.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/spiffs/spiffs/src/spiffs_hydrogen.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/spiffs/spiffs/src/spiffs_nucleus.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcp_transport/transport.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcp_transport/transport_ssl.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/spiffs/libspiffs.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/spiffs/libspiffs.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcp_transport/transport_ssl.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcp_transport/transport_internal.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcp_transport/transport_ws.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/tcpip_adapter/tcpip_adapter_compat.o
@@ -1094,9 +1094,9 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/vfs/vfs_uart.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/vfs/vfs_semihost.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/vfs/vfs_console.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/Partition.o
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/SPI_Flash.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/vfs/libvfs.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/vfs/libvfs.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/SPI_Flash.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/WL_Ext_Perf.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/WL_Ext_Safe.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/wear_levelling/WL_Flash.o
@@ -1317,8 +1317,8 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/mbedtls/mbedtls/library/x509write_csr
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/hal/wdt_hal_iram.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/mbedtls/library/libmbedx509.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/esp-idf/mbedtls/mbedtls/library/libmbedx509.a
-Generating project linker script .pio/build/cnc_ffst_s3_n16r8_usb/sections.ld
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/hal/mpu_hal.o
+Generating project linker script .pio/build/cnc_ffst_s3_n16r8_usb/sections.ld
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/hal/cpu_hal.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp-idf/hal/libhal.a
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp-idf/hal/libhal.a
@@ -1375,8 +1375,8 @@ Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_hw_support/port/esp32s
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_hw_support/port/esp32s3/chip_info.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_crc.o
 Archiving .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp-idf/esp_hw_support/libesp_hw_support.a
-Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_sys.o
 Indexing .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp-idf/esp_hw_support/libesp_hw_support.a
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_sys.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_uart.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_tjpgd.o
 Compiling .pio/build/cnc_ffst_s3_n16r8_usb/bootloader/esp_rom/patches/esp_rom_efuse.o
@@ -1440,15 +1440,15 @@ Retrieving maximum program size .pio/build/cnc_ffst_s3_n16r8_usb/firmware.elf
 Checking size .pio/build/cnc_ffst_s3_n16r8_usb/firmware.elf
 Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
 RAM:   [=         ]   9.8% (used 32056 bytes from 327680 bytes)
-Flash: [=         ]   6.8% (used 429621 bytes from 6291456 bytes)
+Flash: [=         ]   6.8% (used 429629 bytes from 6291456 bytes)
 Building .pio/build/cnc_ffst_s3_n16r8_usb/firmware.bin
 esptool.py v4.4
 Creating esp32s3 image...
 Merged 2 ELF sections
 Successfully created esp32s3 image.
-========================= [SUCCESS] Took 78.06 seconds =========================
+========================= [SUCCESS] Took 75.72 seconds =========================
 
 Environment            Status    Duration
 ---------------------  --------  ------------
-cnc_ffst_s3_n16r8_usb  SUCCESS   00:01:18.062
-========================= 1 succeeded in 00:01:18.062 =========================
+cnc_ffst_s3_n16r8_usb  SUCCESS   00:01:15.719
+========================= 1 succeeded in 00:01:15.719 =========================

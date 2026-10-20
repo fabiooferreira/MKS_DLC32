@@ -30,6 +30,7 @@ class AuthTests(unittest.TestCase):
         cls.lib.host_last_command.restype=ctypes.c_char_p
         cls.lib.host_line.argtypes=[ctypes.c_char_p]
         cls.lib.host_frame.argtypes=[ctypes.c_char_p,ctypes.c_uint]
+        cls.lib.host_serial_bytes.argtypes=[ctypes.c_char_p,ctypes.c_uint]
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
     def setUp(self):self.lib.host_init();self.seq=0;self.rtseq=0
@@ -50,9 +51,31 @@ class AuthTests(unittest.TestCase):
     def rt_frame(self,c,seq=None):
         seq=str(self.rtseq if seq is None else seq);command=bytes([c]).hex()
         return b'\xf8'+(seq+','+mac(self.nonce+'|rt|'+seq+'|'+command)+','+command+'\n').encode()
+    def serial_line(self,text,ending='\n'):
+        self.lib.host_clear();data=(text+ending).encode()
+        self.lib.host_serial_bytes(data,len(data))
+        return self.output()
+    def test_serial_line_endings_reach_command_parser(self):
+        for ending in ['\n','\r','\r\n']:
+            self.assertIn('[FFFW:',self.serial_line('$FFINFO',ending))
+            self.assertIn('ok',self.output())
+    def test_serial_identification_remains_available_in_estop(self):
+        self.lib.host_state(2)
+        self.assertIn('[FFFW:',self.serial_line('$FFINFO'))
+        self.assertIn('ok',self.serial_line('$I'))
+        self.assertIn('error:',self.serial_line('G0X1'))
+        self.assertEqual(self.lib.host_executed(),1) # $I only, never motion
+    def test_serial_handshake_keeps_unsigned_motion_blocked(self):
+        reply=self.serial_line('$FFHELLO')
+        match=re.search(r'\[FFNONCE:([a-f0-9]{64}):([a-f0-9]{64})\]',reply)
+        self.assertIsNotNone(match);nonce=match[1]
+        self.assertIn('[FFAUTH:OK]',self.serial_line('$FFAUTH='+mac('client|'+nonce+'|'+HASH)))
+        self.assertIn('error:',self.serial_line('G0X10'))
+        self.assertIn('error:',self.serial_line('$H'))
+        self.assertFalse(self.lib.host_rt_allowed(ord('~')))
     def test_identity_matches_exact_firmware(self):
         self.assertEqual(self.line('$FFINFO'),0)
-        self.assertIn('[FFFW:CNC_FFST-S3-0.1.0:'+HASH+']',self.output())
+        self.assertIn('[FFFW:CNC_FFST-S3-0.1.1:'+HASH+']',self.output())
     def test_raw_motion_tool_homing_jog_probe_blocked(self):
         for line in ['G0X1','G1A1F1','M3S100','G38.2Z-1F1','$H','$J=G91X1F1','$N0=G0X1','$I=FAKE']:
             self.assertNotEqual(self.line(line),0,line)
@@ -138,13 +161,11 @@ class AuthTests(unittest.TestCase):
                 elif data==b'\x18':lib.host_reset()
                 elif data==b'?':self.rx.put(b'<Idle|MPos:0,0,0,0|FS:0,0>\n')
                 else:
-                    for line in data.splitlines():
-                        result=lib.host_line(line)
-                        for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
-                        self.rx.put(b'ok\n' if result==0 else ('error:'+str(result)+'\n').encode())
+                    lib.host_serial_bytes(data,len(data))
+                    for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
                 return len(data)
         identity=Path(self.temp.name)/'identity.json'
-        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.0','app_image_sha256':HASH}))
+        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.1','app_image_sha256':HASH}))
         raw=RawPort();port=client.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
         try:
             port.write(b'G1A45F10\n')

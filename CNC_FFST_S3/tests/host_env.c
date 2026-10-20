@@ -5,7 +5,8 @@ struct host_grbl grbl;
 struct host_hal hal;
 bool host_isr;
 static char output[16384],last_command[256];
-static unsigned executed,rt_executed,random_seed;
+static unsigned executed,rt_executed,random_seed,serial_pos;
+static char serial_line[800];
 static int state;
 static bool inject;
 static int nested_status;
@@ -20,7 +21,7 @@ status_code_t gc_execute_block(char *line){if(!ffst_auth_trusted())return Status
 executed++;strncpy(last_command,line,255);return Status_OK;}
 status_code_t system_execute_line(char *line,void (*write)(const char *)){status_code_t result;if(ffst_auth_system(line,&result))return result;executed++;strncpy(last_command,line,255);return Status_OK;}
 bool protocol_enqueue_realtime_command(uint8_t c){if(ffst_auth_rx(c)||!ffst_auth_realtime_allowed(c))return true;if(c=='~'||c==0x81||c>=0x90)rt_executed++;return true;}
-void host_init(void){memset(&grbl,0,sizeof(grbl));memset(&hal,0,sizeof(hal));hal.stream.write=write_out;output[0]=last_command[0]=0;executed=rt_executed=0;host_isr=false;state=0;ffst_auth_init();ffst_auth_reset();}
+void host_init(void){memset(&grbl,0,sizeof(grbl));memset(&hal,0,sizeof(hal));hal.stream.write=write_out;output[0]=last_command[0]=0;executed=rt_executed=serial_pos=0;host_isr=false;state=0;ffst_auth_init();ffst_auth_reset();}
 void host_clear(void){output[0]=0;}
 const char *host_output(void){return output;}
 unsigned host_executed(void){return executed;}
@@ -34,3 +35,26 @@ void host_state(int s){state=s;}
 
 void host_inject_raw_during_command(void){inject=true;nested_status=-1;}
 int host_nested_status(void){return nested_status;}
+
+/* UART-boundary model: real auth ISR filters, then a minimal line collector.
+ * Existing host_line tests bypassed these filters and missed dropped CR/LF.
+ * This is not a substitute for the real UART ISR/core on hardware.
+ */
+void host_serial_bytes(const unsigned char *data,unsigned n)
+{
+    char *line=serial_line;
+    unsigned pos=serial_pos;
+    for(unsigned i=0;i<n;i++) {
+        unsigned char c=data[i];host_isr=true;
+        bool consumed=ffst_auth_rx(c)||!ffst_auth_realtime_allowed(c);
+        host_isr=false;
+        if(consumed)continue;
+        if(c=='\r'||c=='\n') {
+            line[pos]=0;
+            int result=pos?host_line(line):Status_OK;pos=0;
+            char reply[40];if(result==Status_OK)write_out("ok\r\n");
+            else {snprintf(reply,sizeof(reply),"error:%d\r\n",result);write_out(reply);}
+        } else if(c>=32&&c<127&&c!='?'&&c!='!'&&pos<sizeof(serial_line)-1)line[pos++]=c;
+    }
+    serial_pos=pos;ffst_auth_poll();
+}

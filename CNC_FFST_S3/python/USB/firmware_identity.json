@@ -1,6 +1,6 @@
 {
   "protocol": 1,
-  "firmware": "CNC_FFST-S3-0.1.0",
-  "app_image_sha256": "bbf22da8b2dbb27b69fe85b3086540f75fe483ba4e7e9c93f5c6d0c57258f211",
-  "application_file_sha256": "064f76cbb29b15c630d768a1e787fbe2dd6937c12b79d5563758b9b79fe8f724"
+  "firmware": "CNC_FFST-S3-0.1.1",
+  "app_image_sha256": "bd4a12438ea7e061fea7b23ef6344086a83d4dad3bc0826fdb58ea31654921fc",
+  "application_file_sha256": "0365d9926e94374a65447edb90597c37acf6825d0280731226194cf5fdd2c7bf"
 }
