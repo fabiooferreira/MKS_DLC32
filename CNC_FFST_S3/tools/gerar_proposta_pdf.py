@@ -12,7 +12,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R1.pdf'
+OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf'
 PAGE_W, PAGE_H = landscape(A3)
 MM = 72 / 25.4
 INK = colors.HexColor('#162b3d')
@@ -36,7 +36,7 @@ PINS = [
  ('LIMIT_Z',14,'in','Entrada condicionada; contato NC'), ('LIMIT_A',15,'in','Entrada condicionada; contato NC'),
  ('PROBE',16,'in','Entrada condicionada; contato NO com GND'),
  ('ESTOP_ACTIVE',17,'in','Monitor de emergência; ativo alto'),
- ('DRV_FAULT_RESERVA',18,'reserved','Não conectado aos FAULT nesta R1'),
+ ('DRV_FAULT_RESERVA',18,'reserved','Não conectado aos FAULT nesta R2'),
  ('USB_D_MINUS',19,'onboard','Reservado à USB nativa da DevKit'), ('USB_D_PLUS',20,'onboard','Reservado à USB nativa da DevKit'),
  ('GPIO21_RESERVA',21,'reserved','Reserva, sem circuito nesta revisão'),
  ('TOOL_ARM',42,'out','Habilitação lógica auxiliar; pull-down 100k'),
@@ -50,7 +50,7 @@ assert not {0,3,45,46,35,36,37,38,48,19,20,43,44}.intersection(p[1] for p in PIN
 assert all(gpio < 32 for _, gpio, _, _ in PINS[:10])
 
 C = canvas.Canvas(str(OUT), pagesize=(PAGE_W, PAGE_H))
-C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R1')
+C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R2')
 C.setAuthor('Projeto CNC_FFST')
 C.setSubject('Placa-base para ESP32-S3 N16R8 dual USB encaixável e quatro DRV8825')
 
@@ -106,7 +106,7 @@ def header(page,title):
     txt(12,13,'CNC_FFST S3',20,True)
     txt(92,13,title,15,True)
     line(12,18,408,18,BLUE,1.3)
-    txt(12,25,'R1 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
+    txt(12,25,'R2 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
     txt(12,31,'20/10/2026 • Placa-base para DevKit ESP32-S3 N16R8 dual USB • X/Y/Z/A • DRV8825 • 24 V',9)
     line(12,280,408,280,BLUE)
     txt(12,286,'Pontos com [PENDENTE] exigem dimensionamento/validação. Rótulos iguais representam a mesma rede.',8)
@@ -244,11 +244,11 @@ txt(20,59,'Contato NC entre ESTOP_LOOP e GND; pull-up 4,7k a 3V3.',8.5)
 txt(20,68,'Série 1k + 10 nF → inversor Schmitt → SAFETY_OK.',8.5)
 txt(20,77,'Outro inversor → ESTOP_ACTIVE (GPIO17).',8.5)
 txt(20,86,'Normal: SAFETY_OK=1; acionado/cabo rompido: SAFETY_OK=0.',8)
-box(219,45,185,54,'Interrupção externa de energia')
-txt(224,60,'Botão de emergência / relé de segurança / contator:',9)
-txt(224,69,'contatos adequados interrompem a energia das ferramentas.',8.5)
-txt(224,78,'A placa apenas monitora contato auxiliar NC e bloqueia sinais.',8.5)
-txt(224,87,'Circuito de potência externo a dimensionar conforme as cargas.',8.5)
+box(219,45,185,54,'Seleção e emergência: circuito de potência externo')
+txt(224,60,'A chave seleciona a alimentação: laser OU spindle.',9)
+txt(224,69,'A emergência interrompe a energia das ferramentas.',8.5)
+txt(224,78,'Não há chave seletora no caminho do sinal PWM.',8.5)
+txt(224,87,'Tensões, contatos e proteções dependem das cargas reais.',8.5)
 gate(65,113,'OR','U_EN','DRV_EN_REQ_N','ESTOP_ACTIVE','DRV_EN_N')
 txt(15,148,'GPIO12: pull-up 10k → 3V3. DRV_EN_N → /EN dos quatro módulos.',9)
 txt(15,157,'DRV_EN_N = 1: todos desabilitados. = 0: todos habilitados.',9)
@@ -258,24 +258,22 @@ txt(219,148,'GPIO13 e GPIO42 com pull-down 100k.',9)
 gate(65,187,'AND','U_PWM2','PWM_ARMED','SAFETY_OK','PWM_OUT')
 txt(15,221,'PWM_OUT = PWM_REQ AND TOOL_ARM AND SAFETY_OK.',9,True)
 txt(15,230,'Portas lógicas em 3V3; 100 nF por CI. Estado inativo do PWM: baixo.',8.5)
-box(243,176,160,62,'S1 — chave SPDT ON-OFF-ON externa')
-line(248,200,273,200);txt(247,194,'PWM_OUT',8,color=BLUE)
-node(273,200);line(273,200,292,190)
-C.circle(296*MM,PAGE_H-190*MM,1*MM,stroke=1,fill=0)
-C.circle(296*MM,PAGE_H-211*MM,1*MM,stroke=1,fill=0)
-line(297,190,322,190);txt(324,191,'PWM_LASER',8,color=BLUE)
-line(297,211,322,211);txt(324,212,'PWM_SPINDLE',8,color=BLUE)
-txt(248,225,'10k para GND em cada saída de destino.',8)
-txt(248,233,'GND comum; chave com ruptura antes do contato.',8)
-note(15,247,190,'A chave seleciona somente sinal PWM 3V3, não comuta potência de laser ou spindle. Trocar com M5/S0 e movimento parado. O modo laser/spindle deve ser ajustado no software: a chave proposta não informa sua posição ao firmware.',8.5)
+box(243,176,160,62,'PWM comum: dois destinos ligados permanentemente')
+line(248,200,273,200);txt(247,195,'PWM_OUT',8,color=BLUE)
+node(273,200);line(273,190,273,211)
+line(273,190,322,190);txt(324,191,'PWM_LASER',8,color=BLUE)
+line(273,211,322,211);txt(324,212,'PWM_SPINDLE',8,color=BLUE)
+txt(248,225,'Mesmo PWM 3V3 simultâneo; referências GND compatíveis.',8)
+txt(248,233,'Chave externa atua somente na alimentação das ferramentas.',8)
+note(15,247,190,'PWM_OUT chega às duas entradas; a chave comuta a alimentação da ferramenta. Trocar com M5/S0 e movimento parado. A posição da chave não é lida pelo firmware. Validar se a entrada PWM do módulo desligado permite sinal sem causar retroalimentação; condicionamento ainda pendente.',8.3)
 note(219,247,184,'Lógica funcional proposta, sem certificação de segurança. Ainda falta portar a autenticação para grblHAL, preparar criptografia/bootloader e testar o conjunto. O bloqueio físico de energia não depende de o ESP32 executar o firmware.',8.5,color=RED)
 end()
 C.save()
 
-with (ROOT/'hardware/pinagem_carrier_r1.csv').open('w',newline='',encoding='utf-8') as f:
+with (ROOT/'hardware/pinagem_carrier_r2.csv').open('w',newline='',encoding='utf-8') as f:
     w=csv.writer(f);w.writerow(['sinal','gpio','tipo','observacao','posicao_fisica'])
     for signal,gpio,kind,detail in PINS:w.writerow([signal,gpio,kind,detail,'CONFERIR NA DEVKIT REAL'])
-write={'revision':'R1','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
+write={'revision':'R2','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
        'development_board':'ESP32-S3 N16R8 dual USB, modelo exato a conferir',
        'board_removable':True,'development_board_power':'USB da propria DevKit',
        'carrier_has_usb_connector':False,'carrier_has_usb_serial_bridge':False,
@@ -283,13 +281,16 @@ write={'revision':'R1','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
        'listing_url':'https://www.mercadolivre.com.br/p/MLB2069410538',
        'axes':list('XYZA'),'driver':'DRV8825 StepStick 2x8, validar modulo real',
        'common_enable':True,'motor_supply_v':24,'pwm_v':3.3,
+       'pwm_permanently_connected_to':['laser','spindle'],
+       'tool_selection':'chave externa na alimentacao; nao no PWM',
        'firmware_driver_commit':'0b2d3e1bb7da3b0ae0e03490b71275374eb84c67',
        'core_submodule_commit':'4ec1ae44b857a70d2f9298344feac4b43ed0eb6b',
        'manufacturing_released':False,'firmware_built':False,
        'pending':['Foto/pinout e medidas da DevKit real: numero de pinos, espacamento e botoes/USB',
                   'Protecao da entrada de 24V, supervisor e conectores com MPNs e calculos',
+                  'Entrada PWM dos modulos sem alimentacao: impedancia e retroalimentacao',
                   'Confirmacao dos GPIOs expostos, do RGB e da alimentacao USB do modelo real',
                   'Mapa grblHAL N16R8, firmware, autenticacao e criptografia para S3',
                   'ERC/DRC de projeto EDA, layout e validacao eletrica/termica/EMC/seguranca']}
-(ROOT/'hardware/proposta_carrier_r1.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(ROOT/'hardware/proposta_carrier_r2.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(OUT)

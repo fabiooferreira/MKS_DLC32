@@ -1,6 +1,6 @@
-# CNC_FFST S3 — placa-base para DevKit N16R8, proposta R1
+# CNC_FFST S3 — placa-base para DevKit N16R8, proposta R2
 
-[**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R1.pdf)
+[**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.
 
@@ -15,7 +15,7 @@ Proposta de esquema funcional para revisão visual: placa-base (carrier) onde se
 - Motores em 24 V; NEMA17 informados como 2 A/fase, com ajuste VREF no próprio módulo.
 - STEP/DIR em GPIOs diretos, sem I2S, multiplexação ou expansores externos.
 - ENABLE comum, com inibição por emergência.
-- Uma saída PWM 3,3 V para chave externa entre laser e controlador do spindle.
+- Uma saída PWM 3,3 V ligada permanentemente às entradas do laser e do controlador do spindle; a chave seleciona a alimentação das ferramentas.
 - Sem display; limites, sonda, emergência, feed hold e cycle start.
 
 O GPIO42 é uma habilitação lógica auxiliar interna do PWM (`TOOL_ARM`), não um ENABLE individual dos drivers nem outro PWM.
@@ -42,7 +42,7 @@ Reservados, sem uso externo pela proposta:
 2. Ligações funcionais dos 16 pinos de cada soquete DRV8825.
 3. Alimentação dos primeiros testes e uso da USB/regulador existentes na DevKit.
 4. Condicionamento de limites, sonda e comandos por contato seco.
-5. ENABLE comum, bloqueio do PWM por emergência e chave seletora externa.
+5. ENABLE comum, bloqueio do PWM por emergência, PWM compartilhado e seleção externa da alimentação.
 
 A numeração lógica dos módulos de driver segue `Driver_Motor:Pololu_Breakout_DRV8825` do KiCad. Conferir o módulo DRV8825 real e a orientação física dos soquetes antes do layout. Essa numeração não representa a vista física de inserção.
 
@@ -62,15 +62,15 @@ Ainda faltam mapa grblHAL para esta DevKit, configuração de flash/PSRAM N16R8,
 
 ## Entradas, PWM e emergência
 
-As entradas propostas são para contato seco/3,3 V, não para sensores de 12/24 V. A saída PWM assume sinal ativo alto e GND compatível com laser e controlador de spindle. A chave externa comuta apenas o sinal, com posição central desligada e ruptura antes do contato. Ela não informa sua posição ao firmware: trocar com máquina parada e ajustar o modo pelo software.
+As entradas propostas são para contato seco/3,3 V, não para sensores de 12/24 V. A saída PWM assume sinal ativo alto e GND compatível com laser e controlador de spindle. O mesmo PWM fica ligado às duas entradas simultaneamente; a chave externa comuta a alimentação, não o sinal. Sua posição não é lida pelo firmware: trocar com M5/S0 e máquina parada, ajustando o modo pelo software. Validar o comportamento das entradas PWM quando os módulos estiverem sem alimentação para evitar retroalimentação; o condicionamento depende dos circuitos reais. Tensões/correntes da comutação de potência ainda precisam ser conferidas.
 
 O circuito de potência da emergência é externo e depende das cargas. A placa-base monitora contato auxiliar NC e bloqueia sinais. Não há certificação de segurança nesta proposta. A corrente de fase não é medida pelo ESP32; continua ajustada pelo VREF de cada módulo.
 
 ## Arquivos e verificações
 
-- `artifacts/CNC_FFST_S3_Carrier_Proposta_R1.pdf`: proposta de esquema para visualizar.
-- `hardware/pinagem_carrier_r1.csv`: GPIOs, sem posições físicas inventadas.
-- `hardware/proposta_carrier_r1.json`: escopo e pendências estruturados.
+- `artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf`: proposta de esquema para visualizar.
+- `hardware/pinagem_carrier_r2.csv`: GPIOs, sem posições físicas inventadas.
+- `hardware/proposta_carrier_r2.json`: escopo e pendências estruturados.
 - `tools/gerar_proposta_pdf.py`: fonte da geração vetorial, usando ReportLab e DejaVu.
 - `docs/REFERENCIAS.md`: versão do driver consultado e referências para revisão elétrica.
 
