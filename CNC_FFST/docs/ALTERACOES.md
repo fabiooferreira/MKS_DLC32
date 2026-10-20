@@ -72,3 +72,10 @@ Ajuste solicitado para versão laser: perfil LASER/$32=1, alias de pino e versã
 própria atualizada. Documentação LASER_SPINDLE.md detalha a configuração persistida,
 escala S e seleção física. 0.1.0-test usava o default PWM original e não deve ser
 confundida com esta entrega laser.
+
+## Identificação 0.2.0 sem sufixo
+
+A pedido do usuário, removido `-test` da identificação em Grbl.h, Report.cpp e
+FW_NAME. Recompilação e reempacotamento do BIN completo; nenhuma mudança de
+funcionalidade ou pinagem. O usuário relatou funcionamento da imagem completa;
+a remoção do rótulo não representa validação adicional de segurança ou sondagem.

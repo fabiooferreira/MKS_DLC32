@@ -1,4 +1,4 @@
-# Perfil laser e operação híbrida — 0.2.0-test
+# Perfil laser e operação híbrida — 0.2.0
 
 O perfil `cnc_ffst_v2_1` agora tem defaults `Spindle/Type=LASER` e `$32=1`.
 `LASER_OUTPUT_PIN` é um alias do GPIO32 original, não uma nova ligação.

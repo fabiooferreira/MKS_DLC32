@@ -40,3 +40,7 @@ Não foram ocultados os avisos no perfil novo. Tratam-se de código herdado não
 A primeira tentativa de image_info usou o Python global e falhou por ausência de pyserial. A invocação correta usa o Python do venv do PlatformIO; essa correção não alterou firmware ou dependências do projeto. Depois, a inspeção sem `--chip esp32` tentou o formato padrão ESP8266 e falhou na leitura dos segmentos. Com `--chip esp32`, a imagem ESP32 foi reconhecida e checksum/hash internos resultaram válidos; não foi necessário regenerar o BIN.
 
 Revisão laser: driver LASER e macro LASER_OUTPUT_PIN=GPIO32 confirmados nas fontes, `$32=1` por default. Configuração NVS existente não é substituída pela gravação. Teste de driver/modo em hardware continua pendente.
+
+## Recompilação da identificação 0.2.0
+
+Removido o sufixo -test conforme pedido. Build e imagem completa gerados com sucesso; 236 ocorrências de warning nesta execução, 0 erros. Logs atuais em artifacts/build.log e artifacts/full-image-build.log; identificação verificada nos bytes da aplicação. Nenhuma mudança de lógica.

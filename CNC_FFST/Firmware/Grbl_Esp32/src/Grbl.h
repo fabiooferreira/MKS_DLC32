@@ -24,7 +24,7 @@
 const char* const GRBL_VERSION       = "1.1";
 // const char* const GRBL_VERSION       = "1.3a";
 #ifdef CNC_FFST_BUILD
-const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0-test";
+const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0";
 #else
 const char* const GRBL_VERSION_BUILD = "2022042101";
 #endif

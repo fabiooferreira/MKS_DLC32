@@ -1,4 +1,4 @@
-# Imagem completa de flash para teste — CNC_FFST 0.2.0-test
+# Imagem completa de flash para teste — CNC_FFST 0.2.0
 
 `artifacts/CNC_FFST_0.2.0_FULL_4MB.bin` é uma imagem completa de 4 MB,
 com base/endereço de gravação **0x0**. Não confundir com `artifacts/firmware.bin`,
@@ -14,7 +14,7 @@ fornecido pelo usuário. O BIN MKS serviu apenas para comparar o layout:
 | Partições | 0x8000 | huge_app: mesmo layout do BIN MKS analisado |
 | NVS | 0x9000 | Vazia, preenchida com FF |
 | Dados OTA | 0xe000 | boot_app0.bin do framework |
-| app0 | 0x10000 | CNC_FFST 0.2.0-test laser, compilado anteriormente |
+| app0 | 0x10000 | CNC_FFST 0.2.0 laser, compilado anteriormente |
 | SPIFFS | 0x310000 | Vazio, preenchido com FF |
 
 ## Antes de gravar
@@ -53,7 +53,7 @@ porque a escrita da flash terminou.
 
 O formato completo resolve a diferença de empacotamento encontrada, mas não
 prova que esse era o motivo dos resets. O código de aplicação desta imagem é
-o mesmo da revisão 0.2.0-test; não foi feita correção especulativa de runtime.
+o mesmo da revisão 0.2.0; não foi feita correção especulativa de runtime.
 Sondagem, FIRE, laser, limites e emergência permanecem sem validação física.
 
 Reprodução: `bash tools/build-full.sh`. Logs da mesclagem/verificações e hashes

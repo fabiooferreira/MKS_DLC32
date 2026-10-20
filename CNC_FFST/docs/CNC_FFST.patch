@@ -68,7 +68,7 @@
  const char* const GRBL_VERSION       = "1.1";
  // const char* const GRBL_VERSION       = "1.3a";
 +#ifdef CNC_FFST_BUILD
-+const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0-test";
++const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0";
 +#else
  const char* const GRBL_VERSION_BUILD = "2022042101";
 +#endif
@@ -95,7 +95,7 @@
 +#ifdef CNC_FFST_BUILD
 +#undef BOARD_NAME
 +#define BOARD_NAME                  "Board:MKS DLC32 V2.1 (original V2.x pin map)"
-+#define FW_NAME                     "CNC_FFST 0.2.0-test"
++#define FW_NAME                     "CNC_FFST 0.2.0"
 +#else
  #define FW_NAME                     "V2.1(8M.H35.20220421)"
 +#endif
@@ -173,7 +173,7 @@
  void report_init_message(uint8_t client) {
      grbl_sendf(client, "\r\nGrbl %s ['$' for help]\r\n", GRBL_VERSION);
 +#ifdef CNC_FFST_BUILD
-+    grbl_sendf(client, "[MSG:CNC_FFST 0.2.0-test; hardware validation pending]\r\n");
++    grbl_sendf(client, "[MSG:CNC_FFST 0.2.0; hardware validation pending]\r\n");
 +#endif
  }
  

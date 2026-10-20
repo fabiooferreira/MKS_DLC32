@@ -46,7 +46,7 @@
 #ifdef CNC_FFST_BUILD
 #undef BOARD_NAME
 #define BOARD_NAME                  "Board:MKS DLC32 V2.1 (original V2.x pin map)"
-#define FW_NAME                     "CNC_FFST 0.2.0-test"
+#define FW_NAME                     "CNC_FFST 0.2.0"
 #else
 #define FW_NAME                     "V2.1(8M.H35.20220421)"
 #endif

@@ -1,4 +1,4 @@
-# CNC_FFST 0.2.0-test
+# CNC_FFST 0.2.0
 
 Firmware experimental para MKS DLC32 V2.1/ESP32, cartesiana XYZ, sem display.
 Base: arquivo `MKS-DLC32-FIRMWARE-main.zip` do repositório
@@ -66,7 +66,7 @@ As bibliotecas originais vendorizadas foram preservadas.
 ## Operação e limitações
 
 Serial: 115200 baud. O banner permanece `Grbl 1.1` para compatibilidade e adiciona
-uma mensagem CNC_FFST; `$I` inclui `CNC_FFST-0.2.0-test` no campo de build.
+uma mensagem CNC_FFST; `$I` inclui `CNC_FFST-0.2.0` no campo de build.
 O Wi-Fi mantém a implementação e configurações NVS da base e inicializa sem LCD.
 Não há troca automática entre ferramentas: laser e spindle compartilham PWM GPIO32.
 Seleção física, intertravamento e configuração de modo são responsabilidade da máquina.

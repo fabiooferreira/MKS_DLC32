@@ -15,10 +15,10 @@ libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing c
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
-libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
@@ -113,6 +113,10 @@ libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
@@ -174,11 +178,7 @@ Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:669:8: warning: enumeration value 'PROBE_FINISH' not handled in switch [-Wswitch]
-libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:63:1: warning: control reaches end of non-void function [-Wreturn-type]
-libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
-libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
-libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:113:29: warning: 'speed' may be used uninitialized in this function [-Wmaybe-uninitialized]
 Grbl_Esp32/src/mks/MKS_draw_move.cpp:113:29: warning: 'step' may be used uninitialized in this function [-Wmaybe-uninitialized]
 Grbl_Esp32/src/mks/MKS_draw_power.cpp:225:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
