@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
 python -m pip install pyserial==3.5 pillow==11.3.0 pyinstaller==6.16.0
