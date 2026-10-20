@@ -1,0 +1,574 @@
+Processing mks_dlc32_v2_1 (platform: espressif32@3.2.0; framework: arduino; board: esp32dev)
+--------------------------------------------------------------------------------
+Platform Manager: Installing espressif32 @ 3.2.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Platform Manager: espressif32@3.2.0 has been installed!
+Tool Manager: Installing platformio/toolchain-xtensa32 @ ~2.50200.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: toolchain-xtensa32@2.50200.97 has been installed!
+Tool Manager: Installing platformio/framework-arduinoespressif32 @ ~3.10006.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: framework-arduinoespressif32@3.10006.210326 has been installed!
+Tool Manager: Installing platformio/tool-esptoolpy @ ~1.30000.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-esptoolpy@1.30000.201119 has been installed!
+Tool Manager: Installing platformio/tool-scons @ ~4.40801.0
+Tool Manager: Error: Please read https://bit.ly/package-manager-ioerror
+Tool Manager: Warning! Package Mirror: HTTPSConnectionPool(host='usc1.contabostorage.com', port=443): Max retries exceeded with url: /250040e607e8431abaff8727621872f9:pioregmirrorus/tools/7d/42/b0fefe6c6223b85c3e0375d07c400e0548dfbbfa2445860fcc475f37c909/tool-scons-4.40801.0.tar.gz (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+Tool Manager: Looking for another mirror...
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-scons@4.40801.0 has been installed!
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32dev.html
+PLATFORM: Espressif 32 (3.2.0) > Espressif ESP32 Dev Module
+HARDWARE: ESP32 160MHz, 320KB RAM, 4MB Flash
+DEBUG: Current (esp-prog) External (esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-arduinoespressif32 @ 3.10006.210326 (1.0.6) 
+ - tool-esptoolpy @ 1.30000.201119 (3.0.0) 
+ - toolchain-xtensa32 @ 2.50200.97 (5.2.0)
+Converting Grbl_Esp32.ino
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Library Manager: Installing TMCStepper @ >=0.7.0,<1.0.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Library Manager: TMCStepper@0.7.3 has been installed!
+Found 33 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- TMCStepper @ 0.7.3
+|-- WiFi @ 1.0
+|-- ESP32 BLE Arduino @ 1.0.1
+|-- lv_arduino @ 2.1.5
+|-- BluetoothSerial @ 1.0
+|-- WebServer @ 1.0
+|-- WiFiClientSecure @ 1.0
+|-- WebSockets @ 2.1.2
+|-- DNSServer @ 1.1.0
+|-- ESP32SSPD @ 1.0
+|-- ESPmDNS @ 1.0
+|-- FS @ 1.0
+|-- SD(esp32) @ 1.0.5
+|-- SPIFFS @ 1.0
+|-- Update @ 1.0
+|-- ArduinoOTA @ 1.0
+|-- TFT_eSPI @ 2.3.70
+|-- EEPROM @ 1.0.3
+|-- Preferences @ 1.0
+|-- Wire @ 1.0.1
+|-- SPI @ 1.0
+Building in release mode
+Compiling .pio/build/mks_dlc32_v2_1/src/Grbl_Esp32.ino.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/CoolantControl.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/CustomCode.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Error.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Exec.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/GCode.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Grbl.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/I2SOut.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Jog.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Limits.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/MotionControl.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/Dynamixel2.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/Motor.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/Motors.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/NullMotor.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/RcServo.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/Servo.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/StandardStepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/TrinamicDriver.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/TrinamicUartDriverClass.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Motors/UnipolarMotor.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/NutsBolts.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Pins.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Planner.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Probe.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/ProcessSettings.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Protocol.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Regex.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Report.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/SDCard.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Serial.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Settings.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/SettingsDefinitions.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/10vSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/BESCSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/DacSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/H2ASpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/HuanyangSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/Laser.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/NullSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/PWMSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/RelaySpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/Spindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/VFDSpindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Spindles/YL620Spindle.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/System.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/Uart.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/UserOutput.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/Authentication.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/BTConfig.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/Commands.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/ESPResponse.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/InputBuffer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/JSONEncoder.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/NotificationsService.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/Serial2Socket.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/TelnetServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/WebServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/WebSettings.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/WifiConfig.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/WebUI/WifiServices.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Adjustment.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Calibration.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Control.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Hhome.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Home.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Low light.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_PWRr.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_Pause.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_SPEED.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_Stop.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_pwr.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/M_start.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Next.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/P_speed.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Positionting.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Previous.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SPD_H_PRE.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SP_H_UP.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SP_L_PRE.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SP_L_UP.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SP_OFF.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/SP_ON.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Sculpture.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Tool.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Unlock.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/X_N.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/X_P.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/X_POS.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Y_N.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Y_P.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Y_POS.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/Z_POS.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/add.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/back.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/confirm.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/dlc32Font.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/file.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/glare.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/icon_reconnect.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/me_status.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/mks_logo.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_adj.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_adj_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_adjpre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_back.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_back_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_pwr.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_pwr_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_speed.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_speed_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_xpos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_ypos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cave_zpos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cnc_en.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cnc_en_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cooling.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_cooling_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_ctrl_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_down.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_down_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_file_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_hhome_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_home_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_cave.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_cave_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_frame.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_frame_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_pos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_infile_pos_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_knife.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_knife_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_l_next.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_l_next_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_l_up.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_l_up_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_language.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_language_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_left.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_left_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_down.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_left.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_pos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_right.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_up.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_z_n.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_z_n_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_z_p.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_m_z_p_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_next_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_pause.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_pause_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_pos_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_position.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_position_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_previous_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_print_file.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_right.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_right_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_search_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_add.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_add_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_back.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_back_per.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_comfirm.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_comfirm_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_dec.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_sp_dec_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_spondle_status.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_spondle_status_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_start.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_start_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_stop.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_stop_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_times.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_tool_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_unlock_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_up.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_up_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_w_pos.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_connect.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_connect_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_dis.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_disconnect.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_wifi_search.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_xyclear.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_xyclear_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_xyhome.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_xyhome_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_down.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_down_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_home.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_home_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_up.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_z_up_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_zclear.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/png_zclear_pre.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/pwroff.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/pwron.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/reduce.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/s_return.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/wifi_status.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/lv_pic/wifi_tool.c.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_FREERTOS_TASK.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_LVGL.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_SDCard.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_TS35.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_ctrl.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_carving.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_frame.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_inFile.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_language.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_lvgl.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_move.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_power.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_powerless.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_print.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_ready.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_tool.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_draw_wifi.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/MKS_updata.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/draw_ui.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/mks_ringbuff.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/src/src/mks/mks_test.cpp.o
+Generating partitions .pio/build/mks_dlc32_v2_1/partitions.bin
+Compiling .pio/build/mks_dlc32_v2_1/lib19c/SPI/SPI.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib19c/libSPI.a
+Indexing .pio/build/mks_dlc32_v2_1/lib19c/libSPI.a
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/CHOPCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/COOLCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/DRVCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/DRVCTRL.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/DRVSTATUS.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/DRV_CONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/DRV_STATUS.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/ENCMODE.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/GCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/IHOLD_IRUN.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/PWMCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/RAMP_STAT.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SERIAL_SWITCH.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SGCSCONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SHORT_CONF.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SMARTEN.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SW_MODE.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/SW_SPI.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC2130Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC2160Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC2208Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC2209Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC2660Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC5130Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMC5160Stepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/TMCStepper.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/bcm2835_spi.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib8fa/TMCStepper/source/bcm2835_stream.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/ETH.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib8fa/libTMCStepper.a
+Indexing .pio/build/mks_dlc32_v2_1/lib8fa/libTMCStepper.a
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFi.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiAP.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiClient.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiGeneric.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiMulti.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiSTA.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiScan.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib4c0/WiFi/WiFiUdp.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLE2902.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib4c0/libWiFi.a
+Indexing .pio/build/mks_dlc32_v2_1/lib4c0/libWiFi.a
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLE2904.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEAddress.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEAdvertisedDevice.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEAdvertising.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEBeacon.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLECharacteristic.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLECharacteristicMap.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEClient.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEDescriptor.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEDescriptorMap.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEDevice.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEEddystoneTLM.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEEddystoneURL.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEExceptions.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEHIDDevice.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLERemoteCharacteristic.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLERemoteDescriptor.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLERemoteService.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEScan.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLESecurity.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEService.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEServiceMap.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEUUID.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEUtils.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/BLEValue.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/FreeRTOS.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libe03/BLE/GeneralUtils.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_debug.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_disp.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_group.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_indev.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_obj.c.o
+Archiving .pio/build/mks_dlc32_v2_1/libe03/libBLE.a
+Indexing .pio/build/mks_dlc32_v2_1/libe03/libBLE.a
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_refr.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_core/lv_style.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_arc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_basic.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_img.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_label.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_line.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_rect.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_draw_triangle.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_img_cache.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_draw/lv_img_decoder.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_fmt_txt.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_12.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_12_subpx.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_16.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_22.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_28.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_roboto_28_compressed.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_font/lv_font_unscii_8.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_hal/lv_hal_disp.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_hal/lv_hal_indev.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_hal/lv_hal_tick.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_anim.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_area.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_async.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_bidi.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_circ.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_color.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_fs.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_gc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_ll.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_log.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_math.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_mem.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_printf.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_task.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_templ.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_txt.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_misc/lv_utils.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_arc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_bar.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_btn.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_btnm.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_calendar.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_canvas.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_cb.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_chart.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_cont.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_cpicker.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_ddlist.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_gauge.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_img.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_imgbtn.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_kb.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_label.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_led.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_line.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_list.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_lmeter.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_mbox.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_objx_templ.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_page.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_preload.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_roller.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_slider.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_spinbox.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_sw.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_ta.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_table.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_tabview.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_tileview.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_objx/lv_win.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_alien.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_default.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_material.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_mono.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_nemo.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_night.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_templ.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib624/lvgl/src/lv_themes/lv_theme_zen.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib50a/BluetoothSerial/BluetoothSerial.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib624/liblvgl.a
+Indexing .pio/build/mks_dlc32_v2_1/lib624/liblvgl.a
+Compiling .pio/build/mks_dlc32_v2_1/lib806/FS/FS.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib806/FS/vfs_api.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib50a/libBluetoothSerial.a
+Indexing .pio/build/mks_dlc32_v2_1/lib50a/libBluetoothSerial.a
+Compiling .pio/build/mks_dlc32_v2_1/libdc2/WebServer/Parsing.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib806/libFS.a
+Indexing .pio/build/mks_dlc32_v2_1/lib806/libFS.a
+Compiling .pio/build/mks_dlc32_v2_1/libdc2/WebServer/WebServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libdc2/WebServer/detail/mimetable.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib6ec/WiFiClientSecure/WiFiClientSecure.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib6ec/WiFiClientSecure/ssl_client.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libdc2/libWebServer.a
+Indexing .pio/build/mks_dlc32_v2_1/libdc2/libWebServer.a
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/WebSockets.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib6ec/libWiFiClientSecure.a
+Indexing .pio/build/mks_dlc32_v2_1/lib6ec/libWiFiClientSecure.a
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/WebSocketsClient.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/WebSocketsServer.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/libb64/cdecode.c.o
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/libb64/cencode.c.o
+Compiling .pio/build/mks_dlc32_v2_1/libf17/arduinoWebSockets/libsha1/libsha1.c.o
+Compiling .pio/build/mks_dlc32_v2_1/lib2e9/DNSServer/DNSServer.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libf17/libarduinoWebSockets.a
+Indexing .pio/build/mks_dlc32_v2_1/libf17/libarduinoWebSockets.a
+Compiling .pio/build/mks_dlc32_v2_1/lib44d/ESP32SSDP/ESP32SSDP.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib2e9/libDNSServer.a
+Indexing .pio/build/mks_dlc32_v2_1/lib2e9/libDNSServer.a
+Compiling .pio/build/mks_dlc32_v2_1/lib494/ESPmDNS/ESPmDNS.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib44d/libESP32SSDP.a
+Indexing .pio/build/mks_dlc32_v2_1/lib44d/libESP32SSDP.a
+Compiling .pio/build/mks_dlc32_v2_1/lib16e/SD/SD.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib494/libESPmDNS.a
+Indexing .pio/build/mks_dlc32_v2_1/lib494/libESPmDNS.a
+Compiling .pio/build/mks_dlc32_v2_1/lib16e/SD/sd_diskio.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/lib16e/SD/sd_diskio_crc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/libf0a/SPIFFS/SPIFFS.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib16e/libSD.a
+Indexing .pio/build/mks_dlc32_v2_1/lib16e/libSD.a
+Compiling .pio/build/mks_dlc32_v2_1/libd49/Update/HttpsOTAUpdate.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libf0a/libSPIFFS.a
+Indexing .pio/build/mks_dlc32_v2_1/libf0a/libSPIFFS.a
+Compiling .pio/build/mks_dlc32_v2_1/libd49/Update/Updater.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/libb71/ArduinoOTA/ArduinoOTA.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libd49/libUpdate.a
+Indexing .pio/build/mks_dlc32_v2_1/libd49/libUpdate.a
+Compiling .pio/build/mks_dlc32_v2_1/lib4f8/TFT_eSPI/TFT_eSPI.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libb71/libArduinoOTA.a
+Indexing .pio/build/mks_dlc32_v2_1/libb71/libArduinoOTA.a
+Compiling .pio/build/mks_dlc32_v2_1/libb86/EEPROM/EEPROM.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/libb86/libEEPROM.a
+Indexing .pio/build/mks_dlc32_v2_1/libb86/libEEPROM.a
+Compiling .pio/build/mks_dlc32_v2_1/lib56a/Preferences/Preferences.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib56a/libPreferences.a
+Indexing .pio/build/mks_dlc32_v2_1/lib56a/libPreferences.a
+Compiling .pio/build/mks_dlc32_v2_1/lib2b4/Wire/Wire.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib2b4/libWire.a
+Indexing .pio/build/mks_dlc32_v2_1/lib2b4/libWire.a
+Archiving .pio/build/mks_dlc32_v2_1/libFrameworkArduinoVariant.a
+Indexing .pio/build/mks_dlc32_v2_1/libFrameworkArduinoVariant.a
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/Esp.cpp.o
+Archiving .pio/build/mks_dlc32_v2_1/lib4f8/libTFT_eSPI.a
+Indexing .pio/build/mks_dlc32_v2_1/lib4f8/libTFT_eSPI.a
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/FunctionalInterrupt.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/HardwareSerial.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/IPAddress.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/IPv6Address.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/MD5Builder.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/Print.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/Stream.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/StreamString.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/WMath.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/WString.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/base64.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/cbuf.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-adc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-bt.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-cpu.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-dac.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-gpio.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-i2c.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-ledc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-log.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-matrix.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-misc.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-psram.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-rmt.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-sigmadelta.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-spi.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-time.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-timer.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-touch.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/esp32-hal-uart.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/libb64/cdecode.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/libb64/cencode.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/main.cpp.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/stdlib_noniso.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/wiring_pulse.c.o
+Compiling .pio/build/mks_dlc32_v2_1/FrameworkArduino/wiring_shift.c.o
+Archiving .pio/build/mks_dlc32_v2_1/libFrameworkArduino.a
+Indexing .pio/build/mks_dlc32_v2_1/libFrameworkArduino.a
+Linking .pio/build/mks_dlc32_v2_1/firmware.elf
+Retrieving maximum program size .pio/build/mks_dlc32_v2_1/firmware.elf
+Checking size .pio/build/mks_dlc32_v2_1/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [==        ]  22.9% (used 75164 bytes from 327680 bytes)
+Flash: [=======   ]  66.4% (used 2088794 bytes from 3145728 bytes)
+Building .pio/build/mks_dlc32_v2_1/firmware.bin
+esptool.py v3.0
+========================= [SUCCESS] Took 86.14 seconds =========================
+
+Environment     Status    Duration
+--------------  --------  ------------
+mks_dlc32_v2_1  SUCCESS   00:01:26.137
+========================= 1 succeeded in 00:01:26.137 =========================

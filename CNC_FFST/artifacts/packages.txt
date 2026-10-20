@@ -1,0 +1,8 @@
+Resolving cnc_ffst_v2_1 dependencies...
+Platform espressif32 @ 3.2.0 (required: espressif32 @ 3.2.0)
+├── framework-arduinoespressif32 @ 3.10006.210326 (required: platformio/framework-arduinoespressif32 @ ~3.10006.0)
+├── tool-esptoolpy @ 1.30000.201119 (required: platformio/tool-esptoolpy @ ~1.30000.0)
+└── toolchain-xtensa32 @ 2.50200.97 (required: platformio/toolchain-xtensa32 @ ~2.50200.0)
+
+Libraries
+└── TMCStepper @ 0.7.3 (required: teemuatlut/TMCStepper @ 0.7.3)

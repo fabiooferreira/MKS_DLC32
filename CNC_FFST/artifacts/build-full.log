@@ -1,0 +1,1734 @@
+Processing cnc_ffst_v2_1 (platform: espressif32@3.2.0; framework: arduino; board: esp32dev)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32dev.html
+PLATFORM: Espressif 32 (3.2.0) > Espressif ESP32 Dev Module
+HARDWARE: ESP32 160MHz, 320KB RAM, 4MB Flash
+DEBUG: Current (esp-prog) External (esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-arduinoespressif32 @ 3.10006.210326 (1.0.6) 
+ - tool-esptoolpy @ 1.30000.201119 (3.0.0) 
+ - toolchain-xtensa32 @ 2.50200.97 (5.2.0)
+Converting Grbl_Esp32.ino
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 33 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- TMCStepper @ 0.7.3
+|-- WiFi @ 1.0
+|-- ESP32 BLE Arduino @ 1.0.1
+|-- lv_arduino @ 2.1.5
+|-- BluetoothSerial @ 1.0
+|-- WebServer @ 1.0
+|-- WiFiClientSecure @ 1.0
+|-- WebSockets @ 2.1.2
+|-- DNSServer @ 1.1.0
+|-- ESP32SSPD @ 1.0
+|-- ESPmDNS @ 1.0
+|-- FS @ 1.0
+|-- SD(esp32) @ 1.0.5
+|-- SPIFFS @ 1.0
+|-- Update @ 1.0
+|-- ArduinoOTA @ 1.0
+|-- TFT_eSPI @ 2.3.70
+|-- EEPROM @ 1.0.3
+|-- Preferences @ 1.0
+|-- Wire @ 1.0.1
+|-- SPI @ 1.0
+Building in release mode
+Compiling .pio/build/cnc_ffst_v2_1/src/Grbl_Esp32.ino.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/CoolantControl.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/CustomCode.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/GCode.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Grbl.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/I2SOut.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/Grbl.cpp:24:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/Grbl.h:43,
+                 from Grbl_Esp32/src/Grbl.cpp:21:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/Grbl.cpp:24:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Jog.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Limits.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/MotionControl.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/Dynamixel2.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/MotionControl.cpp:26:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/Grbl.h:43,
+                 from Grbl_Esp32/src/MotionControl.cpp:25:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/MotionControl.cpp:26:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/Motor.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/Motors.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/NullMotor.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/RcServo.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/Servo.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/StandardStepper.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/TrinamicDriver.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/TrinamicUartDriverClass.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Motors/UnipolarMotor.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/NutsBolts.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Pins.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Planner.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Probe.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/Probe.cpp:25:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/Grbl.h:43,
+                 from Grbl_Esp32/src/Probe.cpp:24:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/ProcessSettings.cpp.o
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/Probe.cpp:25:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Protocol.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/Protocol.cpp:26:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/Grbl.h:43,
+                 from Grbl_Esp32/src/Protocol.cpp:25:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/Protocol.cpp:26:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Report.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.h:4,
+                 from Grbl_Esp32/src/Report.cpp:51:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/Grbl.h:43,
+                 from Grbl_Esp32/src/Report.cpp:49:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/SDCard.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/SDCard.cpp:22:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/Machine.h:9:0,
+                 from Grbl_Esp32/src/Config.h:66,
+                 from Grbl_Esp32/src/SDCard.cpp:21:
+Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.h:4,
+                 from Grbl_Esp32/src/Report.cpp:51:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/SDCard.cpp:22:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/SDCard.cpp: In function 'SDState write_file(const char*, const char*)':
+Grbl_Esp32/src/SDCard.cpp:288:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
+Grbl_Esp32/src/SDCard.cpp: In function 'boolean setFilePos(uint32_t)':
+Grbl_Esp32/src/SDCard.cpp:180:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Serial.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Settings.cpp.o
+Grbl_Esp32/src/Serial.cpp:274:7: warning: extra tokens at end of #endif directive [-Wendif-labels]
+ #endif.
+       ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/SettingsDefinitions.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/10vSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/BESCSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/DacSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/H2ASpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/HuanyangSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/Laser.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/NullSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/PWMSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/RelaySpindle.cpp.o
+Grbl_Esp32/src/Spindles/PWMSpindle.cpp: In member function 'virtual uint32_t Spindles::PWM::set_rpm(uint32_t)':
+Grbl_Esp32/src/Spindles/PWMSpindle.cpp:166:18: warning: variable 'pwm_value' set but not used [-Wunused-but-set-variable]
+         uint32_t pwm_value;
+                  ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/Spindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/VFDSpindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Spindles/YL620Spindle.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Stepper.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/System.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/Uart.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/UserOutput.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/Authentication.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/BTConfig.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/Commands.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/ESPResponse.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/InputBuffer.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/JSONEncoder.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/NotificationsService.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/Serial2Socket.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/TelnetServer.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/WebServer.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/WebSettings.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/WifiConfig.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/WebUI/../mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/WebUI/../mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/WebUI/WifiConfig.cpp:32:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/WebUI/../Machine.h:9:0,
+                 from Grbl_Esp32/src/WebUI/../Config.h:66,
+                 from Grbl_Esp32/src/WebUI/../Grbl.h:43,
+                 from Grbl_Esp32/src/WebUI/WifiConfig.cpp:21:
+Grbl_Esp32/src/WebUI/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/WebUI/WifiServices.cpp.o
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/WebUI/../mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/WebUI/../mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/WebUI/WifiConfig.cpp:32:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_FREERTOS_TASK.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_LVGL.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.h:5,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.h:5,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.h:5,
+                 from Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp: In function 'void mks_page_data_updata()':
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:184:83: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+             mks_draw_common_pupup_info("Info", "Update succeed", "Please restart!");
+                                                                                   ^
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:184:83: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:184:83: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:190:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+             mks_draw_common_pupup_info("Error", "Update Fail", "Please Check mkscfg.txt or sdcard");
+                                                                                                   ^
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:190:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_FREERTOS_TASK.cpp:190:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_SDCard.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_TS35.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.h:5,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:4,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.h:5,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_TS35.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:4,
+                 from Grbl_Esp32/src/mks/MKS_TS35.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.h:5,
+                 from Grbl_Esp32/src/mks/MKS_SDCard.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_TS35.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_SDCard.cpp: In member function 'bool SdCard::sd_data_update(const char*, const char*)':
+Grbl_Esp32/src/mks/MKS_SDCard.cpp:392:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_ctrl.cpp.o
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_carving.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_carving.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:6,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_ctrl.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_ctrl.cpp: In function 'bool mks_wifi_check_is_out(bool)':
+Grbl_Esp32/src/mks/MKS_ctrl.cpp:135:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Grbl_Esp32/src/mks/MKS_draw_carving.cpp: In function 'void event_btn_frame(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_carving.cpp:977:27: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+         event_fram_size_no);
+                           ^
+Grbl_Esp32/src/mks/MKS_draw_carving.cpp:977:27: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_carving.cpp:977:27: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_frame.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_frame.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_inFile.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp: In function 'void set_xy_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:170:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:170:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:170:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:172:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:172:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:172:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp: In function 'void set_z_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:180:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:180:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:180:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:182:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:182:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:182:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp: In function 'void set_xyz_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:193:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                              ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:193:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:193:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:195:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                       ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:195:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:195:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp: In function 'void set_knife()':
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:204:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_pupup_info("Info", "Setting probe...", " ");
+                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:204:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:204:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:209:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Setting error!", "Please set $6=1!", event_henadle_pupup_com);
+                                                                                                       ^
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:209:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:209:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp: In function 'uint8_t get_id(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_inFile.cpp:91:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_language.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_lvgl.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_draw_language.cpp: In function 'void mc_language_init()':
+Grbl_Esp32/src/mks/MKS_draw_language.cpp:8:38: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+  if(mks_grbl.language = SimpleChinese) {
+                                      ^
+Grbl_Esp32/src/mks/MKS_draw_language.cpp:12:37: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+  else if(mks_grbl.language = English) {
+                                     ^
+Grbl_Esp32/src/mks/MKS_draw_language.cpp: In function 'uint8_t get_event(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_language.cpp:70:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_move.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_language.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:14,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_power.cpp.o
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void mc_unlock()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  mks_draw_common_popup_info_com("Info", "Unlock success!", "", event_henadle_pupup_com);
+                                                                                       ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:119:87: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_home()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:164:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  mks_draw_common_pupup_info("Info", "Homing...", " ");
+                                                     ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:164:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:164:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_xy_home()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:181:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  mks_draw_common_pupup_info("Info", "Homing...", " ");
+                                                     ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:181:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:181:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_z_home()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:198:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  mks_draw_common_pupup_info("Info", "Homing...", " ");
+                                                     ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:198:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:198:53: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_xy_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:208:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:208:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:208:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:210:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:210:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:210:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_z_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:219:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:219:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:219:93: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:221:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:221:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:221:102: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_xyz_pos(lv_obj_t*, lv_event_t)':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:233:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Positioning success", " ", event_henadle_pupup_com);
+                                                                                              ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:233:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:233:94: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:235:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Warning", "Please wait machine stop!", " ", event_henadle_pupup_com);
+                                                                                                       ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:235:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:235:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_knife()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:244:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_pupup_info("Info", "Setting probe...", " ");
+                                                             ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:244:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:244:61: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:249:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Info", "Setting error!", "Please set $6=1!", event_henadle_pupup_com);
+                                                                                                       ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:249:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:249:103: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void set_hhome()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:268:54: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_pupup_info("Info", "Homing...", " ");
+                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:268:54: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:268:54: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:271:101: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+   mks_draw_common_popup_info_com("Warning", "No Enable Hard Homing...", " ", event_henadle_pupup_com);
+                                                                                                     ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:271:101: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:271:101: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void hard_home_check()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:619:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Homing succeed!", " ", event_henadle_pupup_com);
+                                                                                          ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:619:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:619:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:625:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Homing fail", "please unlock!", event_henadle_pupup_com);
+                                                                                                   ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:625:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:625:99: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void soft_home_check()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:655:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Homing succeed!", " ", event_henadle_pupup_com);
+                                                                                          ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:655:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:655:90: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:662:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Homing fail", " ", event_henadle_pupup_com);
+                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:662:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:662:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void probe_check()':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:705:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Probe succeed!", " ", event_henadle_pupup_com);
+                                                                                         ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:705:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:705:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    mks_draw_common_popup_info_com("Info", "Probe fail!", " ", event_henadle_pupup_com);
+                                                                                      ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:712:86: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:669:8: warning: enumeration value 'PROBE_FINISH' not handled in switch [-Wswitch]
+  switch(probe_run.status) 
+        ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'uint8_t get_event(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:63:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_power.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp: In function 'void move_ctrl(char, uint8_t)':
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:113:29: warning: 'speed' may be used uninitialized in this function [-Wmaybe-uninitialized]
+  set_move(axis, step, speed);
+                             ^
+Grbl_Esp32/src/mks/MKS_draw_move.cpp:113:29: warning: 'step' may be used uninitialized in this function [-Wmaybe-uninitialized]
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_powerless.cpp.o
+Grbl_Esp32/src/mks/MKS_draw_power.cpp: In function 'void draw_pwr_popup_1(const char*)':
+Grbl_Esp32/src/mks/MKS_draw_power.cpp:225:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  mks_draw_common_popup_info_com("Warning", (char *)text, " ", event_handler_popup_sure_1);
+                                                                                         ^
+Grbl_Esp32/src/mks/MKS_draw_power.cpp:225:89: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+Grbl_Esp32/src/mks/MKS_draw_power.cpp: In function 'uint8_t get_event(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_power.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_powerless.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_print.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_print.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_ready.cpp.o
+Grbl_Esp32/src/mks/MKS_draw_print.cpp: In function 'uint8_t get_sp_event_id(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_print.cpp:741:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_ready.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_tool.cpp.o
+Grbl_Esp32/src/mks/MKS_draw_ready.cpp: In function 'uint8_t get_event(lv_obj_t*)':
+Grbl_Esp32/src/mks/MKS_draw_ready.cpp:22:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_tool.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_draw_wifi.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_wifi.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/MKS_updata.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/MKS_updata.h:4,
+                 from Grbl_Esp32/src/mks/MKS_updata.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/MKS_updata.h:4,
+                 from Grbl_Esp32/src/mks/MKS_updata.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/MKS_updata.h:4,
+                 from Grbl_Esp32/src/mks/MKS_updata.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/draw_ui.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/draw_ui.h:4,
+                 from Grbl_Esp32/src/mks/draw_ui.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/draw_ui.h:4,
+                 from Grbl_Esp32/src/mks/draw_ui.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/draw_ui.h:4,
+                 from Grbl_Esp32/src/mks/draw_ui.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/mks_ringbuff.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.h:4,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.h:4,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.h:4,
+                 from Grbl_Esp32/src/mks/mks_ringbuff.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/src/src/mks/mks_test.cpp.o
+In file included from libraries/TFT_eSPI/User_Setup_Select.h:22:0,
+                 from libraries/TFT_eSPI/TFT_eSPI.h:39,
+                 from Grbl_Esp32/src/mks/MKS_TS35.h:7,
+                 from Grbl_Esp32/src/mks/MKS_LVGL.h:4,
+                 from Grbl_Esp32/src/mks/MKS_draw_move.h:6,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:12,
+                 from Grbl_Esp32/src/mks/mks_test.h:4,
+                 from Grbl_Esp32/src/mks/mks_test.cpp:1:
+libraries/TFT_eSPI/User_Setup.h:214:0: warning: "TOUCH_CS" redefined
+ #define TOUCH_CS 26     // Chip select pin (T_CS) of touch screen
+ ^
+In file included from Grbl_Esp32/src/mks/../Machine.h:9:0,
+                 from Grbl_Esp32/src/mks/../Config.h:66,
+                 from Grbl_Esp32/src/mks/../Grbl.h:43,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:5,
+                 from Grbl_Esp32/src/mks/mks_test.h:4,
+                 from Grbl_Esp32/src/mks/mks_test.cpp:1:
+Grbl_Esp32/src/mks/../Machines/i2s_out_xyz_mks_dlc32.h:132:0: note: this is the location of the previous definition
+ #define TOUCH_CS        GPIO_NUM_26
+ ^
+In file included from libraries/lvgl/src/src/lv_hal/lv_hal_disp.h:21:0,
+                 from libraries/lvgl/src/src/lv_hal/lv_hal.h:16,
+                 from libraries/lvgl/src/lvgl.h:24,
+                 from Grbl_Esp32/src/mks/MKS_draw_lvgl.h:4,
+                 from Grbl_Esp32/src/mks/mks_test.h:4,
+                 from Grbl_Esp32/src/mks/mks_test.cpp:1:
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h: In function 'lv_color_t lv_color_make(uint8_t, uint8_t, uint8_t)':
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:53: warning: narrowing conversion of '(((int)b) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                     ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:62: warning: narrowing conversion of '(((int)g) >> 2)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                              ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:472:71: warning: narrowing conversion of '(((int)r) >> 3)' from 'int' to 'uint16_t {aka short unsigned int}' inside { } [-Wnarrowing]
+ #define LV_COLOR_MAKE(r8, g8, b8) ((lv_color_t){{b8 >> 3, g8 >> 2, r8 >> 3}})
+                                                                       ^
+libraries/lvgl/src/src/lv_hal/../lv_misc/lv_color.h:482:12: note: in expansion of macro 'LV_COLOR_MAKE'
+     return LV_COLOR_MAKE(r, g, b);
+            ^
+Compiling .pio/build/cnc_ffst_v2_1/lib624/lvgl/src/lv_objx/lv_kb.c.o
+In file included from libraries/lvgl/src/src/lv_objx/lv_kb.c:13:0:
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_create':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:97:28: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_MEM(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "Out of memory", p);
+                            ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:153:5: note: in expansion of macro 'LV_ASSERT_MEM'
+     LV_ASSERT_MEM(new_kb);
+     ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:97:28: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_MEM(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "Out of memory", p);
+                            ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:160:5: note: in expansion of macro 'LV_ASSERT_MEM'
+     LV_ASSERT_MEM(ext);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_set_ta':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:238:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:239:12: note: in expansion of macro 'LV_ASSERT_OBJ'
+     if(ta) LV_ASSERT_OBJ(ta, "lv_ta");
+            ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_set_mode':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:266:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_set_cursor_manage':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:291:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_set_style':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:318:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_get_ta':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:341:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_get_mode':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:354:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_get_cursor_manage':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:367:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_get_style':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:381:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c: In function 'lv_kb_def_event_cb':
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:52:33: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
+         lv_debug_log_error(msg, (uint64_t)value);         \
+                                 ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:89:29: note: in expansion of macro 'LV_DEBUG_ASSERT'
+ #  define LV_ASSERT_NULL(p) LV_DEBUG_ASSERT(LV_DEBUG_IS_NULL(p), "NULL pointer", p);
+                             ^
+libraries/lvgl/src/src/lv_objx/../lv_core/lv_debug.h:122:43: note: in expansion of macro 'LV_ASSERT_NULL'
+ #   define LV_ASSERT_OBJ(obj_p, obj_type) LV_ASSERT_NULL(obj_p)
+                                           ^
+libraries/lvgl/src/src/lv_objx/lv_kb.c:411:5: note: in expansion of macro 'LV_ASSERT_OBJ'
+     LV_ASSERT_OBJ(kb, LV_OBJX_NAME);
+     ^
+Archiving .pio/build/cnc_ffst_v2_1/lib624/liblvgl.a
+Indexing .pio/build/cnc_ffst_v2_1/lib624/liblvgl.a
+Linking .pio/build/cnc_ffst_v2_1/firmware.elf
+Retrieving maximum program size .pio/build/cnc_ffst_v2_1/firmware.elf
+Checking size .pio/build/cnc_ffst_v2_1/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [==        ]  19.7% (used 64420 bytes from 327680 bytes)
+Flash: [=====     ]  53.8% (used 1691362 bytes from 3145728 bytes)
+Building .pio/build/cnc_ffst_v2_1/firmware.bin
+esptool.py v3.0
+========================= [SUCCESS] Took 32.11 seconds =========================
+
+Environment    Status    Duration
+-------------  --------  ------------
+cnc_ffst_v2_1  SUCCESS   00:00:32.110
+========================= 1 succeeded in 00:00:32.110 =========================

@@ -1,0 +1,209 @@
+--- a/Firmware/Grbl_Esp32/src/Grbl.cpp
++++ b/Firmware/Grbl_Esp32/src/Grbl.cpp
+@@ -32,9 +32,10 @@
+     disableCore0WDT();
+     disableCore1WDT();
+ 
++#ifndef CNC_FFST_HEADLESS
+     pinMode(LCD_EN, OUTPUT);
+-    
+     LCD_BLK_OFF;
++#endif
+     
+ #ifdef USE_I2S_OUT
+     i2s_out_init();  // The I2S out must be initialized before it can access the expanded GPIO port
+@@ -118,11 +119,17 @@
+ void _mc_task_init(void) {
+ 
+     mks_grbl_parg_init();
++#ifdef CNC_FFST_HEADLESS
++    // Do not start TFT/LVGL, frame UI or SD-triggered factory test mode.
++    mks_grbl.is_test_mode = false;
++    mks_grbl.wifi_connect_enable = true;
++#else
+     ts35_beep_init();
+     bsp_led_init();
+     tft_TS35_init();
+     test_cfg_find_init();
+     disp_task_init();
++#endif
+ }
+ 
+ 
+@@ -153,7 +160,9 @@
+     // client_reset_read_buffer(CLIENT_ALL);
+     gc_init();  // Set g-code parser to default state
+ 
++#ifndef CNC_FFST_HEADLESS
+     test_cfg_find_init();
++#endif
+ 
+     spindle->stop();
+ 
+@@ -181,6 +190,12 @@
+     if(!lcd_init_status) {
+         lcd_init_status = true;
+ 
++#ifdef CNC_FFST_HEADLESS
++        // Wi-Fi must initialize independently of a display/SD configuration page.
++#ifdef ENABLE_WIFI
++        WebUI::wifi_config.mks_setup();
++#endif
++#else
+         /* SD cfg updata */
+         if(mks_grbl.is_test_mode != true) {
+             mks_updata_init();
+@@ -197,6 +212,7 @@
+         delay_ms(100);
+         BLTOUCH_push_down();
+ #endif
++#endif // CNC_FFST_HEADLESS
+     }
+     spindle_check_init();
+ }
+--- a/Firmware/Grbl_Esp32/src/Grbl.h
++++ b/Firmware/Grbl_Esp32/src/Grbl.h
+@@ -23,7 +23,11 @@
+ // Grbl versioning system
+ const char* const GRBL_VERSION       = "1.1";
+ // const char* const GRBL_VERSION       = "1.3a";
++#ifdef CNC_FFST_BUILD
++const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0-test";
++#else
+ const char* const GRBL_VERSION_BUILD = "2022042101";
++#endif
+ 
+ //#include <sdkconfig.h>
+ #include <Arduino.h>
+--- a/Firmware/Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h
++++ b/Firmware/Grbl_Esp32/src/Machines/i2s_out_xyz_mks_dlc32.h
+@@ -32,14 +32,24 @@
+ 
+ // #define USE_BL_TOUCH
+ 
++#ifdef CNC_FFST_BUILD
++#define MACHINE_NAME                "CNC_FFST"
++#else
+ #define MACHINE_NAME                "MKS DLC32"
++#endif
+ #ifdef USE_BOARD_V2_0
+     #define BOARD_NAME              "Board:MKS DLC32 CNC V2.0"
+ #else 
+     #define BOARD_NAME              "Board:MKS DLC32 CNC V1.0"
+ #endif
+ 
++#ifdef CNC_FFST_BUILD
++#undef BOARD_NAME
++#define BOARD_NAME                  "Board:MKS DLC32 V2.1 (original V2.x pin map)"
++#define FW_NAME                     "CNC_FFST 0.2.0-test"
++#else
+ #define FW_NAME                     "V2.1(8M.H35.20220421)"
++#endif
+ 
+ 
+ #ifdef N_AXIS
+@@ -83,11 +93,20 @@
+ #endif
+ 
+ // Laser pin set
+-#define SPINDLE_TYPE                SpindleType::PWM 
++#ifdef CNC_FFST_BUILD
++#define SPINDLE_TYPE                SpindleType::LASER
++#else
++#define SPINDLE_TYPE                SpindleType::PWM
++#endif
+ #ifdef USE_BOARD_V2_0
+ #define SPINDLE_OUTPUT_PIN          GPIO_NUM_32
+ #else 
+ #define SPINDLE_OUTPUT_PIN          GPIO_NUM_22
++#endif
++
++#ifdef CNC_FFST_BUILD
++// Logical laser output aliases the original PWM pin; no physical remapping.
++#define LASER_OUTPUT_PIN            SPINDLE_OUTPUT_PIN
+ #endif
+ 
+ #define X_LIMIT_PIN                 GPIO_NUM_36
+@@ -163,7 +182,11 @@
+ #endif
+ #define DEFAULT_SPINDLE_RPM_MIN 0.0 // rpm
+ 
++#ifdef CNC_FFST_BUILD
++#define DEFAULT_LASER_MODE 1 // Laser-first profile; stored NVS settings still apply.
++#else
+ #define DEFAULT_LASER_MODE 0 // false
++#endif
+ 
+ #define DEFAULT_X_STEPS_PER_MM 80.0
+ #define DEFAULT_Y_STEPS_PER_MM 80.0
+--- a/Firmware/Grbl_Esp32/src/Probe.cpp
++++ b/Firmware/Grbl_Esp32/src/Probe.cpp
+@@ -68,6 +68,8 @@
+ }
+ 
+ 
++#ifndef CNC_FFST_BUILD
++// Legacy UI accident monitor shares PROBE_PIN. Not a dedicated flame input.
+ static void event_probe_yes(lv_obj_t* obj, lv_event_t event) {
+     if(event == LV_EVENT_RELEASED) {
+         if(PROBE_READ() == PROBE_READ_LOW) {
+@@ -168,3 +170,5 @@
+         break;
+     }
+ }
++
++#endif // !CNC_FFST_BUILD: legacy UI accident monitor
+--- a/Firmware/Grbl_Esp32/src/Protocol.cpp
++++ b/Firmware/Grbl_Esp32/src/Protocol.cpp
+@@ -143,7 +143,9 @@
+     // Primary loop! Upon a system abort, this exits back to main() to reset the system.
+     // This is also where Grbl idles while waiting for something to do.
+     // ---------------------------------------------------------------------------------
+-    MKS_GRBL_CMD_SEND("$x\n");   // 主动解锁
++#ifndef CNC_FFST_BUILD
++    MKS_GRBL_CMD_SEND("$x\n");   // Original automatic unlock; never use in CNC_FFST.
++#endif
+ 
+     if(first_restart == true) {
+       MKS_GRBL_CMD_SEND(re_cmd);  
+--- a/Firmware/Grbl_Esp32/src/Report.cpp
++++ b/Firmware/Grbl_Esp32/src/Report.cpp
+@@ -288,6 +288,9 @@
+ // Welcome message
+ void report_init_message(uint8_t client) {
+     grbl_sendf(client, "\r\nGrbl %s ['$' for help]\r\n", GRBL_VERSION);
++#ifdef CNC_FFST_BUILD
++    grbl_sendf(client, "[MSG:CNC_FFST 0.2.0-test; hardware validation pending]\r\n");
++#endif
+ }
+ 
+ // Grbl help message
+--- a/Firmware/ini/mks_dlc32.ini
++++ b/Firmware/ini/mks_dlc32.ini
+@@ -42,4 +42,13 @@
+ build_flags = ${esp32_common.build_flags}
+ 			-D MACHINE_TYPE_COREXY
+ lib_deps = 
+-    TMCStepper@>=0.7.0,<1.0.0
+\ No newline at end of file
++    TMCStepper@>=0.7.0,<1.0.0
++; CNC_FFST: Cartesian DLC32 V2.1, no display, no flame sensor.
++[env:cnc_ffst_v2_1]
++extends = env:mks_dlc32_v2_1
++lib_deps = teemuatlut/TMCStepper@0.7.3
++build_unflags = -w
++build_flags = ${env:mks_dlc32_v2_1.build_flags}
++    -D CNC_FFST_BUILD
++    -D CNC_FFST_HEADLESS
++    -D FORCE_INITIALIZATION_ALARM
+--- a/Firmware/platformio.ini
++++ b/Firmware/platformio.ini
+@@ -12,7 +12,7 @@
+ src_dir = Grbl_Esp32
+ lib_dir = libraries
+ data_dir = Grbl_Esp32/data
+-default_envs = mks_dlc32_v2_1 
++default_envs = cnc_ffst_v2_1 
+ 
+ extra_configs =
+ 	ini/mks_dlc32.ini
