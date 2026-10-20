@@ -13,6 +13,14 @@ detecção FIRE, precisão de sondagem, limites ou parada de emergência.
 Não há sensor de chama instalado segundo o usuário. Esta base não contém
 detecção FIRE/FLAME ativa; detalhes em [investigação](docs/FIRE_SONDAGEM.md).
 
+## Imagem completa para gravação
+
+Disponível `artifacts/CNC_FFST_0.2.0_FULL_4MB.bin`: conjunto de 4 MB para
+base 0x0, com bootloader, partições e aplicação. Não confundir com firmware.bin
+(aplicação em 0x10000). Leia [gravação completa](docs/GRAVACAO_COMPLETA.md)
+antes de usar: esta imagem sobrescreve NVS e SPIFFS, incluindo calibração e Wi-Fi.
+O empacotamento foi verificado; funcionamento em hardware permanece pendente.
+
 ## Compilar
 
 Abra `Firmware` no VS Code com PlatformIO e selecione `cnc_ffst_v2_1`.
