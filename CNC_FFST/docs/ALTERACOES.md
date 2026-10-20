@@ -100,3 +100,11 @@ a remoção do rótulo não representa validação adicional de segurança ou so
 - A primeira implementação em andamento previa pareamento NVS por placa; foi
   substituída antes da publicação pela chave fixa conforme pedido do usuário.
   Nenhum firmware de pareamento NVS foi entregue como versão final.
+
+## Distribuição Python em arquivo único
+
+CNC_FFST_Unico.py reúne o programa original adaptado, autenticação isolada em
+um namespace e recursos comprimidos embutidos. Gerado por tools/bundle_python.py.
+Não precisa de JSON/módulo/BIN externo. A chave e o hash são os mesmos da 0.3.0;
+firmware não alterado. Onze testes do protocolo foram executados sobre a versão
+embutida, além da compilação sintática. Script PyInstaller usa apenas esse .py.

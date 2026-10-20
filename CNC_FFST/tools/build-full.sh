@@ -15,4 +15,5 @@ framework="$PLATFORMIO_CORE_DIR/packages/framework-arduinoespressif32"
   0xe000 "$framework/tools/partitions/boot_app0.bin" \
   0x10000 "$project_dir/artifacts/firmware.bin"
 python3 "$project_dir/tools/write_firmware_identity.py"
+python3 "$project_dir/tools/bundle_python.py"
 (cd "$project_dir/artifacts" && sha256sum CNC_FFST_0.3.0_FULL_4MB.bin > FULL_SHA256SUMS)
