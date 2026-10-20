@@ -16,7 +16,9 @@ def main():
         archive.write(ROOT/'installer/Instalador_CNC_FFST_S3.py', 'Instalador_CNC_FFST_S3.py')
         archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.0_UART_FULL_16MB.bin',
                       'CNC_FFST_S3_0.1.0_UART_FULL_16MB.bin')
-        archive.write(ROOT/'python/UART/CNC_FFST_Unico.py', 'CNC_FFST_Unico.py')
+        archive.write(ROOT/'python/UART/Fabricação Fresa Laser.py', 'Fabricação Fresa Laser.py')
+        archive.writestr('ABRIR_FABRICACAO_FRESA_LASER.cmd', '@echo off\r\nchcp 65001 >nul\r\npy -3.12 "%~dp0Fabricação Fresa Laser.py"\r\npause\r\n')
+        archive.writestr('INSTALAR_DEPENDENCIAS_CONTROLE.cmd', '@echo off\r\npy -3.12 -m pip install pyserial==3.5 pillow==11.3.0\r\npause\r\n')
         archive.write(ROOT/'docs/INSTALADOR_E_PROTECAO.md', 'LEIA_PRIMEIRO.md')
         archive.writestr('ABRIR_INSTALADOR.cmd', '@echo off\r\npy -3.12 "%~dp0Instalador_CNC_FFST_S3.py"\r\npause\r\n')
         for path in sorted(ROOT.rglob('*')):
@@ -30,7 +32,20 @@ def main():
         assert archive.testzip() is None
         assert all('.private' not in Path(name).parts and not name.lower().endswith('.pem') for name in archive.namelist())
         assert not any('/PROTECTED/' in name for name in archive.namelist())
+    controller = ROOT/'artifacts/CNC_FFST_S3_Fabricacao_Fresa_Laser_UART.zip'
+    with zipfile.ZipFile(output) as source, zipfile.ZipFile(controller, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for name in ['Fabricação Fresa Laser.py', 'ABRIR_FABRICACAO_FRESA_LASER.cmd', 'INSTALAR_DEPENDENCIAS_CONTROLE.cmd']:
+            archive.writestr(name, source.read(name))
+        archive.writestr('LEIA_PRIMEIRO.txt',
+            'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.0.\n'
+            'Requer Python 3.12. Execute INSTALAR_DEPENDENCIAS_CONTROLE.cmd uma vez, depois ABRIR_FABRICACAO_FRESA_LASER.cmd.\n'
+            'Feche o instalador/outros programas da porta antes de conectar. Use sua COM (exemplo COM8) e 115200 baud.\n'
+            'Não usar com DLC32 clássica ou BIN protegido: o controle deve corresponder ao firmware.\n'
+            'Para o protegido, use o programa gerado localmente em python/PROTECTED/Fabricação Fresa Laser.py.\n'
+            'Movimento, sonda e segurança física ainda exigem testes na placa.\n')
     print('Installer package:', output.name, output.stat().st_size, 'bytes; private keys/protected binaries excluded.')
+    print('Controller package:', controller.name)
+
 
 
 if __name__ == '__main__': main()

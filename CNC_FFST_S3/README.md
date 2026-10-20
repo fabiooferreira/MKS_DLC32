@@ -4,6 +4,8 @@
 
 [Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote UART 0.1.0 abaixo continua sendo o modo reversível sem proteção de leitura.
 
+[**Baixar somente o programa Fabricação Fresa Laser — UART reversível 0.1.0**](artifacts/CNC_FFST_S3_Fabricacao_Fresa_Laser_UART.zip)
+
 [**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.

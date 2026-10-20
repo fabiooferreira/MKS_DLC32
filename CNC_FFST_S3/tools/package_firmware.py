@@ -137,6 +137,7 @@ SAFE_REALTIME = _ffst_auth.SAFE_REALTIME
     app_source=app_source.replace(original,factory)
     compile(app_source,'CNC_FFST_Unico.py','exec')
     (target/'CNC_FFST_Unico.py').write_text(app_source,encoding='utf-8')
+    (target/'Fabricação Fresa Laser.py').write_text(app_source,encoding='utf-8')
     manifest={'firmware':version,'profile':profile,'environment':environment,'chip':'esp32s3',
         'flash_mb':16,'psram_mb':8,'step_pulse_us':5,'direction_setup_delay_us':2,'file':name,'offset':0,'sha256':hashlib.sha256(full).hexdigest(),
         'application_offset':app_offset,'partition_offset':table_offset,
