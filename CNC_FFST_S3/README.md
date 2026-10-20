@@ -6,6 +6,8 @@ Proposta de esquema funcional para revisão visual: placa-base (carrier) onde se
 
 **Ainda não é esquema liberado para fabricação.** Nesta entrega não há PCB roteada, arquivo KiCad/netlist ou firmware BIN para este hardware.
 
+A revisão R2 substitui a R1: corrige a seleção das ferramentas para comutar alimentação, mantendo o PWM nas duas entradas.
+
 ## Requisitos incorporados
 
 - Placa de desenvolvimento ESP32-S3 N16R8, 16 MB flash / 8 MB PSRAM, duas USBs, encaixável.

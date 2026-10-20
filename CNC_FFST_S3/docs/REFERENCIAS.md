@@ -1,4 +1,4 @@
-# Referências da proposta R1
+# Referências da proposta R2
 
 ## grblHAL
 
@@ -10,7 +10,7 @@ Core indicado pelo submódulo nessa revisão: `4ec1ae44b857a70d2f9298344feac4b43
 - Mapa S3 genérico, com restrição ao quarto motor: https://github.com/grblHAL/ESP32/blob/0b2d3e1bb7da3b0ae0e03490b71275374eb84c67/main/boards/generic_s3_map.h
 - Conflito de LED endereçável RMT com quarto motor: https://github.com/grblHAL/ESP32/blob/0b2d3e1bb7da3b0ae0e03490b71275374eb84c67/main/neopixel_rmt.c
 
-O mapa genérico não é um perfil pronto desta placa: é necessária adaptação própria. Nenhuma compilação grblHAL foi executada para a proposta R1.
+O mapa genérico não é um perfil pronto desta placa: é necessária adaptação própria. Nenhuma compilação grblHAL foi executada para a proposta R2.
 
 ## Bibliotecas EDA e fabricantes
 
