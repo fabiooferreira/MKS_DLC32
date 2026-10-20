@@ -5,6 +5,7 @@ build_tools="${CNC_FFST_TOOLS_DIR:-/workspace/mks-environment}"
 export PLATFORMIO_CORE_DIR="${PLATFORMIO_CORE_DIR:-$build_tools/platformio}"
 export PIP_CACHE_DIR="$build_tools/pip-cache"
 mkdir -p "$build_tools" "$project_dir/artifacts"
+python3 "$project_dir/tools/prepare_shared_key.py"
 if [ ! -x "$build_tools/venv/bin/python" ]; then
   python3 -m venv "$build_tools/venv"
 fi

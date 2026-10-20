@@ -289,7 +289,7 @@ void report_feedback_message(Message message) {  // ok to send to all clients
 void report_init_message(uint8_t client) {
     grbl_sendf(client, "\r\nGrbl %s ['$' for help]\r\n", GRBL_VERSION);
 #ifdef CNC_FFST_BUILD
-    grbl_sendf(client, "[MSG:CNC_FFST 0.2.0; hardware validation pending]\r\n");
+    grbl_sendf(client, "[MSG:CNC_FFST 0.3.0; hardware validation pending]\r\n");
 #endif
 }
 

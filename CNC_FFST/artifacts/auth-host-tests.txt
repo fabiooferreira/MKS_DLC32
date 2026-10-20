@@ -1,0 +1,16 @@
+test_many_writes_without_application_reader_do_not_deadlock (__main__.AuthTests.test_many_writes_without_application_reader_do_not_deadlock) ... ok
+test_new_nonce_and_busy_public_write (__main__.AuthTests.test_new_nonce_and_busy_public_write) ... ok
+test_oversize_and_raw_realtime (__main__.AuthTests.test_oversize_and_raw_realtime) ... ok
+test_public_config_and_unsigned_execution (__main__.AuthTests.test_public_config_and_unsigned_execution) ... ok
+test_realtime_does_not_wait_for_pending_motion (__main__.AuthTests.test_realtime_does_not_wait_for_pending_motion) ... ok
+test_replay_proof_cannot_rewind_sequence (__main__.AuthTests.test_replay_proof_cannot_rewind_sequence) ... ok
+test_signed_port_real_firmware_auth_logic (__main__.AuthTests.test_signed_port_real_firmware_auth_logic) ... ok
+test_tamper_sequence_reset_and_cross_transport (__main__.AuthTests.test_tamper_sequence_reset_and_cross_transport) ... ok
+test_usb_and_network_cannot_replace_fixed_key (__main__.AuthTests.test_usb_and_network_cannot_replace_fixed_key) ... ok
+test_wrong_firmware_is_rejected_before_secret (__main__.AuthTests.test_wrong_firmware_is_rejected_before_secret) ... ok
+test_wrong_key_is_rejected (__main__.AuthTests.test_wrong_key_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.732s
+
+OK

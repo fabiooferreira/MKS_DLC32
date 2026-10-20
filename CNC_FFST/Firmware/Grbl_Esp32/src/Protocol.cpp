@@ -96,6 +96,10 @@ Error execute_line(char* line, uint8_t client, WebUI::AuthenticationLevel auth_l
 }
 
 bool can_park() {
+#ifdef CNC_FFST_AUTH
+    // Door/hold remain available as stops, without an unsigned automatic retract.
+    return false;
+#endif
     return
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
         sys.override_ctrl == Override::ParkingMotion &&

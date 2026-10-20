@@ -1,11 +1,8 @@
-# Compilação e verificações
+# Compilação CNC_FFST 0.3.0 com chave fixa
 
-Compilação do alvo laser CNC_FFST 0.2.0-test: SUCCESS, 32,11 s; 0 erros, 236 ocorrências de warning. Alteração de header de máquina recompilou os dependentes; bibliotecas válidas foram reutilizadas.
-RAM: 64420/327680 bytes; flash: 1691362/3145728 bytes.
-Base original: SUCCESS, 86,14 s, flags originais incluem -w e ocultam avisos.
-A revisão anterior 0.1.0-test teve repetição incremental via tools/build.sh: SUCCESS, 3,93 s. A revisão laser foi compilada pelo mesmo script.
-
-## Avisos encontrados (agrupados por mensagem)
+Build PlatformIO e imagem completa: SUCCESS. Nenhum erro de compilação nesta execução.
+884 ocorrências de warning herdados, listadas integralmente em artifacts/warnings.txt; contexto em artifacts/build-full.log.
+RAM 69292/327680 bytes (21,1%); flash 1711642/3145728 bytes (54,4%).
 
 | Ocorrências | Mensagem |
 | --- | --- |
@@ -22,25 +19,22 @@ A revisão anterior 0.1.0-test teve repetição incremental via tools/build.sh: 
 | 1 | `enumeration value 'PROBE_FINISH' not handled in switch [-Wswitch]` |
 | 1 | `'speed' may be used uninitialized in this function [-Wmaybe-uninitialized]` |
 | 1 | `'step' may be used uninitialized in this function [-Wmaybe-uninitialized]` |
-| 12 | `cast from pointer to integer of different size [-Wpointer-to-int-cast]` |
+| 656 | `cast from pointer to integer of different size [-Wpointer-to-int-cast]` |
+| 1 | `implicit declaration of function 'malloc' [-Wimplicit-function-declaration]` |
+| 1 | `incompatible implicit declaration of built-in function 'malloc'` |
+| 2 | `initialization from incompatible pointer type [-Wincompatible-pointer-types]` |
 
-Todos os locais e repetições estão em artifacts/warnings.txt; o contexto integral está em artifacts/build-full.log.
-Não foram ocultados os avisos no perfil novo. Tratam-se de código herdado não corrigido nesta entrega; não é correto declarar ausência de riscos com base na compilação. Avisos de retorno ausente, variáveis possivelmente não inicializadas, malloc implícito e ponteiros merecem auditoria antes de produção. A maioria das repetições vem de headers LVGL incluídos em vários arquivos.
+A base original oculta warnings com -w; o perfil CNC_FFST mantém os warnings habilitados. Avisos herdados não foram corrigidos nem ocultados nesta tarefa. Não considerar firmware de produção validado por causa da compilação.
 
-## Verificações adicionais
+## Verificações
 
-- Testes host de Probe.cpp: 8 combinações de nível, polaridade e direção, captura de posição, cancelamento, inicialização pull-up e estado sem pino; passaram. Não testam hardware/ISR real.
-- ELF contém probe_get_state, probe_state_monitor e limits_init; não contém símbolos mks_probe_check, mks_probe_init ou lvgl_disp_task.
-- Caminhos MotionControl.cpp, Stepper.cpp, Limits.cpp, System.cpp, GCode.cpp e drivers de spindle permanecem byte a byte iguais ao ZIP original.
-- A imagem e seus checksums foram examinados com esptool image_info; resultado salvo em artifacts/image-info.txt.
-- Nenhum teste serial/Wi-Fi real, movimentação, gravação, sondagem, FIRE ou emergência foi executado na placa.
+- 11 testes host com FFSTAuth.cpp real e transporte Python: aprovados (auth-host-tests.txt). Shims de RTOS/GPIO/identidade; HMAC OpenSSL no host e mbedTLS no ESP32.
+- Sintaxe do programa e módulo Python: verificada com py_compile. GUI/Tk e EXE Windows não executados.
+- Comparação AST com o Python original: apenas Streamer.connect, Streamer.realtime e App.connect foram alterados; demais funções/métodos preservados.
+- BIN completo 4MB, aplicação no offset correto, checksums/hash ESP32, manifesto/cliente e chave compartilhada embutida: verificados, sem imprimir a chave (auth-artifact-verification.txt).
+- EXE Windows: script PyInstaller fornecido; geração não executada neste Linux.
+- Testes de bancada USB, rede, movimento, laser, sondagem, limites e segurança: pendentes. O usuário confirmou funcionamento da revisão 0.2.0; isso não valida a nova 0.3.0.
 
-## Diagnóstico da ferramenta de inspeção
+## Diagnósticos durante o desenvolvimento
 
-A primeira tentativa de image_info usou o Python global e falhou por ausência de pyserial. A invocação correta usa o Python do venv do PlatformIO; essa correção não alterou firmware ou dependências do projeto. Depois, a inspeção sem `--chip esp32` tentou o formato padrão ESP8266 e falhou na leitura dos segmentos. Com `--chip esp32`, a imagem ESP32 foi reconhecida e checksum/hash internos resultaram válidos; não foi necessário regenerar o BIN.
-
-Revisão laser: driver LASER e macro LASER_OUTPUT_PIN=GPIO32 confirmados nas fontes, `$32=1` por default. Configuração NVS existente não é substituída pela gravação. Teste de driver/modo em hardware continua pendente.
-
-## Recompilação da identificação 0.2.0
-
-Removido o sufixo -test conforme pedido. Build e imagem completa gerados com sucesso; 236 ocorrências de warning nesta execução, 0 erros. Logs atuais em artifacts/build.log e artifacts/full-image-build.log; identificação verificada nos bytes da aplicação. Nenhuma mudança de lógica.
+O teste host inicial de realtime encontrou um aviso de snprintf potencialmente truncado, corrigido com limites explícitos no formato e revalidado com -Werror. Ajustes no harness (isolamento de estado e consumo de respostas) foram corrigidos antes dos resultados finais. A comparação AST inicialmente esperava uma mudança de UI de pareamento; após a opção por chave fixa essa mudança foi removida, e a expectativa do teste foi ajustada. Não há testes host falhando no resultado final.

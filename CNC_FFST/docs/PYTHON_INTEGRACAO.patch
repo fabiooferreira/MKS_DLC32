@@ -1,0 +1,60 @@
+--- a/Fabricação Laser Fresa.py
++++ b/Fabricação Laser Fresa.py
+@@ -16,6 +16,7 @@
+ from pathlib import Path, PureWindowsPath
+ from tkinter import filedialog, messagebox, simpledialog, ttk
+ from PIL import Image, ImageChops, ImageDraw, ImageTk, ImageOps
++from cnc_ffst_auth import open_authenticated, SAFE_REALTIME
+ 
+ try:
+     import serial
+@@ -45,7 +46,7 @@
+     return PROJECT_DIR / filename
+ 
+ 
+-APP_VERSION = '1.0 — Controlador PCB'
++APP_VERSION = '1.1 — Controlador PCB / CNC_FFST autenticado'
+ DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
+     {'name': 'Laser OFF', 'command': 'M5'},
+     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}
+@@ -552,7 +553,7 @@
+     def connect(self, name, baud):
+         self.disconnect()
+         self.simulation = False
+-        self.port = serial.Serial(name, baud, timeout=.1, write_timeout=2)
++        self.port = open_authenticated(name, baud)
+         self.inflight = []
+         self.work_offset = None
+         self.work_position = None
+@@ -563,7 +564,7 @@
+         self.reader = threading.Thread(target=self.read_loop, daemon=True)
+         self.reader.start()
+         threading.Thread(target=self.query_settings, args=(self.port,), daemon=True).start()
+-        self.emit('log', f'Conectado: {name} @ {baud}')
++        self.emit('log', f'Conectado e autenticado: {name} @ {baud}')
+ 
+     def query_settings(self, port):
+         time.sleep(1.5)
+@@ -1100,8 +1101,12 @@
+         # de um reset inesperado ao encostar a ferramenta.
+         if b'\x18' in code:
+             self.emit('log', '>>> RESET GRBL (Ctrl+X) ENVIADO PELO PROGRAMA')
+-        with self.lock:
++        # Stops/reset/status must not wait behind a signed command holding the stream lock.
++        if code and all(c in SAFE_REALTIME for c in code):
+             self.port.write(code)
++            return
++        # Signed realtime has its own sequence and bounded transmit lock.
++        self.port.write(code)
+ 
+     def wait_m0_complete(self, number):
+         """Mostra M0 quando a máquina informa Hold:0, sem esperar um ok tardio."""
+@@ -2383,7 +2388,7 @@
+             if serial is None:
+                 raise RuntimeError('Instale pyserial: pip install pyserial pillow')
+             self.stream.connect(self.port.get(), int(self.baud.get()))
+-            self.status.set('Conectado')
++            self.status.set('Conectado / autenticado')
+             for button in getattr(self, 'macro_buttons', []):
+                 button.configure(state='normal')
+         except Exception as exc:

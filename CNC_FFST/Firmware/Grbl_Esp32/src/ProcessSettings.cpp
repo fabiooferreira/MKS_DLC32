@@ -509,6 +509,9 @@ Error do_command_or_setting(const char* key, char* value, WebUI::AuthenticationL
     // value if one is given, otherwise display the current value
     for (Setting* s = Setting::List; s; s = s->next()) {
         if (strcasecmp(s->getName(), key) == 0) {
+#ifdef CNC_FFST_AUTH
+            if(!ffst_auth_setting(s->getGrblName(),value,out->client())) return Error::AuthenticationFailed;
+#endif
             if (auth_failed(s, value, auth_level)) {
                 return Error::AuthenticationFailed;
             }
@@ -525,6 +528,9 @@ Error do_command_or_setting(const char* key, char* value, WebUI::AuthenticationL
     // value if one is given, otherwise display the current value in compatible mode
     for (Setting* s = Setting::List; s; s = s->next()) {
         if (s->getGrblName() && strcasecmp(s->getGrblName(), key) == 0) {
+#ifdef CNC_FFST_AUTH
+            if(!ffst_auth_setting(s->getGrblName(),value,out->client())) return Error::AuthenticationFailed;
+#endif
             if (auth_failed(s, value, auth_level)) {
                 return Error::AuthenticationFailed;
             }
@@ -541,6 +547,11 @@ Error do_command_or_setting(const char* key, char* value, WebUI::AuthenticationL
     // or display solely based on the presence of a value.
     for (Command* cp = Command::List; cp; cp = cp->next()) {
         if ((strcasecmp(cp->getName(), key) == 0) || (cp->getGrblName() && strcasecmp(cp->getGrblName(), key) == 0)) {
+#ifdef CNC_FFST_AUTH
+            // Asynchronous WebUI/SD execution is not a signed streaming path.
+            if(cp->getType()==WEBCMD || !ffst_auth_command(cp->getGrblName(),out->client()))
+                return Error::AuthenticationFailed;
+#endif
             if (auth_failed(cp, value, auth_level)) {
                 return Error::AuthenticationFailed;
             }
@@ -575,6 +586,10 @@ Error do_command_or_setting(const char* key, char* value, WebUI::AuthenticationL
 }
 
 Error system_execute_line(char* line, WebUI::ESPResponseStream* out, WebUI::AuthenticationLevel auth_level) {
+#ifdef CNC_FFST_AUTH
+    Error authResult;
+    if(ffst_auth_handle(line,out->client(),authResult)) return authResult;
+#endif
     remove_password(line, auth_level);
 
     char* value;
@@ -615,6 +630,10 @@ Error system_execute_line(char* line, uint8_t client, WebUI::AuthenticationLevel
 }
 
 void system_execute_startup(char* line) {
+#ifdef CNC_FFST_AUTH
+    // No automatic scripts: their execution would outlive an authenticated packet.
+    return;
+#endif
     Error status_code;
     char  gcline[256];
     strncpy(gcline, startup_line_0->get(), 255);

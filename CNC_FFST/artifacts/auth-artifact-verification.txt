@@ -1,0 +1,2 @@
+PASS: 4MB image; application identical at 0x10000; ESP32 image checksum/digest valid; client manifest, bundled BIN and retained/embedded shared credential match (key value not displayed).
+Only original Python methods changed: Streamer.connect, Streamer.realtime, App.connect. All other original function/method ASTs preserved.

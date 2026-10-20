@@ -1,4 +1,5 @@
-PASS: 4MB full image; application identical at 0x10000; NVS/SPIFFS blank. CNC_FFST 0.2.0 identification present; -test suffix absent from firmware identification.
+PASS: 4MB image; application identical at 0x10000; ESP32 image checksum/digest valid; client manifest, bundled BIN and retained/embedded shared credential match (key value not displayed).
+Only original Python methods changed: Streamer.connect, Streamer.realtime, App.connect. All other original function/method ASTs preserved.
 esptool.py v4.8.1
 File size: 28672 (bytes)
 Image version: 1
@@ -11,17 +12,3 @@ Segment 3: len 0x0278c load 0x40078000 file_offs 0x00000440 [CACHE_APP]
 Segment 4: len 0x016e0 load 0x40080400 file_offs 0x00002bd4 [IRAM]
 Checksum: 86 (valid)
 Validation Hash: 0d8833c98258219c6a6d15543970640059aa141d297748820f4fd08fd69d9aa2 (valid)
-esptool.py v4.8.1
-File size: 1691456 (bytes)
-Image version: 1
-Entry point: 40085a1c
-6 segments
-
-Segment 1: len 0xc851c load 0x3f400020 file_offs 0x00000018 [DROM]
-Segment 2: len 0x0422c load 0x3ffbdb60 file_offs 0x000c853c [BYTE_ACCESSIBLE,DRAM]
-Segment 3: len 0x00400 load 0x40080000 file_offs 0x000cc770 [IRAM]
-Segment 4: len 0x03490 load 0x40080400 file_offs 0x000ccb78 [IRAM]
-Segment 5: len 0xbf3a4 load 0x400d0018 file_offs 0x000d0010 [IROM]
-Segment 6: len 0x0db58 load 0x40083890 file_offs 0x0018f3bc [IRAM]
-Checksum: b0 (valid)
-Validation Hash: 955cc73bc4265dc88553cfc9c8896bdc5202483345619b9090380a0eaccefc00 (valid)

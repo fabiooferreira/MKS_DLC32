@@ -124,6 +124,11 @@ void collapseGCode(char* line) {
 Error gc_execute_line(char* line, uint8_t client) {
     // Step 0 - remove whitespace and comments and convert to upper case
     collapseGCode(line);
+#ifdef CNC_FFST_AUTH
+    // Exact stop-only G-code remains public. Modal words and combined blocks are not exempt.
+    if(!ffst_auth_trusted(client) && strcmp(line,"M5") && strcmp(line,"M9") && *line)
+        return Error::AuthenticationFailed;
+#endif
 #ifdef REPORT_ECHO_LINE_RECEIVED
     report_echo_line_received(line, client);
 #endif

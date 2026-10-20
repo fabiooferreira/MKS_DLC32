@@ -8,10 +8,11 @@ python3 -m venv "$build_tools/image-venv"
 PIP_CACHE_DIR="$build_tools/pip-cache" "$build_tools/image-venv/bin/python" -m pip install 'esptool==4.8.1'
 framework="$PLATFORMIO_CORE_DIR/packages/framework-arduinoespressif32"
 "$build_tools/image-venv/bin/python" -m esptool --chip esp32 merge_bin \
-  --output "$project_dir/artifacts/CNC_FFST_0.2.0_FULL_4MB.bin" \
+  --output "$project_dir/artifacts/CNC_FFST_0.3.0_FULL_4MB.bin" \
   --flash_mode dout --flash_freq 80m --flash_size 4MB --fill-flash-size 4MB \
   0x1000 "$framework/tools/sdk/bin/bootloader_dout_80m.bin" \
   0x8000 "$project_dir/Firmware/.pio/build/cnc_ffst_v2_1/partitions.bin" \
   0xe000 "$framework/tools/partitions/boot_app0.bin" \
   0x10000 "$project_dir/artifacts/firmware.bin"
-(cd "$project_dir/artifacts" && sha256sum CNC_FFST_0.2.0_FULL_4MB.bin > FULL_SHA256SUMS)
+python3 "$project_dir/tools/write_firmware_identity.py"
+(cd "$project_dir/artifacts" && sha256sum CNC_FFST_0.3.0_FULL_4MB.bin > FULL_SHA256SUMS)

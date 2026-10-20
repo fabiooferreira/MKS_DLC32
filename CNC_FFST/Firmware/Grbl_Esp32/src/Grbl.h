@@ -24,7 +24,7 @@
 const char* const GRBL_VERSION       = "1.1";
 // const char* const GRBL_VERSION       = "1.3a";
 #ifdef CNC_FFST_BUILD
-const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.2.0";
+const char* const GRBL_VERSION_BUILD = "CNC_FFST-0.3.0";
 #else
 const char* const GRBL_VERSION_BUILD = "2022042101";
 #endif
@@ -119,3 +119,5 @@ void motors_to_cartesian(float* cartestian, float* motors, int n_axis);  // weak
 void user_defined_macro(uint8_t index);
 
 void phy_init_reinit(void);
+
+#include "FFSTAuth.h"

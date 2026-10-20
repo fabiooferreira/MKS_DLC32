@@ -176,6 +176,9 @@ void clientCheckTask(void* pvParameters) {
     static UBaseType_t uxHighWaterMark = 0;
     while (true) {  // run continuously
         while ((client = getClientChar(&data)) != CLIENT_ALL) {
+#ifdef CNC_FFST_AUTH
+            if(ffst_auth_rx(data,client)) continue;
+#endif
             // Pick off realtime command characters directly from the serial stream. These characters are
             // not passed into the main buffer, but these set system state flag bits for realtime execution.
             if (is_realtime_command(data)) {
@@ -246,6 +249,10 @@ bool is_realtime_command(uint8_t data) {
 
 // Act upon a realtime character
 void execute_realtime_command(Cmd command, uint8_t client) {
+#ifdef CNC_FFST_AUTH
+    if(!ffst_auth_realtime(static_cast<uint8_t>(command),client)) return;
+    if(command==Cmd::Reset) ffst_auth_reset();
+#endif
     switch (command) {
         case Cmd::Reset:
             grbl_msg_sendf(CLIENT_ALL, MsgLevel::Debug, "Cmd::Reset");

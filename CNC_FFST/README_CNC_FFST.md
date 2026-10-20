@@ -1,10 +1,20 @@
-# CNC_FFST 0.2.0
+# CNC_FFST 0.3.0
 
 Firmware experimental para MKS DLC32 V2.1/ESP32, cartesiana XYZ, sem display.
 Base: arquivo `MKS-DLC32-FIRMWARE-main.zip` do repositório
 `fabiooferreira/MKS_DLC32`, commit `7aebcb3aa752424109a7d61eb93e5ade42aef4c4`.
 GRBL-ESP32 declara GRBL 1.1, build 2022042101. A versão de produto original
 é V2.1(8M.H35.20220421). Não foi inferido um commit upstream a partir dessa data.
+
+## Autenticação 0.3.0
+
+Esta revisão usa chave fixa compartilhada dentro do BIN e do pacote do EXE.
+Somente comandos de execução assinados são aceitos; outros programas continuam
+consultando/editando calibrações GRBL permitidas. Não há pareamento inicial.
+Use o cliente atualizado da pasta `python`; o programa antigo não libera execução.
+Veja [uso do programa](python/LEIA_PRIMEIRO.md) e [política/protocolo](docs/AUTENTICACAO.md).
+A chave é extraível do BIN/EXE; isso não garante exclusividade contra engenharia reversa.
+A versão 0.2.0 foi preservada em sua branch anterior.
 
 ## Estado
 
@@ -15,7 +25,7 @@ detecção FIRE/FLAME ativa; detalhes em [investigação](docs/FIRE_SONDAGEM.md)
 
 ## Imagem completa para gravação
 
-Disponível `artifacts/CNC_FFST_0.2.0_FULL_4MB.bin`: conjunto de 4 MB para
+Disponível `artifacts/CNC_FFST_0.3.0_FULL_4MB.bin`: conjunto de 4 MB para
 base 0x0, com bootloader, partições e aplicação. Não confundir com firmware.bin
 (aplicação em 0x10000). Leia [gravação completa](docs/GRAVACAO_COMPLETA.md)
 antes de usar: esta imagem sobrescreve NVS e SPIFFS, incluindo calibração e Wi-Fi.
@@ -66,7 +76,7 @@ As bibliotecas originais vendorizadas foram preservadas.
 ## Operação e limitações
 
 Serial: 115200 baud. O banner permanece `Grbl 1.1` para compatibilidade e adiciona
-uma mensagem CNC_FFST; `$I` inclui `CNC_FFST-0.2.0` no campo de build.
+uma mensagem CNC_FFST; `$I` inclui `CNC_FFST-0.3.0` no campo de build.
 O Wi-Fi mantém a implementação e configurações NVS da base e inicializa sem LCD.
 Não há troca automática entre ferramentas: laser e spindle compartilham PWM GPIO32.
 Seleção física, intertravamento e configuração de modo são responsabilidade da máquina.

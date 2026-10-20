@@ -28,6 +28,9 @@
 #include "mks/MKS_SDCard.h"
 
 void grbl_init() {
+#ifdef CNC_FFST_AUTH
+    ffst_auth_init();
+#endif
 
     disableCore0WDT();
     disableCore1WDT();
@@ -95,6 +98,9 @@ void phy_init_reinit(void) {
 }
 
 void reset_mc_config(void) {
+#ifdef CNC_FFST_AUTH
+    ffst_auth_reset();
+#endif
 
     State prior_state = sys.state;
     memset(&sys, 0, sizeof(system_t));  // Clear system struct variable.

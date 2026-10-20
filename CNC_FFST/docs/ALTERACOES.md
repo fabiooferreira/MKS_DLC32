@@ -79,3 +79,24 @@ A pedido do usuário, removido `-test` da identificação em Grbl.h, Report.cpp 
 FW_NAME. Recompilação e reempacotamento do BIN completo; nenhuma mudança de
 funcionalidade ou pinagem. O usuário relatou funcionamento da imagem completa;
 a remoção do rótulo não representa validação adicional de segurança ou sondagem.
+
+## Revisão 0.3.0 — autenticação solicitada pelo usuário
+
+- FFSTAuth.cpp/.h implementam desafio/resposta HMAC-SHA256, chave fixa comum
+  compilada, identidade de firmware, sequência anti-replay e contexto por tarefa/cliente.
+- Serial.cpp trata retomada/overrides autenticados fora da fila G-code, mantendo
+  parada/reset/status públicos. Buffers de linha de protocolo aumentados a 768.
+- ProcessSettings.cpp limita settings e comandos sem assinatura e bloqueia ações
+  WebUI/SD assíncronas. Scripts de startup não executam automaticamente.
+- GCode.cpp exige contexto autenticado, exceto M5/M9 exatos e linhas vazias.
+- Grbl.cpp inicializa o mutex e revoga sessões em reset. Protocol.cpp desabilita
+  parking automático para evitar retração disparada sem autenticação.
+- Identificação 0.3.0. Pinagem, geometria, algoritmo de sondagem, limites, parser
+  e drivers mantidos; as entradas de execução passam pelo novo controle de acesso.
+- Python original recebe módulo de transporte, manifesto do BIN e autenticação
+  automática ao conectar. Rotinas de geometria/mapa/editor não foram reescritas.
+- Novos scripts de geração da chave/header, manifesto e build EXE Windows.
+  Header e seed locais não são publicados. BIN público contém chave recuperável.
+- A primeira implementação em andamento previa pareamento NVS por placa; foi
+  substituída antes da publicação pela chave fixa conforme pedido do usuário.
+  Nenhum firmware de pareamento NVS foi entregue como versão final.
