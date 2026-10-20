@@ -1,0 +1,27 @@
+CNC_FFST Gerenciador DLC32 V2.1 — versão 2.0
+Validação em Linux, Python 3.12. Data local: 20/10/2026.
+
+19 testes aprovados, sem testes pulados na execução final.
+Inclui interface Tk, programa de duas páginas gerado pelo Montador original,
+JSON do espefuse em modo virtual, análise de eFuses e simulação de operações USB.
+Criação das ferramentas em venv e repetição no mesmo venv: aprovadas.
+
+Compilação autenticada 0.3.0 pelo Backend.build: SUCCESS (incremental/cache),
+BIN completo 4 MB, pacote JSON e Python correspondente gerados/validados.
+Nenhum erro ou novo aviso nessa execução incremental; não é declaração de
+compilação completa sem avisos.
+SHA256 BIN: db7a6f42d1ae0ce27d037fa3d87c9ddddf8aa17c1f1ab08076558c9fbe436be6
+
+Compilação sem autenticação 0.2.0 pelo Backend.build: SUCCESS, BIN completo 4 MB
+validado. 884 ocorrências de warning:, nenhum error:. Avisos das fontes e
+bibliotecas existentes, incluindo TOUCH_CS redefinido e conversões LVGL.
+SHA256 BIN: 2c603724f9e5f1b899fcc004fb49a31fecff2f1f1135faf14c769b8cd3d9f8cf
+
+Logs completos dessas verificações acompanham o ZIP na pasta validacao/.
+O gerenciador também salva os logs de cada nova compilação local.
+
+Nenhuma placa física conectada, nenhum eFuse alterado. Backup/gravação/verificação
+USB nos testes foram simulados. Windows e EXE não testados neste ambiente.
+Proteção de leitura permanece BLOQUEADA: bootloader e procedimento protegido
+precisam ser preparados conforme o relatório real e validados em hardware.
+Não há vínculo do firmware ao MAC; mantém-se o objetivo de criptografia.
