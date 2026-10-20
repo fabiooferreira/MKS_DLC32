@@ -1,0 +1,2 @@
+PASS: actual PageHost, Conectar button, authenticated adapter, indicators/poll, visible failure, blank-port feedback and persistent config.
+PASS: generated two-page app from actual Montador, button authentication, visible COM indicator and clean Sair/save.

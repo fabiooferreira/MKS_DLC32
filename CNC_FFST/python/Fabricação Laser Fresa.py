@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Visualizador e transmissor GRBL para controladora. Requer: pip install pyserial pillow."""
 import json
+import os
 import ast
 import base64
 import binascii
@@ -25,8 +26,11 @@ except ImportError:
     serial = None
     list_ports = None
 
-PROJECT_DIR = (Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False)
-               else Path(__file__).resolve().parent)
+RESOURCE_DIR = (Path(sys.executable).resolve().parent if getattr(sys, 'frozen', False)
+                else Path(__file__).resolve().parent)
+# Montador extracts source into a temporary directory but provides a persistent config path.
+PROJECT_DIR = Path(os.environ.get('CNC_PCBS_CONFIG_DIR', str(RESOURCE_DIR))).expanduser()
+PROJECT_DIR.mkdir(parents=True, exist_ok=True)
 CONFIG = PROJECT_DIR / 'config_controlador_pcb.json'
 ATIVAR_LOG = True  # True = grava diagnóstico; False = desativa totalmente o log
 DIAGNOSTIC_LOG = PROJECT_DIR / 'CNC_PCB_diagnostico_GRBL.log'
@@ -38,15 +42,19 @@ def icon_path(saved_path):
     if original.is_file():
         return original
     filename = PureWindowsPath(saved_path).name
-    for directory in PROJECT_DIR.iterdir():
-        if directory.is_dir():
-            candidate = directory / filename
-            if candidate.is_file():
-                return candidate
-    return PROJECT_DIR / filename
+    for base in dict.fromkeys((PROJECT_DIR, RESOURCE_DIR)):
+        candidate = base / filename
+        if candidate.is_file():
+            return candidate
+        for directory in base.iterdir():
+            if directory.is_dir():
+                candidate = directory / filename
+                if candidate.is_file():
+                    return candidate
+    return RESOURCE_DIR / filename
 
 
-APP_VERSION = '1.1 — Controlador PCB / CNC_FFST autenticado'
+APP_VERSION = '1.2 — Controlador PCB / CNC_FFST autenticado'
 DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
     {'name': 'Laser OFF', 'command': 'M5'},
     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}
@@ -2376,23 +2384,35 @@ class App:
             self.status.set(f'Concluído. Próximo: {name} — clique Iniciar')
 
     def connect(self):
-        self.clear_heightmap()
         try:
+            self.clear_heightmap()
+            self.write_diagnostic('CONECTAR: início da tentativa')
             if not self.port.get().strip():
                 self.stream.disconnect()
                 self.stream.simulation = True
                 self.status.set('Modo simulação — sem porta serial')
+                self.connection_label.set('SIMULAÇÃO: selecione a porta COM para conectar à placa')
+                messagebox.showinfo('Conexão', 'Nenhuma porta selecionada. O programa está em simulação.\n'
+                                    'Para conectar à placa, clique Atualizar e escolha a porta COM.',
+                                    parent=self.root.winfo_toplevel())
                 for button in getattr(self, 'macro_buttons', []):
                     button.configure(state='normal')
                 return
             if serial is None:
                 raise RuntimeError('Instale pyserial: pip install pyserial pillow')
+            self.status.set('Abrindo porta e autenticando...')
+            self.connection_label.set(f'Conectando: {self.port.get()} — aguarde a autenticação')
+            self.root.update_idletasks()
             self.stream.connect(self.port.get(), int(self.baud.get()))
+            self.write_diagnostic('CONECTAR: conexão autenticada')
             self.status.set('Conectado / autenticado')
             for button in getattr(self, 'macro_buttons', []):
                 button.configure(state='normal')
         except Exception as exc:
-            messagebox.showerror('Conexão', str(exc))
+            self.status.set('Falha na conexão')
+            self.connection_label.set('Falha: ' + str(exc))
+            self.write_diagnostic('CONECTAR: ' + type(exc).__name__ + ': ' + str(exc))
+            messagebox.showerror('Conexão', str(exc), parent=self.root.winfo_toplevel())
 
     def disconnect(self):
         self.finish_timer()

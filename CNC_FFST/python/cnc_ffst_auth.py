@@ -65,12 +65,14 @@ def exchange(port, command, timeout=8):
         if line.startswith('error:'):
             if '[FFUNPAIRED]' in lines:
                 raise RuntimeError('Firmware não corresponde à edição de chave fixa.')
-            raise RuntimeError('A placa recusou a autenticação/pareamento. '
-                               'Confira firmware 0.3.0 e a chave local.')
+            stage = command.split('=', 1)[0]
+            raise RuntimeError(f'A placa recusou a autenticação: etapa {stage}, resposta {line}. '
+                               'Confira se o BIN CNC_FFST 0.3.0 correspondente está gravado.')
         if line == 'ok':
             return lines
-    raise TimeoutError('A placa não respondeu ao protocolo CNC_FFST. '
-                       'Confira firmware 0.3.0, porta e baud.')
+    stage = command.split('=', 1)[0]
+    raise TimeoutError(f'A placa não respondeu na etapa {stage}. '
+                       'Confira o BIN CNC_FFST 0.3.0, a porta e 115200 baud.')
 
 
 class SignedPort:
@@ -115,6 +117,15 @@ class SignedPort:
             raise
         self._reader = threading.Thread(target=self._pump, daemon=True)
         self._reader.start()
+
+    @property
+    def port(self):
+        # Preserve the pyserial interface consumed by App.update_indicators().
+        return getattr(self.raw, 'port', getattr(self.raw, 'name', 'USB'))
+
+    @property
+    def name(self):
+        return self.port
 
     @property
     def is_open(self):

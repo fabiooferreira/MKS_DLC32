@@ -108,3 +108,26 @@ um namespace e recursos comprimidos embutidos. Gerado por tools/bundle_python.py
 Não precisa de JSON/módulo/BIN externo. A chave e o hash são os mesmos da 0.3.0;
 firmware não alterado. Onze testes do protocolo foram executados sobre a versão
 embutida, além da compilação sintática. Script PyInstaller usa apenas esse .py.
+
+## Cliente Python 1.2 — conexão e Montador de Páginas
+
+Corrigida uma incompatibilidade do adaptador: App.update_indicators acessa
+port.port, que SignedPort não expunha. Isso podia interromper o polling da UI
+com AttributeError, oculto em um EXE sem console. Adicionadas propriedades port/name.
+Não é prova de que essa foi a única causa da falha relatada na placa do usuário.
+
+O botão Conectar agora informa o andamento; uma porta vazia avisa sobre o modo
+simulação. Erros mostram etapa/resposta da autenticação e são registrados no log.
+O diálogo usa a janela principal da página como parent. A limpeza do mapa foi
+incluída no try da conexão, evitando exceção silenciosa fora do handler.
+
+O programa respeita CNC_PCBS_CONFIG_DIR fornecido pelo Montador; configurações
+não são mais salvas na extração temporária. Recursos opcionais ainda podem ser
+localizados na pasta extraída. A importação em PageHost/App(root) foi testada
+com o RUNTIME original do Montador do usuário, inclusive em um app de duas abas.
+
+Testes: UI Tk real em display virtual, backend de autenticação C++ simulado,
+clique em Conectar, indicador COM, polling, erro visível, aviso de simulação,
+persistência de configuração e encerramento. Onze testes do protocolo do arquivo
+único passaram novamente. Não houve teste com USB/placa nem EXE Windows.
+O firmware BIN 0.3.0 e a chave não foram alterados.

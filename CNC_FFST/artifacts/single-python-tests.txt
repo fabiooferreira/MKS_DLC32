@@ -1,4 +1,4 @@
-PASS: single-file embedded auth runs without sidecar files; embedded firmware/key matches delivered 0.3.0 BIN (key not printed); no external cnc_ffst_auth import.
+PASS: single-file auth without sidecars; embedded credential/firmware unchanged.
 test_many_writes_without_application_reader_do_not_deadlock (test_single_auth.AuthTests.test_many_writes_without_application_reader_do_not_deadlock) ... ok
 test_new_nonce_and_busy_public_write (test_single_auth.AuthTests.test_new_nonce_and_busy_public_write) ... ok
 test_oversize_and_raw_realtime (test_single_auth.AuthTests.test_oversize_and_raw_realtime) ... ok
@@ -12,6 +12,6 @@ test_wrong_firmware_is_rejected_before_secret (test_single_auth.AuthTests.test_w
 test_wrong_key_is_rejected (test_single_auth.AuthTests.test_wrong_key_is_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 11 tests in 0.712s
+Ran 11 tests in 0.768s
 
 OK
