@@ -14,6 +14,12 @@
 #include <stdlib.h>
 #ifndef FFST_HOST_TEST
 #include "esp_system.h"
+#ifdef CNC_FFST_PROTECTED
+#include "esp_flash_encrypt.h"
+#include "esp_secure_boot.h"
+#include "esp_efuse.h"
+#include "esp_efuse_table.h"
+#endif
 #include "bootloader_random.h"
 #include "esp_ota_ops.h"
 #include "mbedtls/md.h"
@@ -192,6 +198,36 @@ bool ffst_auth_system(char *line,status_code_t *result)
         *result=Status_AccessDenied;return true;
     }
     *result=Status_AccessDenied;
+#if defined(CNC_FFST_PROTECTED) && !defined(FFST_HOST_TEST)
+    if(!strncmp(line,"$FFSEC=",7)) {
+        uint8_t challenge[16],tag[32],mac[6];
+        if(!decode(line+7,challenge,sizeof(challenge)) || !get_hash()) return true;
+        bool key1=false,key2=false;
+        for(int block=EFUSE_BLK_KEY0;block<=EFUSE_BLK_KEY5;block++) {
+            esp_efuse_purpose_t purpose=esp_efuse_get_key_purpose((esp_efuse_block_t)block);
+            bool locked=esp_efuse_get_key_dis_read((esp_efuse_block_t)block) &&
+                        esp_efuse_get_key_dis_write((esp_efuse_block_t)block);
+            if(purpose==ESP_EFUSE_KEY_PURPOSE_XTS_AES_256_KEY_1) key1=locked;
+            if(purpose==ESP_EFUSE_KEY_PURPOSE_XTS_AES_256_KEY_2) key2=locked;
+        }
+        esp_efuse_mac_get_default(mac);
+        char payload[400],message[420],encoded[800],taghex[65];
+        snprintf(payload,sizeof(payload),
+            "{\"nonce\":\"%s\",\"mac\":\"%02x%02x%02x%02x%02x%02x\",\"appsha\":\"%s\","
+            "\"encryption_release\":%d,\"secure_boot\":%d,\"secure_download\":%d,"
+            "\"jtag_disabled\":%d,\"keys_read_protected\":%d,\"maintenance_safe\":%d}",
+            line+7,mac[0],mac[1],mac[2],mac[3],mac[4],mac[5],image_hash,
+            esp_get_flash_encryption_mode()==ESP_FLASH_ENC_MODE_RELEASE,
+            esp_secure_boot_enabled(),esp_efuse_read_field_bit(ESP_EFUSE_ENABLE_SECURITY_DOWNLOAD),
+            esp_efuse_read_field_bit(ESP_EFUSE_HARD_DIS_JTAG) && esp_efuse_read_field_bit(ESP_EFUSE_DIS_USB_JTAG),
+            key1&&key2, !spindle_is_on() && (state_get()==STATE_IDLE || state_get()==STATE_ALARM || state_get()==STATE_ESTOP));
+        snprintf(message,sizeof(message),"security|%s",payload);
+        if(!digest(message,tag)) return true;
+        hex((uint8_t *)payload,encoded,strlen(payload));hex(tag,taghex,32);
+        hal.stream.write("[FFSEC:");hal.stream.write(encoded);hal.stream.write(":");hal.stream.write(taghex);hal.stream.write("]\r\n");
+        *result=Status_OK;return true;
+    }
+#endif
     if(!strcmp(line,"$FFINFO")) {
         if(!get_hash()) return true;
         hal.stream.write("[FFFW:" FFST_FIRMWARE_VERSION ":");hal.stream.write(image_hash);hal.stream.write("]\r\n");

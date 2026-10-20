@@ -5,7 +5,11 @@
 #else
 #include "grbl/hal.h"
 #endif
+#ifdef CNC_FFST_PROTECTED
+#define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.2.0-PROTECTED"
+#else
 #define FFST_FIRMWARE_VERSION "CNC_FFST-S3-0.1.0"
+#endif
 void ffst_auth_init(void);
 bool ffst_auth_trusted(void);
 bool ffst_auth_system(char *line, status_code_t *result);

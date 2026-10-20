@@ -1,5 +1,7 @@
 # CNC_FFST-S3 0.1.0 — firmware inicial para bancada
 
+Para o novo instalador com opção de proteção e atualizações, consultar [INSTALADOR_E_PROTECAO.md](INSTALADOR_E_PROTECAO.md). Este documento descreve os BINs reversíveis 0.1.0; suas limitações de criptografia não se aplicam à configuração protegida 0.2.0.
+
 Alvo: **ESP32-S3 N16R8, 16 MB de flash / 8 MB de PSRAM octal**, na placa-base proposta R2. Sem display, DRV8825 encaixáveis, XYZA, STEP/DIR diretos, ENABLE comum e PWM 3,3 V ligado simultaneamente ao laser e ao controlador do spindle. A chave externa seleciona a alimentação das ferramentas.
 
 **Não usar na DLC32 V2.1/ESP32 clássico ou na DLC32 MAX.** São outros hardwares e pinagens. O anúncio da DevKit não pôde ser verificado: conferir as marcações dos GPIOs antes de ligar qualquer carga. As posições físicas dos soquetes ainda não estão definidas.

@@ -1,5 +1,9 @@
 # CNC_FFST S3 — firmware 0.1.0 e placa-base R2
 
+[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.0.zip)
+
+[Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote UART 0.1.0 abaixo continua sendo o modo reversível sem proteção de leitura.
+
 [**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.
@@ -64,7 +68,7 @@ Fusível, proteção de inversão, TVS, supervisor, ESD, conectores e suas refer
 
 O driver grblHAL consultado tem geração direta por RMT. Quatro STEP usam os quatro canais TX do S3; o LED endereçável não deve consumir RMT. O mapa S3 genérico tem restrição ao quarto motor: esta placa precisa de mapa próprio.
 
-Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos e procedimento de criptografia/proteção específico do S3. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R2 registra a proposta de hardware anterior a esta implementação; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
+Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos, incluindo o provisionamento e a atualização protegida descritos no novo instalador. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R2 registra a proposta de hardware anterior a esta implementação; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
 
 ## Entradas, PWM e emergência
 

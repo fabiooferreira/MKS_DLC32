@@ -1,0 +1,1 @@
+PASS: janela Tk real no Linux, opções Reversível/Protegido, padrão reversível, controles, thread de trabalho, log e retorno após conclusão. Nenhuma placa conectada. Windows não testado.

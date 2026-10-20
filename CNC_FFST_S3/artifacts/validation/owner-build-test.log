@@ -1,0 +1,98 @@
+> python -m pip install platformio==6.1.18
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Requirement already satisfied: platformio==6.1.18 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (6.1.18)
+Requirement already satisfied: bottle==0.13.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.13.4)
+Collecting click<8.1.8,>=8.0.4 (from platformio==6.1.18)
+  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Requirement already satisfied: colorama in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.4.6)
+Requirement already satisfied: marshmallow==3.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (3.26.2)
+Requirement already satisfied: pyelftools<1,>=0.27 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.33)
+Requirement already satisfied: pyserial==3.5.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (3.5)
+Requirement already satisfied: requests==2.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (2.34.2)
+Requirement already satisfied: semantic_version==2.10.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (2.10.0)
+Requirement already satisfied: tabulate==0.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.10.0)
+Requirement already satisfied: ajsonrpc==1.2.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (1.2.0)
+Requirement already satisfied: starlette<0.47,>=0.19 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.46.2)
+Requirement already satisfied: uvicorn<0.35,>=0.16 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (0.34.3)
+Requirement already satisfied: wsproto==1.* in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from platformio==6.1.18) (1.3.2)
+Requirement already satisfied: packaging>=17.0 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from marshmallow==3.*->platformio==6.1.18) (26.3)
+Requirement already satisfied: charset_normalizer<4,>=2 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from requests==2.*->platformio==6.1.18) (3.5.2)
+Requirement already satisfied: idna<4,>=2.5 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from requests==2.*->platformio==6.1.18) (3.20)
+Requirement already satisfied: urllib3<3,>=1.26 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from requests==2.*->platformio==6.1.18) (1.26.20)
+Requirement already satisfied: certifi>=2023.5.7 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from requests==2.*->platformio==6.1.18) (2026.10.19)
+Requirement already satisfied: h11<1,>=0.16.0 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from wsproto==1.*->platformio==6.1.18) (0.16.0)
+Requirement already satisfied: anyio<5,>=3.6.2 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from starlette<0.47,>=0.19->platformio==6.1.18) (4.15.1)
+Requirement already satisfied: typing_extensions>=4.16.0 in /workspace/esp32-manager-venv/lib/python3.12/site-packages (from anyio<5,>=3.6.2->starlette<0.47,>=0.19->platformio==6.1.18) (4.16.0)
+Downloading click-8.1.7-py3-none-any.whl (97 kB)
+Installing collected packages: click
+  Attempting uninstall: click
+    Found existing installation: click 8.5.0
+    Uninstalling click-8.5.0:
+      Successfully uninstalled click-8.5.0
+Successfully installed click-8.1.7
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
+> python -m @script /workspace/MKS_DLC32/CNC_FFST_S3/tools/build_firmware.py protected --signing-key /tmp/tmpnzezfnr7/keys/secure_boot_signing_key.pem
+Processing cnc_ffst_s3_n16r8_protected (platform: espressif32@5.3.0; framework: espidf; board: esp32-s3-devkitc-1)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CNC_FFST: common application credential retained; no value displayed.
+CNC_FFST: protected profile; preserve the private signing key offline.
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-s3-devkitc-1.html
+PLATFORM: Espressif 32 (5.3.0) > Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)
+HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
+DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES:
+ - framework-espidf @ 3.40403.0 (4.4.3)
+ - tool-cmake @ 3.16.4
+ - tool-esptoolpy @ 1.40400.0 (4.4.0)
+ - tool-ninja @ 1.7.1
+ - toolchain-esp32ulp @ 1.23500.220830 (2.35.0)
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5
+ - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Reading CMake configuration...
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 0 compatible libraries
+Scanning dependencies...
+No dependencies
+Building in release mode
+Retrieving maximum program size .pio/build/cnc_ffst_s3_n16r8_protected/firmware.elf
+Checking size .pio/build/cnc_ffst_s3_n16r8_protected/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   8.3% (used 27200 bytes from 327680 bytes)
+Flash: [=         ]   6.7% (used 418709 bytes from 6291456 bytes)
+========================= [SUCCESS] Took 7.34 seconds =========================
+
+Environment                  Status    Duration
+---------------------------  --------  ------------
+cnc_ffst_s3_n16r8_protected  SUCCESS   00:00:07.340
+========================= 1 succeeded in 00:00:07.340 =========================
+espsecure.py v4.8.1
+/tmp/tmpnzezfnr7/keys/secure_boot_signing_key.pem public key extracted to /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/secure_boot_public_key.pem
+esptool.py v4.8.1
+SHA digest in image updated
+Wrote 0x5820 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/bootloader_params.bin, ready to flash to offset 0x0
+espsecure.py v4.8.1
+1 signing key(s) found.
+Signed 65536 bytes of data from /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/bootloader_params_padded.bin. Signature sector now has 1 signature blocks.
+espsecure.py v4.8.1
+Signature block 0 is valid (RSA).
+Signature block 0 verification successful using the supplied key (RSA).
+Signature block 1 invalid. Skipping.
+Signature block 2 invalid. Skipping.
+espsecure.py v4.8.1
+1 signing key(s) found.
+Signed 458752 bytes of data from /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/firmware_padded.bin. Signature sector now has 1 signature blocks.
+espsecure.py v4.8.1
+Signature block 0 is valid (RSA).
+Signature block 0 verification successful using the supplied key (RSA).
+Signature block 1 invalid. Skipping.
+Signature block 2 invalid. Skipping.
+esptool.py v4.8.1
+Wrote 0x1000000 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/CNC_FFST_S3_0.2.0_PROTECTED_FULL_16MB.bin, ready to flash to offset 0x0
+Packaged PROTECTED 6277426a688025f52021d5294095f50798073619cb5daecb42396a7782066151
+BIN protegido preparado com sua chave: /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/CNC_FFST_S3_0.2.0_PROTECTED_FULL_16MB.bin
+PASS: real local-owner preparation through installer backend, signature backup, compilation, packaging and image registration. No hardware.

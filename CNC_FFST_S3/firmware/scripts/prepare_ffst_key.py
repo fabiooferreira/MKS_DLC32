@@ -22,3 +22,20 @@ text='/* Generated credential: do not print or publish separately. */\nstatic co
 header=root/'firmware/main/ffst_key.generated.h'
 if not header.exists() or header.read_text()!=text:header.write_text(text)
 print('CNC_FFST: common application credential retained; no value displayed.')
+
+# Only the separate protected environment is allowed to create a signing key.
+if env.get('PIOENV', '') == 'cnc_ffst_s3_n16r8_protected':
+    import subprocess
+    import sys
+    signing = Path(os.environ.get('FFST_SIGNING_KEY',str(root/'firmware/ffst_secure_boot_signing_key.pem')))
+    if not signing.exists():
+        subprocess.run([sys.executable, '-m', 'espsecure', 'generate_signing_key',
+                        '--version', '2', str(signing)], check=True)
+        signing.chmod(0o600)
+    project_key=root/'firmware/ffst_secure_boot_signing_key.pem'
+    if signing.resolve()!=project_key.resolve():
+        import shutil
+        if project_key.exists() and project_key.read_bytes()!=signing.read_bytes():
+            raise RuntimeError('Different project signing key exists: preserve it before using another owner key')
+        if not project_key.exists():shutil.copy2(signing,project_key);project_key.chmod(0o600)
+    print('CNC_FFST: protected profile; preserve the private signing key offline.')

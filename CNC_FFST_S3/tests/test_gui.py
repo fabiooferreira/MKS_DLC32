@@ -70,7 +70,9 @@ def main(builder_path):
                     return page._ffst_auth.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
                 return connect
             with patch.dict(os.environ,{'CNC_PCBS_CONFIG_DIR':str(base)}):
-                for profile in ['UART','USB']:
+                profiles=['UART','USB']
+                if (ROOT/'python/PROTECTED/CNC_FFST_Unico.py').exists():profiles.append('PROTECTED')
+                for profile in profiles:
                     page=load('ffst_s3_'+profile,ROOT/'python'/profile/'CNC_FFST_Unico.py')
                     root=tk.Tk();root.withdraw()
                     root.report_callback_exception=lambda kind,value,tb: errors.append(str(value))
@@ -95,7 +97,7 @@ def main(builder_path):
                     print('PASS:',profile,'standalone Tk, button connection/HMAC, port indicator, four-axis probe response.')
             if builder_path:
                 builder=load('real_s3_page_builder',builder_path)
-                source=ROOT/'python/UART/CNC_FFST_Unico.py'
+                source=ROOT/'python/PROTECTED/CNC_FFST_Unico.py' if (ROOT/'python/PROTECTED/CNC_FFST_Unico.py').exists() else ROOT/'python/UART/CNC_FFST_Unico.py'
                 extra=base/'Outra.py';extra.write_text('import tkinter as tk\ndef create_page(parent):\n return tk.Label(parent,text="Outra página")\n')
                 combined=base/'Montado.py'
                 combined.write_text(builder.generate_source([

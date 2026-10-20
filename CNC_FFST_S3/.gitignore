@@ -12,3 +12,10 @@ python/*/CNC_PCB_diagnostico_GRBL.log
 .platformio-core/
 .venv-build/
 firmware/compile_commands.json
+firmware/*signing_key*.pem
+installer/__pycache__/
+
+installer/imagens_locais.json
+
+artifacts/PROTECTED/
+python/PROTECTED/

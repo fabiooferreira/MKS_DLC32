@@ -1,0 +1,24 @@
+espsecure.py v4.8.1
+/workspace/MKS_DLC32/CNC_FFST_S3/firmware/ffst_secure_boot_signing_key.pem public key extracted to /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/secure_boot_public_key.pem
+esptool.py v4.8.1
+SHA digest in image updated
+Wrote 0x5820 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/bootloader_params.bin, ready to flash to offset 0x0
+espsecure.py v4.8.1
+1 signing key(s) found.
+Signed 65536 bytes of data from /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/bootloader_params_padded.bin. Signature sector now has 1 signature blocks.
+espsecure.py v4.8.1
+Signature block 0 is valid (RSA).
+Signature block 0 verification successful using the supplied key (RSA).
+Signature block 1 invalid. Skipping.
+Signature block 2 invalid. Skipping.
+espsecure.py v4.8.1
+1 signing key(s) found.
+Signed 458752 bytes of data from /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/firmware_padded.bin. Signature sector now has 1 signature blocks.
+espsecure.py v4.8.1
+Signature block 0 is valid (RSA).
+Signature block 0 verification successful using the supplied key (RSA).
+Signature block 1 invalid. Skipping.
+Signature block 2 invalid. Skipping.
+esptool.py v4.8.1
+Wrote 0x1000000 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/PROTECTED/CNC_FFST_S3_0.2.0_PROTECTED_FULL_16MB.bin, ready to flash to offset 0x0
+Packaged PROTECTED 6277426a688025f52021d5294095f50798073619cb5daecb42396a7782066151

@@ -1,0 +1,3 @@
+PASS: virtual eFuses AES256 purposes and read/write key protection (no physical chip).
+PASS: real espsecure AES-XTS roundtrip at update offset; another key cannot recover the application.
+PASS: signed bootloader and application verified, merged bootloader identical to signed bytes.
