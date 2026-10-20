@@ -1,0 +1,34 @@
+{
+  "revision": "R1",
+  "status": "PROPOSTA_CARRIER_NAO_FABRICAR",
+  "development_board": "ESP32-S3 N16R8 dual USB, modelo exato a conferir",
+  "board_removable": true,
+  "development_board_power": "USB da propria DevKit",
+  "carrier_has_usb_connector": false,
+  "carrier_has_usb_serial_bridge": false,
+  "flash_mb": 16,
+  "psram_mb": 8,
+  "header_positions_verified": false,
+  "listing_url": "https://www.mercadolivre.com.br/p/MLB2069410538",
+  "axes": [
+    "X",
+    "Y",
+    "Z",
+    "A"
+  ],
+  "driver": "DRV8825 StepStick 2x8, validar modulo real",
+  "common_enable": true,
+  "motor_supply_v": 24,
+  "pwm_v": 3.3,
+  "firmware_driver_commit": "0b2d3e1bb7da3b0ae0e03490b71275374eb84c67",
+  "core_submodule_commit": "4ec1ae44b857a70d2f9298344feac4b43ed0eb6b",
+  "manufacturing_released": false,
+  "firmware_built": false,
+  "pending": [
+    "Foto/pinout e medidas da DevKit real: numero de pinos, espacamento e botoes/USB",
+    "Protecao da entrada de 24V, supervisor e conectores com MPNs e calculos",
+    "Confirmacao dos GPIOs expostos, do RGB e da alimentacao USB do modelo real",
+    "Mapa grblHAL N16R8, firmware, autenticacao e criptografia para S3",
+    "ERC/DRC de projeto EDA, layout e validacao eletrica/termica/EMC/seguranca"
+  ]
+}

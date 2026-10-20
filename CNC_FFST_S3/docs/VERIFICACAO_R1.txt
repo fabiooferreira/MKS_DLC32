@@ -1,0 +1,17 @@
+VERIFICAÇÃO DA PROPOSTA R1 — PLACA-BASE ESP32-S3 N16R8
+
+APROVADO: PDF vetorial com 5 folhas A3, texto extraível e fontes incorporadas.
+APROVADO: renderização visual das folhas e conferência da legibilidade.
+APROVADO: 19 GPIOs ativos propostos, sem duplicações nem uso dos pinos reservados
+para PSRAM octal, USBs, straps ou possíveis LEDs RGB (GPIO38/48).
+APROVADO: GPIO42 reservado à habilitação lógica auxiliar do PWM.
+APROVADO: GPIOs ativos existem na referência de módulo WROOM-1 da biblioteca
+local. Isso NÃO confirma sua posição ou exposição na DevKit do anúncio.
+APROVADO: números lógicos dos pinos do DRV8825 conferidos com símbolo Pololu
+da biblioteca KiCad instalada. Módulos reais/soquetes ainda precisam de revisão.
+APROVADO: tabela lógica proposta inibe drivers e PWM na condição de emergência.
+
+NÃO VERIFICADO: anúncio HTTP 403, pinout físico, medidas e circuito da DevKit real.
+NÃO REALIZADO: ERC/DRC, layout, simulação de potência, compilação S3, ensaios físicos,
+compatibilidade da autenticação, proteção de leitura e validação de segurança.
+ESTADO: proposta para revisão; não liberada para fabricação nem uso na máquina.

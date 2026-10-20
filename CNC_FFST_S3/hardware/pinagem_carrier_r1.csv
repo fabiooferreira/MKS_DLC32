@@ -1,0 +1,30 @@
+sinal,gpio,tipo,observacao,posicao_fisica
+X_STEP,4,out,STEP direto / RMT canal 0,CONFERIR NA DEVKIT REAL
+Y_STEP,5,out,STEP direto / RMT canal 1,CONFERIR NA DEVKIT REAL
+Z_STEP,6,out,STEP direto / RMT canal 2,CONFERIR NA DEVKIT REAL
+A_STEP,7,out,STEP direto / RMT canal 3,CONFERIR NA DEVKIT REAL
+X_DIR,8,out,DIR direto,CONFERIR NA DEVKIT REAL
+Y_DIR,9,out,DIR direto,CONFERIR NA DEVKIT REAL
+Z_DIR,10,out,DIR direto,CONFERIR NA DEVKIT REAL
+A_DIR,11,out,DIR direto,CONFERIR NA DEVKIT REAL
+DRV_EN_REQ_N,12,out,"ENABLE comum, ativo baixo; pull-up 10k",CONFERIR NA DEVKIT REAL
+PWM_REQ,13,out,"PWM 3V3, ativo alto; pull-down 100k",CONFERIR NA DEVKIT REAL
+LIMIT_X,1,in,Entrada condicionada; contato NC,CONFERIR NA DEVKIT REAL
+LIMIT_Y,2,in,Entrada condicionada; contato NC,CONFERIR NA DEVKIT REAL
+LIMIT_Z,14,in,Entrada condicionada; contato NC,CONFERIR NA DEVKIT REAL
+LIMIT_A,15,in,Entrada condicionada; contato NC,CONFERIR NA DEVKIT REAL
+PROBE,16,in,Entrada condicionada; contato NO com GND,CONFERIR NA DEVKIT REAL
+ESTOP_ACTIVE,17,in,Monitor de emergência; ativo alto,CONFERIR NA DEVKIT REAL
+DRV_FAULT_RESERVA,18,reserved,Não conectado aos FAULT nesta R1,CONFERIR NA DEVKIT REAL
+USB_D_MINUS,19,onboard,Reservado à USB nativa da DevKit,CONFERIR NA DEVKIT REAL
+USB_D_PLUS,20,onboard,Reservado à USB nativa da DevKit,CONFERIR NA DEVKIT REAL
+GPIO21_RESERVA,21,reserved,"Reserva, sem circuito nesta revisão",CONFERIR NA DEVKIT REAL
+TOOL_ARM,42,out,Habilitação lógica auxiliar; pull-down 100k,CONFERIR NA DEVKIT REAL
+FEED_HOLD,39,in,"Contato NO, condicionado",CONFERIR NA DEVKIT REAL
+CYCLE_START,40,in,"Contato NO, condicionado",CONFERIR NA DEVKIT REAL
+SAFETY_DOOR_RESERVA,41,reserved,Reserva para intertravamento,CONFERIR NA DEVKIT REAL
+GPIO38_RESERVA,38,reserved,Possível LED RGB integrado; não usar,CONFERIR NA DEVKIT REAL
+UART_TX,43,onboard,Reservado ao USB/serial integrado,CONFERIR NA DEVKIT REAL
+UART_RX,44,onboard,Reservado ao USB/serial integrado,CONFERIR NA DEVKIT REAL
+STATUS_RESERVA,47,reserved,LED comum opcional,CONFERIR NA DEVKIT REAL
+GPIO48_RESERVA,48,reserved,Possível LED RGB integrado; não usar,CONFERIR NA DEVKIT REAL
