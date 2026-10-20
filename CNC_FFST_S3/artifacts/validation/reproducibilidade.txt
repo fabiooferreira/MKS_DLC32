@@ -1,0 +1,1 @@
+PASS: recuperação de credencial do BIN em diretório temporário, igualdade com original e segunda execução sem alterar header.

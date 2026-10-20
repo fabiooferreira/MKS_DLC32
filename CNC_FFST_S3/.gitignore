@@ -1,0 +1,14 @@
+firmware/.pio/
+firmware/sdkconfig.cnc_ffst_s3_n16r8*
+firmware/main/ffst_key.generated.h
+.private/
+python/__pycache__/
+python/build/
+python/dist/
+*.spec
+__pycache__/
+python/*/config_controlador_pcb.json
+python/*/CNC_PCB_diagnostico_GRBL.log
+.platformio-core/
+.venv-build/
+firmware/compile_commands.json

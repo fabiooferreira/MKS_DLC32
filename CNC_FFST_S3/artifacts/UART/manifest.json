@@ -1,0 +1,21 @@
+{
+  "firmware": "CNC_FFST-S3-0.1.0",
+  "profile": "UART",
+  "environment": "cnc_ffst_s3_n16r8_uart",
+  "chip": "esp32s3",
+  "flash_mb": 16,
+  "psram_mb": 8,
+  "step_pulse_us": 5,
+  "direction_setup_delay_us": 2,
+  "file": "CNC_FFST_S3_0.1.0_UART_FULL_16MB.bin",
+  "offset": 0,
+  "sha256": "510ff661c5885c97c57e9b69b6d4667adb05f8893595bda90faa57384399d3eb",
+  "authentication": "FFST HMAC v1, shared existing credential",
+  "flash_encryption": false,
+  "secure_boot": false,
+  "efuse_changes": false,
+  "hardware_tested": false,
+  "protocol": 1,
+  "app_image_sha256": "c5c1c2b6e4b3b0b2aff0d8139aa1fe7fcca9678f57148aa25aa237e31df7ac51",
+  "application_file_sha256": "9323e6e408f8e991a1a0b16c97861ea98fa33e4e3def202a343be041b9e36b0c"
+}

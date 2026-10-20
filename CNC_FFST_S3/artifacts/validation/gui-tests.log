@@ -1,0 +1,3 @@
+PASS: UART standalone Tk, button connection/HMAC, port indicator, four-axis probe response.
+PASS: USB standalone Tk, button connection/HMAC, port indicator, four-axis probe response.
+PASS: original Montador generated two-page application, HMAC connection and clean exit.

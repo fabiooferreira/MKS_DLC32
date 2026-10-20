@@ -1,0 +1,361 @@
+Processing cnc_ffst_s3_n16r8_uart (platform: espressif32@5.3.0; framework: espidf; board: esp32-s3-devkitc-1)
+--------------------------------------------------------------------------------
+Tool Manager: Installing espressif/toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+Tool Manager: Error: Please read https://bit.ly/package-manager-ioerror
+Tool Manager: Warning! Package Mirror: HTTPSConnectionPool(host='usc1.contabostorage.com', port=443): Max retries exceeded with url: /250040e607e8431abaff8727621872f9:pioregmirrorus/tools/d7/df/880b9c8cd34902c63f4aad6727148f9a966a3e8ec3dc391072e663dab348/toolchain-xtensa-esp32s3-linux_x86_64-8.4.0+2021r2-patch5.tar.gz (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+Tool Manager: Looking for another mirror...
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: toolchain-xtensa-esp32s3@8.4.0+2021r2-patch5 has been installed!
+Tool Manager: Installing espressif/toolchain-riscv32-esp @ 8.4.0+2021r2-patch5
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: toolchain-riscv32-esp@8.4.0+2021r2-patch5 has been installed!
+Tool Manager: Installing platformio/toolchain-esp32ulp @ ~1.23500.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: toolchain-esp32ulp@1.23500.220830 has been installed!
+Tool Manager: Installing platformio/framework-espidf @ ~3.40403.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: framework-espidf@3.40403.0 has been installed!
+Tool Manager: Installing platformio/tool-cmake @ ~3.16.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-cmake@3.16.4 has been installed!
+Tool Manager: Installing platformio/tool-ninja @ ^1.7.0
+Tool Manager: Error: Please read https://bit.ly/package-manager-ioerror
+Tool Manager: Warning! Package Mirror: HTTPSConnectionPool(host='usc1.contabostorage.com', port=443): Max retries exceeded with url: /250040e607e8431abaff8727621872f9:pioregmirrorus/tools/8b/e6/db2dbade39b60950193e6c0ff7601ee491374a38993abb6f22656b4d7d5c/tool-ninja-linux_x86_64-1.7.1.tar.gz (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))
+Tool Manager: Looking for another mirror...
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20%
+Tool Manager: tool-ninja@1.7.1 has been installed!
+Tool Manager: Installing platformio/tool-scons @ ~4.40801.0
+Downloading 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Unpacking 0% 10% 20% 30% 40% 50% 60% 70% 80% 90% 100%
+Tool Manager: tool-scons@4.40801.0 has been installed!
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-s3-devkitc-1.html
+PLATFORM: Espressif 32 (5.3.0) > Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)
+HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
+DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-espidf @ 3.40403.0 (4.4.3) 
+ - tool-cmake @ 3.16.4 
+ - tool-esptoolpy @ 1.40400.0 (4.4.0) 
+ - tool-ninja @ 1.7.1 
+ - toolchain-esp32ulp @ 1.23500.220830 (2.35.0) 
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
+ - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Installing ESP-IDF's Python dependencies
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Collecting cryptography<35.0.0,>=2.1.4
+  Downloading cryptography-3.4.8-cp36-abi3-manylinux_2_24_x86_64.whl.metadata (5.2 kB)
+Collecting future>=0.15.2
+  Downloading future-1.0.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting pyparsing<2.4.0,>=2.0.3
+  Downloading pyparsing-2.3.1-py2.py3-none-any.whl.metadata (1.0 kB)
+Collecting kconfiglib==13.7.1
+  Downloading kconfiglib-13.7.1-py2.py3-none-any.whl.metadata (39 kB)
+Collecting idf-component-manager~=1.0
+  Downloading idf_component_manager-1.5.3-py2.py3-none-any.whl.metadata (12 kB)
+Collecting cffi>=1.12 (from cryptography<35.0.0,>=2.1.4)
+  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting packaging (from idf-component-manager~=1.0)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting requests<3 (from idf-component-manager~=1.0)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting urllib3<2 (from idf-component-manager~=1.0)
+  Downloading urllib3-1.26.20-py2.py3-none-any.whl.metadata (50 kB)
+Collecting requests-file<2 (from idf-component-manager~=1.0)
+  Downloading requests_file-1.5.1-py2.py3-none-any.whl.metadata (596 bytes)
+Collecting requests-toolbelt (from idf-component-manager~=1.0)
+  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Collecting schema<=0.7.5 (from idf-component-manager~=1.0)
+  Downloading schema-0.7.5-py2.py3-none-any.whl.metadata (34 kB)
+Collecting six (from idf-component-manager~=1.0)
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting tqdm<5 (from idf-component-manager~=1.0)
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+Collecting colorama (from idf-component-manager~=1.0)
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting pyyaml>5.2 (from idf-component-manager~=1.0)
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting cachecontrol>0.12.6 (from cachecontrol[filecache]>0.12.6; python_version >= "3.6"->idf-component-manager~=1.0)
+  Downloading cachecontrol-0.14.4-py3-none-any.whl.metadata (3.1 kB)
+Collecting contextlib2>0.6.0 (from idf-component-manager~=1.0)
+  Downloading contextlib2-21.6.0-py2.py3-none-any.whl.metadata (4.1 kB)
+Collecting click (from idf-component-manager~=1.0)
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting msgpack<2.0.0,>=0.5.2 (from cachecontrol>0.12.6->cachecontrol[filecache]>0.12.6; python_version >= "3.6"->idf-component-manager~=1.0)
+  Downloading msgpack-1.2.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+Collecting filelock>=3.8.0 (from cachecontrol[filecache]>0.12.6; python_version >= "3.6"->idf-component-manager~=1.0)
+  Downloading filelock-4.2.4-py3-none-any.whl.metadata (2.0 kB)
+Collecting pycparser (from cffi>=1.12->cryptography<35.0.0,>=2.1.4)
+  Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3->idf-component-manager~=1.0)
+  Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+Collecting idna<4,>=2.5 (from requests<3->idf-component-manager~=1.0)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting certifi>=2023.5.7 (from requests<3->idf-component-manager~=1.0)
+  Downloading certifi-2026.10.19-py3-none-any.whl.metadata (2.5 kB)
+Downloading kconfiglib-13.7.1-py2.py3-none-any.whl (145 kB)
+Downloading cryptography-3.4.8-cp36-abi3-manylinux_2_24_x86_64.whl (3.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 25.6 MB/s eta 0:00:00
+Downloading future-1.0.0-py3-none-any.whl (491 kB)
+Downloading pyparsing-2.3.1-py2.py3-none-any.whl (61 kB)
+Downloading idf_component_manager-1.5.3-py2.py3-none-any.whl (161 kB)
+Downloading cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+Downloading contextlib2-21.6.0-py2.py3-none-any.whl (13 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 71.4 MB/s eta 0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading requests_file-1.5.1-py2.py3-none-any.whl (3.7 kB)
+Downloading schema-0.7.5-py2.py3-none-any.whl (17 kB)
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+Downloading urllib3-1.26.20-py2.py3-none-any.whl (144 kB)
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading certifi-2026.10.19-py3-none-any.whl (136 kB)
+Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+Downloading filelock-4.2.4-py3-none-any.whl (162 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading msgpack-1.2.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (472 kB)
+Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+Installing collected packages: pyparsing, urllib3, tqdm, six, pyyaml, pycparser, packaging, msgpack, kconfiglib, idna, future, filelock, contextlib2, colorama, click, charset_normalizer, certifi, schema, requests, cffi, requests-toolbelt, requests-file, cryptography, cachecontrol, idf-component-manager
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.8.0
+    Uninstalling urllib3-2.8.0:
+      Successfully uninstalled urllib3-2.8.0
+  Attempting uninstall: six
+    Found existing installation: six 1.17.0
+    Uninstalling six-1.17.0:
+      Successfully uninstalled six-1.17.0
+  Attempting uninstall: pyyaml
+    Found existing installation: PyYAML 6.0.3
+    Uninstalling PyYAML-6.0.3:
+      Successfully uninstalled PyYAML-6.0.3
+  Attempting uninstall: pycparser
+    Found existing installation: pycparser 3.11
+    Uninstalling pycparser-3.11:
+      Successfully uninstalled pycparser-3.11
+  Attempting uninstall: packaging
+    Found existing installation: packaging 26.3
+    Uninstalling packaging-26.3:
+      Successfully uninstalled packaging-26.3
+  Attempting uninstall: idna
+    Found existing installation: idna 3.20
+    Uninstalling idna-3.20:
+      Successfully uninstalled idna-3.20
+  Attempting uninstall: colorama
+    Found existing installation: colorama 0.4.6
+    Uninstalling colorama-0.4.6:
+      Successfully uninstalled colorama-0.4.6
+  Attempting uninstall: click
+    Found existing installation: click 8.1.7
+    Uninstalling click-8.1.7:
+      Successfully uninstalled click-8.1.7
+  Attempting uninstall: charset_normalizer
+    Found existing installation: charset-normalizer 3.5.2
+    Uninstalling charset-normalizer-3.5.2:
+      Successfully uninstalled charset-normalizer-3.5.2
+  Attempting uninstall: certifi
+    Found existing installation: certifi 2026.10.19
+    Uninstalling certifi-2026.10.19:
+      Successfully uninstalled certifi-2026.10.19
+  Attempting uninstall: requests
+    Found existing installation: requests 2.34.2
+    Uninstalling requests-2.34.2:
+      Successfully uninstalled requests-2.34.2
+  Attempting uninstall: cffi
+    Found existing installation: cffi 2.1.1
+    Uninstalling cffi-2.1.1:
+      Successfully uninstalled cffi-2.1.1
+  Attempting uninstall: cryptography
+    Found existing installation: cryptography 50.0.2
+    Uninstalling cryptography-50.0.2:
+      Successfully uninstalled cryptography-50.0.2
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+platformio 6.1.18 requires click<8.1.8,>=8.0.4, but you have click 8.5.0 which is incompatible.
+Successfully installed cachecontrol-0.14.4 certifi-2026.10.19 cffi-2.1.1 charset_normalizer-3.5.2 click-8.5.0 colorama-0.4.6 contextlib2-21.6.0 cryptography-3.4.8 filelock-4.2.4 future-1.0.0 idf-component-manager-1.5.3 idna-3.20 kconfiglib-13.7.1 msgpack-1.2.3 packaging-26.3 pycparser-3.11 pyparsing-2.3.1 pyyaml-6.0.3 requests-2.34.2 requests-file-1.5.1 requests-toolbelt-1.0.0 schema-0.7.5 six-1.17.0 tqdm-4.70.1 urllib3-1.26.20
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
+Reading CMake configuration...
+Generating assembly for certificate bundle...
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 0 compatible libraries
+Scanning dependencies...
+No dependencies
+Building in release mode
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/main.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/driver.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/nvs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/timers.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/uart_serial.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/ioports.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/ioports_analog.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/i2c.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/neopixel_rmt.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/neopixel_spi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/boards/BlackBoxX32.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/boards/ooznest_cnc.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/grbllib.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/canbus.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/coolant_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/crossbar.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/crc.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/nvs_buffer.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/gcode.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/machine_limits.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/messages.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/modbus.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/modbus_rtu.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/motion_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/nuts_bolts.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/override.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/probe.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/planner.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/protocol.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/report.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/settings.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/sleep.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/spindle_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/state_machine.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/stream.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/stream_file.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/stream_json.o
+main/grbl/stream_json.c: In function 'json_parse_string':
+main/grbl/stream_json.c:251:10: warning: variable 'c' set but not used [-Wunused-but-set-variable]
+     char c, *s, *e, *tag, *value;
+          ^
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/stepper.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/stepper2.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/strutils.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/system.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/tool_change.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/alarms.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/errors.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/ngc_expr.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/ngc_params.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/ngc_flowctrl.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/regex.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/ioports.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/encoders.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/utf8.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/vfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/fs_device.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/fs_embedded.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/fs_ram.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/kinematics/asymmetric_ganging.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/kinematics/corexy.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/kinematics/wall_plotter.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/kinematics/delta.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/kinematics/polar.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/littlefs_hal.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/littlefs/lfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/littlefs/lfs_util.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/fs_littlefs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/usb_serial.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/i2s_out_s3.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/grbl/my_plugin.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/wifi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/mqtt.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/dns_server.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/httpd.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/http_upload.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/telnetd.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/websocketd.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/base64.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/sha1.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/urlencode.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/urldecode.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/utils.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/multipartparser.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/networking.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/etag.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/webdav.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/ssdp.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/ftpd.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/networking/sfifo.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/keypad/keypad.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/keypad/macros.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/keypad/display/i2c_interface.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/tmc_spi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/motors/trinamic.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/common.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc_interface.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc2130.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc2130hal.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc2209.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc2209hal.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc5160.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/trinamic/tmc5160hal.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/tmc_uart.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/args.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/login.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/commands_v2.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/commands_v3.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/server.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/fs_handlers.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/sdfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/webui/flashfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/esp_webui/fs_embedded.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/sdcard.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/ymodem.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/fs_fatfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/fs_stream.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/sdcard/macros.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/bluetooth_le.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/select.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/onoff.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/offset.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/pwm.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/pwm_clone.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/stepper.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/gs20.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/h100.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/huanyang.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/huanyang2.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/modvfd.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/nowforever.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/spindle.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/spindle/vfd/yl620.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/eeprom/eeprom_24LC16B.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/eeprom/eeprom_24AAxxx.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/laser/co2.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/laser/coolant.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/laser/lb_clusters.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/laser/ppi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/bltouch.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/eventout.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/feed_override_m220.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/fnc_expander.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/hc595.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/homing_pulloff.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/mcp3221.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/mcp4725.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/mcp23017.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/pca9654e.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/pwm_servo_m280.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/rgb_led_m150.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/plugins/tooltable.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/embroidery/embroidery.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/embroidery/brother.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/embroidery/tajima.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/openpnp/openpnp.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/enet.o
+*** [.pio/build/cnc_ffst_s3_n16r8_uart/.pio/build/cnc_ffst_s3_n16r8_uart/favicon.ico.o] Source `.pio/build/cnc_ffst_s3_n16r8_uart/favicon.ico.S' not found, needed by target `.pio/build/cnc_ffst_s3_n16r8_uart/.pio/build/cnc_ffst_s3_n16r8_uart/favicon.ico.o'.
+========================= [FAILED] Took 75.83 seconds =========================
+
+Environment             Status    Duration
+----------------------  --------  ------------
+cnc_ffst_s3_n16r8_uart  FAILED    00:01:15.828
+==================== 1 failed, 0 succeeded in 00:01:15.828 ====================

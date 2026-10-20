@@ -1,10 +1,14 @@
-# CNC_FFST S3 — placa-base para DevKit N16R8, proposta R2
+# CNC_FFST S3 — firmware 0.1.0 e placa-base R2
 
 [**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.
 
-**Ainda não é esquema liberado para fabricação.** Nesta entrega não há PCB roteada, arquivo KiCad/netlist ou firmware BIN para este hardware.
+**Ainda não é esquema liberado para fabricação.** Não há PCB roteada ou arquivo KiCad/netlist. Há agora firmware compilado para testes de bancada, sem validação física.
+
+[**Baixar firmware + Python único — USB/serial (principal)**](artifacts/CNC_FFST_S3_0.1.0_UART_Pacote.zip)
+
+[Instruções de gravação, compilação e limitações](docs/FIRMWARE_S3.md). A USB nativa é uma alternativa separada; grave somente o perfil da porta escolhida. Autenticação HMAC preservada; Wi-Fi e criptografia da flash não estão ativados nesta versão de bancada.
 
 A revisão R2 substitui a R1: corrige a seleção das ferramentas para comutar alimentação, mantendo o PWM nas duas entradas.
 
@@ -56,11 +60,11 @@ Os motores usarão fonte separada de 24 V com proteção e GND comum, mantendo o
 
 Fusível, proteção de inversão, TVS, supervisor, ESD, conectores e suas referências comerciais ainda precisam ser selecionados e dimensionados. São blocos identificados como pendentes, não circuitos prontos para fabricação.
 
-## Firmware e validação ainda pendentes
+## Firmware e validação
 
 O driver grblHAL consultado tem geração direta por RMT. Quatro STEP usam os quatro canais TX do S3; o LED endereçável não deve consumir RMT. O mapa S3 genérico tem restrição ao quarto motor: esta placa precisa de mapa próprio.
 
-Ainda faltam mapa grblHAL para esta DevKit, configuração de flash/PSRAM N16R8, firmware compilado, autenticação portada e procedimento de criptografia/proteção específico do S3. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3.
+Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos e procedimento de criptografia/proteção específico do S3. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R2 registra a proposta de hardware anterior a esta implementação; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
 
 ## Entradas, PWM e emergência
 

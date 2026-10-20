@@ -1,0 +1,64 @@
+{
+  "upstream": "https://github.com/grblHAL/ESP32.git",
+  "driver_commit": "0b2d3e1bb7da3b0ae0e03490b71275374eb84c67",
+  "submodules": [
+    {
+      "path": "main/eeprom",
+      "commit": "0c278db74edc38303b9d86583a7d51a1ec1be51e"
+    },
+    {
+      "path": "main/embroidery",
+      "commit": "9a112c3c2509563aa5c745d5773aba5a62046d7c"
+    },
+    {
+      "path": "main/grbl",
+      "commit": "4ec1ae44b857a70d2f9298344feac4b43ed0eb6b"
+    },
+    {
+      "path": "main/keypad",
+      "commit": "c34933091df668d009fe11ed7397a9b78c9bfd79"
+    },
+    {
+      "path": "main/laser",
+      "commit": "26934c6c9607e0b5ba4a711516a60d4657bf142c"
+    },
+    {
+      "path": "main/motors",
+      "commit": "9229617c1d8a3cc7a71fd584896500a779978b02"
+    },
+    {
+      "path": "main/networking",
+      "commit": "0b665ee0c0be5161d5044bdf2dcdf59ad62509f8"
+    },
+    {
+      "path": "main/openpnp",
+      "commit": "76dbbc1420dd9773b1008a21f9d97b266f564bc9"
+    },
+    {
+      "path": "main/plugins",
+      "commit": "265711922037cab6b6e47a9560ef11da3a6e5f83"
+    },
+    {
+      "path": "main/sdcard",
+      "commit": "d0fe753d622e79a60e54e729ba83f7207276114c"
+    },
+    {
+      "path": "main/spindle",
+      "commit": "8a3ae47f5a218834da9c742424c3dd22c5629fdb"
+    },
+    {
+      "path": "main/trinamic",
+      "commit": "9b304175318d93818c8967faadc89dd101b17e92"
+    },
+    {
+      "path": "main/webui",
+      "commit": "3712523bc98f0bce343b56e03bdf881cc7fd4aa0"
+    }
+  ],
+  "source_vendored": true,
+  "platformio": "6.1.18",
+  "platform": "espressif32@5.3.0",
+  "esp_idf": "4.4.3",
+  "toolchain": "xtensa-esp32s3 8.4.0+2021r2-patch5",
+  "bin_packaging_esptool": "4.8.1"
+}

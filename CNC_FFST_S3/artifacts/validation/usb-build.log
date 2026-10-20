@@ -1,0 +1,115 @@
+Processing cnc_ffst_s3_n16r8_usb (platform: espressif32@5.3.0; framework: espidf; board: esp32-s3-devkitc-1)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-s3-devkitc-1.html
+PLATFORM: Espressif 32 (5.3.0) > Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)
+HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
+DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-espidf @ 3.40403.0 (4.4.3) 
+ - tool-cmake @ 3.16.4 
+ - tool-esptoolpy @ 1.40400.0 (4.4.0) 
+ - tool-ninja @ 1.7.1 
+ - toolchain-esp32ulp @ 1.23500.220830 (2.35.0) 
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
+ - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Reading CMake configuration...
+Generating assembly for certificate bundle...
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 0 compatible libraries
+Scanning dependencies...
+No dependencies
+Building in release mode
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/main.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/driver.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/ffst_auth.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/nvs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/timers.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/uart_serial.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/ioports.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/ioports_analog.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/i2c.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/spi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/neopixel_rmt.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/neopixel_spi.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/boards/BlackBoxX32.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/boards/ooznest_cnc.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/grbllib.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/canbus.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/coolant_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/crossbar.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/crc.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/nvs_buffer.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/gcode.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/machine_limits.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/messages.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/modbus.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/modbus_rtu.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/motion_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/nuts_bolts.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/override.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/probe.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/planner.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/protocol.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/report.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/settings.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/sleep.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/spindle_control.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/state_machine.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/stream.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/stream_file.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/stream_json.o
+main/grbl/stream_json.c: In function 'json_parse_string':
+main/grbl/stream_json.c:251:10: warning: variable 'c' set but not used [-Wunused-but-set-variable]
+     char c, *s, *e, *tag, *value;
+          ^
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/stepper.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/stepper2.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/strutils.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/system.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/tool_change.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/alarms.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/errors.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/ngc_expr.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/ngc_params.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/ngc_flowctrl.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/regex.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/ioports.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/encoders.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/utf8.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/vfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/fs_device.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/fs_embedded.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/fs_ram.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/kinematics/asymmetric_ganging.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/kinematics/corexy.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/kinematics/wall_plotter.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/kinematics/delta.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/grbl/kinematics/polar.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/littlefs_hal.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/littlefs/lfs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/littlefs/lfs_util.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/sdcard/fs_littlefs.o
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/usb_serial.o
+main/usb_serial.c:53:10: fatal error: tinyusb.h: No such file or directory
+
+*****************************************************************
+* Looking for tinyusb.h dependency? Check our library registry!
+*
+* CLI  > platformio lib search "header:tinyusb.h"
+* Web  > https://registry.platformio.org/search?q=header:tinyusb.h
+*
+*****************************************************************
+
+ #include "tinyusb.h"
+          ^~~~~~~~~~~
+compilation terminated.
+*** [.pio/build/cnc_ffst_s3_n16r8_usb/main/usb_serial.o] Error 1
+========================= [FAILED] Took 10.73 seconds =========================
+
+Environment            Status    Duration
+---------------------  --------  ------------
+cnc_ffst_s3_n16r8_usb  FAILED    00:00:10.726
+==================== 1 failed, 0 succeeded in 00:00:10.726 ====================
