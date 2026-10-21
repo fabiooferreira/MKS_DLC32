@@ -4801,6 +4801,7 @@ class Streamer:
                 self.inflight.append(item)
             try:
                 self.port.write(payload)
+                self.emit('command', payload.decode('ascii').strip())
             except Exception:
                 with self.lock:
                     for index, pending in enumerate(self.inflight):
@@ -5537,7 +5538,8 @@ class App:
         self.status = tk.StringVar(value='Desconectado')
         self.coordinates = tk.StringVar(value='Posição: aguardando controladora ou simulação')
         self.connection_label = tk.StringVar(value='Serial: desconectada')
-        self.last_log_message = tk.StringVar(value='')
+        self.last_command = tk.StringVar(value='Comando: —')
+        self.last_response = tk.StringVar(value='Resposta: —')
         self.time_label = tk.StringVar(value='Total estimado: --:--:--   |   Tempo corrido: 00:00:00')
         self.job_started = None; self.job_elapsed = 0.0; self.job_estimate = None
         self.camera_index = tk.StringVar(value=str(self.config.get('camera_index', '0')))
@@ -5647,8 +5649,14 @@ class App:
         serial_line = ttk.Frame(top)
         serial_line.grid(row=1, column=0, columnspan=9, sticky='ew', pady=(6, 0))
         ttk.Label(serial_line, textvariable=self.connection_label, style='Muted.TLabel').pack(side='left')
-        ttk.Label(serial_line, textvariable=self.last_log_message, style='Muted.TLabel',
-                  anchor='e', width=1).pack(side='right', fill='x', expand=True, padx=(16, 0))
+        exchange_line = ttk.Frame(serial_line)
+        exchange_line.pack(side='right', fill='x', expand=True, padx=(16, 0))
+        exchange_line.columnconfigure(0, weight=1)
+        exchange_line.columnconfigure(1, weight=1)
+        ttk.Label(exchange_line, textvariable=self.last_command, style='Muted.TLabel',
+                  anchor='e', width=1).grid(row=0, column=0, sticky='ew', padx=(0, 16))
+        ttk.Label(exchange_line, textvariable=self.last_response, style='Muted.TLabel',
+                  anchor='e', width=1).grid(row=0, column=1, sticky='ew')
 
         bar = ttk.Frame(shell)
         bar.pack(fill='x', pady=(0, 10))
@@ -7074,9 +7082,11 @@ class App:
                             self.height_status.set('Marcar Zero interrompido; mapa guardado, compensação desativada até redefinir Z0.')
                         self._mark_zero_in_progress = False
                     self.update_macro_availability()
+                elif kind == 'command':
+                    self.last_command.set('Comando: ' + event[1])
                 elif kind == 'log':
-                    lines = str(event[1]).splitlines()
-                    self.last_log_message.set(lines[-1] if lines else '')
+                    if str(event[1]).startswith('< '):
+                        self.last_response.set('Resposta: ' + str(event[1])[2:])
                     # Registro persistente para identificar ALARM:3, PRB e resets
                     # após a falha, sem modificar a sequência de movimento.
                     self.write_diagnostic(event[1])
