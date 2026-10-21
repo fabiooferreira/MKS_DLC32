@@ -154,6 +154,37 @@ class M0Tests(unittest.TestCase):
         self.assertFalse(self.stream.running or self.stream.paused or self.stream.m0_waiting)
         self.assertFalse(self.stream._workers or self.stream.inflight)
         self.assertIsNone(self.stream._m0_anchor)
+    def test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging(self):
+        original=self.port.write
+        ended=threading.Event()
+        def delayed_write(data):
+            result=original(data)
+            if data.startswith(b'$J='):
+                self.port.state='Jog'
+                def finish():self.port.state='Idle';ended.set()
+                threading.Timer(.2,finish).start()
+            return result
+        self.port.write=delayed_write
+        self.pause()
+        self.stream.send_manual('$J=G21G91X.1F100')
+        self.wait(lambda:not self.stream._m0_editing)
+        self.assertFalse(self.stream.cancel, list(self.stream.events.queue))
+        self.assertTrue(ended.is_set())
+        self.assertTrue(self.stream.m0_alignment_ready)
+        self.assertEqual(self.stream.work_position,self.stream._m0_anchor)
+    def test_hold_during_jog_cancels_without_applying_g92_or_resuming(self):
+        original=self.port.write
+        def held_write(data):
+            result=original(data)
+            if data.startswith(b'$J='):self.port.state='Hold:0'
+            return result
+        self.port.write=held_write
+        self.pause();self.stream.send_manual('$J=G21G91X.1F100')
+        self.wait(lambda:not self.stream._m0_editing)
+        self.assertTrue(self.stream.cancel)
+        self.assertFalse(any(w.startswith('G92') for w in self.port.writes))
+        self.assertNotIn('G1X12',self.port.writes)
+        self.assertEqual(self.port.tool,'M5')
     def test_no_adjustment_is_available_outside_m0(self):
         with self.assertRaises(RuntimeError):self.stream.start_m0_alignment('G91X.1F100')
         self.assertFalse(self.port.writes)

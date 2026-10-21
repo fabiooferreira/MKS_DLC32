@@ -5396,6 +5396,20 @@ class Streamer:
         self.emit('m0_busy')
         self.start_worker(self.m0_alignment_loop, (lines,))
 
+    def wait_m0_adjustment_idle(self, timeout=120):
+        # $J ACK means accepted, not finished. Ordinary G-code is rejected in Jog.
+        deadline = time.monotonic() + timeout
+        while True:
+            self.fresh_status()
+            state = self.machine_state.lower()
+            if state == 'idle':
+                return
+            if state not in ('run', 'jog') or self.cancel:
+                raise RuntimeError('Ajuste interrompido no estado ' + self.machine_state)
+            if time.monotonic() >= deadline:
+                raise TimeoutError('Jog não confirmou parada em Idle; ajuste não repetido.')
+            time.sleep(.05)
+
     def m0_alignment_loop(self, lines):
         try:
             self.wait_idle()
@@ -5403,6 +5417,9 @@ class Streamer:
             self.sync_command('G94')
             for line in lines:
                 self.sync_command(line, 120)
+                if line.startswith('$J='):
+                    self.wait_m0_adjustment_idle()
+            self.wait_m0_adjustment_idle()
             self.sync_command('G4 P0.01', 120)
             self.wait_idle()
             self.sync_command('G21 G90 G94')

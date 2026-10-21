@@ -1,0 +1,26 @@
+test_alarm_before_adjustment_cancels_job_without_motion (__main__.M0Tests.test_alarm_before_adjustment_cancels_job_without_motion) ... ok
+test_disconnect_ends_worker_and_clears_execution_state (__main__.M0Tests.test_disconnect_ends_worker_and_clears_execution_state) ... ok
+test_existing_offset_is_preserved_and_incremented (__main__.M0Tests.test_existing_offset_is_preserved_and_incremented) ... ok
+test_file_origin_change_after_pause_is_rejected_before_sending (__main__.M0Tests.test_file_origin_change_after_pause_is_rejected_before_sending) ... ok
+test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging (__main__.M0Tests.test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging) ... FAIL
+test_jog_step_is_mm_even_when_file_uses_inches (__main__.M0Tests.test_jog_step_is_mm_even_when_file_uses_inches) ... ok
+test_no_adjustment_is_available_outside_m0 (__main__.M0Tests.test_no_adjustment_is_available_outside_m0) ... ok
+test_normal_manual_motion_updates_coordinates_outside_pause (__main__.M0Tests.test_normal_manual_motion_updates_coordinates_outside_pause) ... ok
+test_reset_cancels_pause_without_rearming_tool (__main__.M0Tests.test_reset_cancels_pause_without_rearming_tool) ... ok
+test_resume_during_adjustment_is_rejected (__main__.M0Tests.test_resume_during_adjustment_is_rejected) ... ok
+test_safe_tool_off_macro_is_allowed (__main__.M0Tests.test_safe_tool_off_macro_is_allowed) ... ok
+test_unsafe_macro_is_rejected_whole_without_motion (__main__.M0Tests.test_unsafe_macro_is_rejected_whole_without_motion) ... ok
+test_xyz_macros_and_jog_preserve_work_position_and_shift_remainder (__main__.M0Tests.test_xyz_macros_and_jog_preserve_work_position_and_shift_remainder) ... ok
+
+======================================================================
+FAIL: test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging (__main__.M0Tests.test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_m0_alignment.py", line 171, in test_jog_ack_before_motion_finished_does_not_send_gcode_while_jogging
+    self.assertFalse(self.stream.cancel, list(self.stream.events.queue))
+AssertionError: True is not false : [('command', '$32=1'), ('log', '> $32=1'), ('log', '< ok'), ('ack', None), ('log', 'Modo automático: LASER ($32=1)'), ('command', 'G1X11F100'), ('progress', 1, 3), ('log', '< ok'), ('ack', 1), ('command', 'G4 P0.01'), ('log', '> G4 P0.01'), ('log', '< ok'), ('ack', None), ('probe_state', False), ('position', 11.0, 20.0, 'Idle'), ('command', '$G'), ('log', '> $G'), ('log', '< [GC:G1 G54 G17 G21 G90 G94 M3 M9 F100.0 S1000.0]'), ('log', '< ok'), ('ack', None), ('command', 'M5'), ('log', '> M5'), ('log', '< ok'), ('ack', None), ('command', '$$'), ('log', '> $$'), ('log', '< $13=0'), ('log', '< ok'), ('ack', None), ('probe_state', False), ('position', 11.0, 20.0, 'Idle'), ('log', 'M0 linha 2: parado, M5; ajuste XYZ por movimentos/macros e clique Retornar.'), ('m0_alignment', 2), ('m0_busy',), ('probe_state', False), ('command', 'M5'), ('log', '> M5'), ('log', '< ok'), ('ack', None), ('command', 'G94'), ('log', '> G94'), ('log', '< ok'), ('ack', None), ('log', '< ok'), ('ack', None), ('command', '$J=G21G91X.1F100'), ('log', '> $J=G21G91X.1F100'), ('command', 'G4 P0.01'), ('log', '> G4 P0.01'), ('log', '< error:9'), ('error', None, 'error:9'), ('fault', 'Ajuste M0 interrompido: Operação cancelada ou erro da controladora.. Confira a posição antes de novo trabalho.'), ('m0_adjusted',)]
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.388s
+
+FAILED (failures=1)

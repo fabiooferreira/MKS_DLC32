@@ -41,3 +41,11 @@ A habilitação das macros agora depende de execução real (`stream.running`) e
 Na desconexão/reconexão, o programa cancela e encerra as threads da sessão anterior, limpa fila de comandos, pausa, ajuste, posições/modal em cache, progresso, temporizador e identificação do trabalho ativo. A nova porta recebe autenticação nova; nenhum arquivo é retomado. Se uma operação antiga não encerrar dentro da espera limitada de 2 s, a nova conexão é recusada até ela encerrar. Arquivos carregados, macros e parâmetros GRBL permanecem; a rotina não envia restauração de fábrica nem elimina G92 físico na placa. Desconectar a interface cancela o envio, mas não substitui Cancelar/emergência para interromper movimento já aceito pelo controlador.
 
 Validação desta correção: o caso `$X` com seleção residual falhou no cliente antigo (`unlock-before.log`, falha esperada de regressão) e passou no corrigido. Testes Tk incluem desconectar/reconectar com pausa/progresso pendentes, sessão autenticada nova e macros habilitadas. Passaram nos três perfis e no Montador. Os 12 testes de ajuste/desconexão, 3 de streaming e o diálogo de conferência também passaram. Validação física permanece pendente.
+
+## Correção do erro 9 após jog
+
+O ACK de `$J` confirma aceitação, sem garantir que o deslocamento terminou. O programa anterior enviava G4 logo após o ACK, ainda em Jog, estado em que o firmware recusa G-code comum com erro 9. O ajuste agora consulta status e aguarda Idle antes do próximo comando não-jog e antes de G4/G92. Durante essa espera somente Run/Jog são tolerados; Hold, alarme, emergência, cancelamento e timeout continuam interrompendo o trabalho. Não se repete o jog.
+
+A regressão usa ACK imediato seguido de estado Jog temporário; reproduziu erro 9 e cancelamento no cliente anterior e passou após corrigir a ordem. O BIN permanece idêntico. Se o erro ocorreu após o deslocamento, G92 pode não ter sido aplicado: conferir posição antes de iniciar outro trabalho. O ajuste continua aguardando teste físico na placa.
+
+Resultado desta entrega: 14 testes de ajuste, incluindo Jog com ACK antecipado e Hold durante o jog, passaram; caixa de conferência e GUI dos três perfis/Montador também passaram. `jog-before.log` registra a falha esperada no cliente antigo; `jog-after.log` registra a correção. Testes modelados, sem movimento físico na nuvem.
