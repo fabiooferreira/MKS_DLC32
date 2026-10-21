@@ -26,7 +26,7 @@ with tempfile.TemporaryDirectory() as tmp:
  assert (t/'wrong.bin').read_bytes()!=app.read_bytes()
  print('PASS: real espsecure AES-XTS roundtrip at update offset; another key cannot recover the application.')
  # Signature verification uses the exact bootloader bytes that will be written.
- full=(r/'artifacts/PROTECTED/CNC_FFST_S3_0.2.1_PROTECTED_FULL_16MB.bin').read_bytes()
+ full=(r/'artifacts/PROTECTED/CNC_FFST_S3_0.2.2_PROTECTED_FULL_16MB.bin').read_bytes()
  boot=r/'artifacts/PROTECTED/bootloader_signed.bin'
  assert full[:len(boot.read_bytes())]==boot.read_bytes()
  run('espsecure',['verify_signature','--version','2','--keyfile',str(r/'artifacts/PROTECTED/secure_boot_public_key.pem'),str(boot)])

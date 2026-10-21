@@ -75,6 +75,10 @@ def exchange(port, command, timeout=8):
                        'Confira o BIN CNC_FFST 0.3.0, a porta e 115200 baud.')
 
 
+class SessionChanged(RuntimeError):
+    pass
+
+
 class SignedPort:
     """Serial-compatible wrapper. A separate pump keeps ACK handling independent of GUI locks.
 
@@ -96,27 +100,61 @@ class SignedPort:
         self._ready.set()
         self._tx = threading.Lock()
         self._kind = None
+        self._identity_path = identity_path
+        self._recovering = False
+        self._generation = 0
         try:
             time.sleep(boot_wait)
             raw.reset_input_buffer()
-            image_hash = verify_firmware(raw, identity_path)
-            lines = exchange(raw, '$FFHELLO')
-            matches = [re.fullmatch(r'\[FFNONCE:([0-9a-f]{64}):([0-9a-f]{64})\]', s)
-                       for s in lines]
-            match = next((m for m in matches if m), None)
-            if not match:
-                raise RuntimeError('Resposta de autenticação inválida.')
-            self.nonce = match[1]
-            if not hmac.compare_digest(mac(key, 'server|' + self.nonce + '|' + image_hash), match[2]):
-                raise RuntimeError('A placa não corresponde à chave local.')
-            reply = exchange(raw, '$FFAUTH=' + mac(key, 'client|' + self.nonce + '|' + image_hash))
-            if '[FFAUTH:OK]' not in reply:
-                raise RuntimeError('Autenticação não confirmada.')
+            self._authenticate()
         except Exception:
             raw.close()
             raise
         self._reader = threading.Thread(target=self._pump, daemon=True)
         self._reader.start()
+
+    def _authenticate(self):
+        image_hash = verify_firmware(self.raw, self._identity_path)
+        lines = exchange(self.raw, '$FFHELLO')
+        matches = [re.fullmatch(r'\[FFNONCE:([0-9a-f]{64}):([0-9a-f]{64})\]', s)
+                   for s in lines]
+        match = next((m for m in matches if m), None)
+        if not match:
+            raise RuntimeError('Resposta de autenticação inválida.')
+        self.nonce = match[1]
+        if not hmac.compare_digest(mac(self.key, 'server|' + self.nonce + '|' + image_hash), match[2]):
+            raise RuntimeError('A placa não corresponde à chave local.')
+        reply = exchange(self.raw, '$FFAUTH=' + mac(self.key, 'client|' + self.nonce + '|' + image_hash))
+        if '[FFAUTH:OK]' not in reply:
+            raise RuntimeError('Autenticação não confirmada.')
+        self.seq = self.rtseq = 0
+
+    @property
+    def authenticated(self):
+        return self.is_open and self.nonce is not None and not self._recovering and self.failure is None
+
+    def _recover_session(self):
+        self._recovering = True
+        self._ready.clear()
+        self._generation += 1
+        pending, self._kind = self._kind, None
+        try:
+            with self._wire:
+                time.sleep(.2)
+                self.raw.reset_input_buffer()
+                self._authenticate()
+            self.failure = None
+            if pending is not None:
+                # Stop the application's outstanding operation. Never repeat an uncertain move.
+                self._responses.put(b'[MSG:Comando anterior sem confirmacao; nao repetido.]\n')
+                self._responses.put(b'error:9\n')
+            self._responses.put(b'[MSG:Sessao autenticada renovada na mesma porta.]\n')
+        except Exception as exc:
+            self.failure = RuntimeError('Falha ao renovar autenticação: ' + str(exc))
+            raise
+        finally:
+            self._recovering = False
+            self._ready.set()
 
     @property
     def port(self):
@@ -145,22 +183,24 @@ class SignedPort:
                     self._responses.put(b'error:110\n')
                     self._ready.set()
                     continue
-                if text.startswith(b'grbl'):
-                    self.failure = RuntimeError('Placa reiniciada. Reconecte para autenticar novamente.')
-                    self._ready.set()
+                if text.startswith(b'grbl') or text == b'[ffsession:reset]':
+                    self._responses.put(response)
+                    self._recover_session()
+                    continue
                 if text == b'ok' or text.startswith(b'error:'):
                     kind, self._kind = self._kind, None
-                    if text.startswith(b'error:'):
-                        self.failure = RuntimeError('Comando recusado pela placa: ' +
-                                                    text.decode('ascii', 'replace') +
-                                                    '. Reconecte após corrigir a causa.')
+                    if text == b'error:78':
+                        self._responses.put(response)
+                        self._recover_session()
+                        continue
+                    # G-code, alarm and limit errors reject that operation, not authentication.
                     self._ready.set()
                     if kind == 'rt':
                         # Realtime API has no GRBL line in the application's inflight queue.
                         continue
                 self._responses.put(response)
-        except Exception:
-            self.failure = RuntimeError('Conexão interrompida. Reconecte para autenticar.')
+        except Exception as exc:
+            self.failure = RuntimeError('Conexão/autenticação interrompida: ' + str(exc))
             self._ready.set()
         finally:
             self._responses.put(None)
@@ -177,6 +217,9 @@ class SignedPort:
             return b''
 
     def _signed(self, command, kind):
+        generation = self._generation
+        if self._recovering:
+            raise RuntimeError('Autenticação sendo renovada; comando não enviado.')
         encoded = command.encode('ascii')
         if not 1 <= len(encoded) <= 200 or any(c < 32 or c > 126 for c in encoded):
             raise ValueError('Cada comando deve ter 1–200 caracteres ASCII, em uma única linha.')
@@ -201,13 +244,19 @@ class SignedPort:
             self._ready.clear()
             try:
                 with self._wire:
+                    if generation != self._generation or self._recovering:
+                        self._kind = None
+                        raise SessionChanged('Sessão renovada; comando não enviado. Confirme o estado antes de tentar novamente.')
                     if self.raw.write(wire) != len(wire):
                         raise OSError('Escrita incompleta; não repetir movimento.')
+                    self.seq += 1
+            except SessionChanged:
+                self._ready.set()
+                raise
             except Exception:
                 self.failure = OSError('Falha de envio. Reconecte; comando não será repetido.')
                 self._ready.set()
                 raise
-            self.seq += 1
 
     def write(self, data):
         data = bytes(data)
@@ -215,10 +264,10 @@ class SignedPort:
             raise OSError('Conexão fechada.')
         if data and all(c in SAFE_REALTIME for c in data):
             # Stop/status/reset bypass HMAC and the pending-command queue.
+            if self._recovering and all(c == ord('?') for c in data):
+                return len(data)
             result = self.raw.write(data)
-            if b'\x18' in data:
-                self.failure = RuntimeError('Reset enviado. Reconecte para autenticar novamente.')
-                self._ready.set()
+            # Firmware reports session reset; reader renews it without resending moves.
             return result
         if len(data) == 1 and (data[0] >= 0x80 or data == b'~'):
             self._signed_realtime(data[0])
@@ -233,6 +282,9 @@ class SignedPort:
     def _signed_realtime(self, command):
         # A resume must not wait for the ACK of a held G38.x command.
         with self._rt_tx:
+            generation = self._generation
+            if self._recovering:
+                raise RuntimeError('Autenticação sendo renovada; aguarde antes de retomar.')
             if self.failure:
                 raise self.failure
             if self.rtseq >= 0xffffffff:
@@ -241,13 +293,20 @@ class SignedPort:
             tag = mac(self.key, self.nonce + '|rt|' + seq + '|' + value)
             wire = b'\xf8' + (seq + ',' + tag + ',' + value + '\n').encode('ascii')
             with self._wire:
+                if generation != self._generation or self._recovering:
+                    raise RuntimeError('Sessão renovada; retomada não enviada.')
                 if self.raw.write(wire) != len(wire):
                     self.failure = OSError('Falha de envio realtime; não repetir automaticamente.')
                     raise self.failure
-            self.rtseq += 1
+                self.rtseq += 1
 
     def close(self):
         self._closed = True
+        try:
+            with self._wire:
+                if self.raw.is_open:self.raw.write(b'$FFBYE\n')
+        except Exception:
+            pass
         self._ready.set()
         self.raw.close()
 

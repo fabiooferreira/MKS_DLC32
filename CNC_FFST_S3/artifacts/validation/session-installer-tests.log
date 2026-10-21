@@ -1,0 +1,12 @@
+test_app_only_rejected (__main__.InstallerTests.test_app_only_rejected) ... ok
+test_corrupt_image_rejected (__main__.InstallerTests.test_corrupt_image_rejected) ... ok
+test_other_chip_never_written (__main__.InstallerTests.test_other_chip_never_written) ... ok
+test_other_flash_never_written (__main__.InstallerTests.test_other_flash_never_written) ... ok
+test_valid_release_image (__main__.InstallerTests.test_valid_release_image) ... ok
+test_verify_failure_is_failure (__main__.InstallerTests.test_verify_failure_is_failure) ... ok
+test_write_then_verify_without_force_or_efuses (__main__.InstallerTests.test_write_then_verify_without_force_or_efuses) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.266s
+
+OK

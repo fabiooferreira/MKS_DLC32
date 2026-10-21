@@ -1,6 +1,6 @@
-# CNC_FFST-S3 0.1.1 — firmware inicial para bancada
+# CNC_FFST-S3 0.1.2 — firmware de bancada
 
-Para o novo instalador com opção de proteção e atualizações, consultar [INSTALADOR_E_PROTECAO.md](INSTALADOR_E_PROTECAO.md). Este documento descreve os BINs reversíveis 0.1.1; suas limitações de criptografia não se aplicam à configuração protegida 0.2.1.
+Para o novo instalador com opção de proteção e atualizações, consultar [INSTALADOR_E_PROTECAO.md](INSTALADOR_E_PROTECAO.md). Este documento descreve os BINs reversíveis 0.1.2; suas limitações de criptografia não se aplicam à configuração protegida 0.2.2.
 
 Alvo: **ESP32-S3 N16R8, 16 MB de flash / 8 MB de PSRAM octal**, na placa-base proposta R2. Sem display, DRV8825 encaixáveis, XYZA, STEP/DIR diretos, ENABLE comum e PWM 3,3 V ligado simultaneamente ao laser e ao controlador do spindle. A chave externa seleciona a alimentação das ferramentas.
 
@@ -33,7 +33,7 @@ A interface mantém controles de PCB/XYZ. O firmware aceita A por G-code autenti
 
 ## Arquivos de cada pacote
 
-- `CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin` ou `...USB_FULL_16MB.bin`: **arquivo único completo de 16.777.216 bytes, para endereço 0x0**.
+- `CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin` ou `...USB_FULL_16MB.bin`: **arquivo único completo de 16.777.216 bytes, para endereço 0x0**.
 - `CNC_FFST_Unico.py`: cliente em um único arquivo, com credencial e identidade da imagem correspondentes embutidas.
 - `manifest.json` / `firmware_identity.json` / `SHA256SUMS`: identificação e hashes.
 - `LEIA_PRIMEIRO.md` e logs: instruções, avisos e limites.
@@ -60,8 +60,8 @@ Se não for ESP32-S3 com 16 MB, não gravar este pacote. Se não entrar em downl
 Para o pacote UART:
 
 ```powershell
-py -3.12 -m esptool --chip esp32s3 --port COM7 write_flash --flash_mode keep --flash_freq keep --flash_size keep 0x0 CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin
-py -3.12 -m esptool --chip esp32s3 --port COM7 verify_flash 0x0 CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin
+py -3.12 -m esptool --chip esp32s3 --port COM7 write_flash --flash_mode keep --flash_freq keep --flash_size keep 0x0 CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin
+py -3.12 -m esptool --chip esp32s3 --port COM7 verify_flash 0x0 CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin
 py -3.12 CNC_FFST_Unico.py
 ```
 
@@ -152,3 +152,7 @@ Duas compilações passaram, UART e USB nativa. Testes do adaptador C real execu
 Os logs completos, incluindo falhas iniciais corrigidas e avisos, estão em `artifacts/validation/`. Falhas corrigidas: recursos HTML embutidos não necessários causavam erro de caminho no PlatformIO; USB nativa exigia habilitar o componente TinyUSB no sdkconfig. Um mirror de pacotes negou acesso e o próprio PlatformIO completou por outro mirror, sem desabilitar verificação.
 
 Os ensaios reais de boot, movimento, laser/spindle, limites, emergência, perda de comunicação e sondagem continuam obrigatórios para validar o firmware na sua placa. Nenhum teste de host deve ser tratado como validação física de segurança.
+
+## Sessão de autenticação
+
+Veja [SESSAO_0.1.2.md](SESSAO_0.1.2.md): autenticação a cada abertura, continuidade após erros de comandos e renovação após reset sem repetição automática de movimento.

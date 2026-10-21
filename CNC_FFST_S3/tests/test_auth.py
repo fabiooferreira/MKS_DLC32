@@ -10,6 +10,7 @@ import re
 import subprocess
 import tempfile
 import unittest
+import time
 
 ROOT=Path(__file__).resolve().parents[1]
 KEY=b'K'*32
@@ -75,7 +76,7 @@ class AuthTests(unittest.TestCase):
         self.assertFalse(self.lib.host_rt_allowed(ord('~')))
     def test_identity_matches_exact_firmware(self):
         self.assertEqual(self.line('$FFINFO'),0)
-        self.assertIn('[FFFW:CNC_FFST-S3-0.1.1:'+HASH+']',self.output())
+        self.assertIn('[FFFW:CNC_FFST-S3-0.1.2:'+HASH+']',self.output())
     def test_raw_motion_tool_homing_jog_probe_blocked(self):
         for line in ['G0X1','G1A1F1','M3S100','G38.2Z-1F1','$H','$J=G91X1F1','$N0=G0X1','$I=FAKE']:
             self.assertNotEqual(self.line(line),0,line)
@@ -146,7 +147,7 @@ class AuthTests(unittest.TestCase):
         class RawPort:
             is_open=True
             port='USB_SIM'
-            def __init__(self):self.rx=queue.Queue()
+            def __init__(self):self.rx=queue.Queue();self.writes=[]
             def reset_input_buffer(self):
                 while not self.rx.empty():self.rx.get_nowait()
             def close(self):self.is_open=False
@@ -154,18 +155,21 @@ class AuthTests(unittest.TestCase):
                 try:return self.rx.get(timeout=.05)
                 except queue.Empty:return b''
             def write(self,data):
+                self.writes.append(data)
                 lib.host_clear()
                 if data.startswith(b'\xf8'):
                     lib.host_frame(data,len(data))
                     for line in lib.host_output().splitlines():self.rx.put(line+b'\n')
-                elif data==b'\x18':lib.host_reset()
+                elif data==b'\x18':
+                    lib.host_reset();lib.host_frame(b'',0)
+                    for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
                 elif data==b'?':self.rx.put(b'<Idle|MPos:0,0,0,0|FS:0,0>\n')
                 else:
                     lib.host_serial_bytes(data,len(data))
                     for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
                 return len(data)
         identity=Path(self.temp.name)/'identity.json'
-        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.1','app_image_sha256':HASH}))
+        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.2','app_image_sha256':HASH}))
         raw=RawPort();port=client.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
         try:
             port.write(b'G1A45F10\n')
@@ -173,9 +177,39 @@ class AuthTests(unittest.TestCase):
             self.assertEqual(lib.host_last_command(),b'G1A45F10')
             port.write(b'~')
             self.assertEqual(lib.host_rt_executed(),1)
+            old_nonce=port.nonce;old_generation=port._generation
+            before=lib.host_executed();sent=len(raw.writes)
             port.write(b'\x18')
-            with self.assertRaises(RuntimeError):port.write(b'G0X1\n')
+            deadline=time.monotonic()+4
+            while time.monotonic()<deadline and not (port._generation>old_generation and port.authenticated and port._ready.is_set()):time.sleep(.01)
+            self.assertTrue(port.authenticated,str(port.failure))
+            self.assertNotEqual(port.nonce,old_nonce)
+            self.assertIs(port.raw,raw);self.assertTrue(raw.is_open)
+            self.assertEqual(lib.host_executed(),before) # No movement replay.
+            self.assertFalse(any(w.startswith(b'$FFCMD=') for w in raw.writes[sent:]))
+            while port.readline():pass
+            lib.host_state(2)
+            current_nonce=port.nonce
+            port.write(b'G0X1\n')
+            self.assertEqual(port.readline(),b'error:9\n')
+            self.assertTrue(port.authenticated)
+            self.assertEqual(port.nonce,current_nonce) # Safety rejection keeps session.
+            lib.host_state(0)
+            port.write(b'G0X2\n')
+            self.assertEqual(port.readline(),b'ok\n')
+            self.assertEqual(lib.host_last_command(),b'G0X2')
         finally:port.close()
+    def test_close_session_invalidates_old_signed_packets(self):
+        self.hello();packet=self.envelope('G0X1')
+        self.assertEqual(self.line('$FFBYE'),0)
+        self.assertNotEqual(self.line(packet),0)
+        self.assertEqual(self.lib.host_executed(),0)
+    def test_reset_notice_is_single_and_discards_stale_realtime(self):
+        self.hello();self.lib.host_reset();self.lib.host_reset()
+        self.lib.host_clear();self.lib.host_frame(b'',0)
+        self.assertEqual(self.output().count('[FFSESSION:RESET]'),1)
+        self.lib.host_clear();self.lib.host_frame(b'',0)
+        self.assertNotIn('[FFSESSION:RESET]',self.output())
     def test_guards_present_in_real_core_entry_points(self):
         protocol=(ROOT/'firmware/main/grbl/protocol.c').read_text()
         self.assertNotIn('system_execute_line(',protocol)

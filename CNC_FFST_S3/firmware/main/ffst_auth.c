@@ -34,7 +34,7 @@
 static uint8_t key[32];
 static char image_hash[65], nonce[65];
 static uint32_t sequence, rt_sequence;
-static volatile bool authenticated;
+static volatile bool authenticated, session_notice;
 static volatile uint32_t epoch;
 static TaskHandle_t owner;
 static unsigned trusted_depth, command_active;
@@ -98,12 +98,14 @@ bool IRAM_ATTR ffst_auth_trusted(void)
 {
     return !xPortInIsrContext() && owner && owner==xTaskGetCurrentTaskHandle() && trusted_depth;
 }
-void IRAM_ATTR ffst_auth_reset(void)
+static void IRAM_ATTR reset_session(bool notify)
 {
     if(xPortInIsrContext()) portENTER_CRITICAL_ISR(&mux); else portENTER_CRITICAL(&mux);
+    session_notice=notify ? (session_notice || authenticated) : false;
     authenticated=false;nonce[0]=0;epoch++;frame.active=false;
     if(xPortInIsrContext()) portEXIT_CRITICAL_ISR(&mux); else portEXIT_CRITICAL(&mux);
 }
+void IRAM_ATTR ffst_auth_reset(void) {reset_session(true);}
 static void IRAM_ATTR on_reset(void) { ffst_auth_reset();if(old_reset) old_reset(); }
 static void on_stream(void) { ffst_auth_reset();if(old_stream) old_stream(); }
 static bool signed_rt(uint8_t c)
@@ -152,8 +154,14 @@ bool IRAM_ATTR ffst_auth_rx(uint8_t c)
 }
 void ffst_auth_poll(void)
 {
-    if(!rt_queue) return;
+    bool notice;
+    portENTER_CRITICAL(&mux);notice=session_notice;session_notice=false;portEXIT_CRITICAL(&mux);
     rt_packet_t packet;
+    if(notice) {
+        if(rt_queue) while(xQueueReceive(rt_queue,&packet,0)==pdTRUE) {}
+        hal.stream.write("[FFSESSION:RESET]\r\n");
+    }
+    if(!rt_queue) return;
     while(xQueueReceive(rt_queue,&packet,0)==pdTRUE) {
         bool accepted=false;
         char *seq=packet.text,*tag=strchr(seq,','),*cmd=tag?strchr(tag+1,','):NULL;
@@ -235,8 +243,9 @@ bool ffst_auth_system(char *line,status_code_t *result)
         hal.stream.write("[FFFW:" FFST_FIRMWARE_VERSION ":");hal.stream.write(image_hash);hal.stream.write("]\r\n");
         *result=Status_OK;return true;
     }
+    if(!strcmp(line,"$FFBYE")) {reset_session(false);*result=Status_OK;return true;}
     if(!strcmp(line,"$FFHELLO")) {
-        ffst_auth_reset();sequence=rt_sequence=0;
+        reset_session(false);sequence=rt_sequence=0;
         uint8_t random[32],tag[32];char msg[160],taghex[65];
         /* Radio/ADC are unused on this USB-only profile: provide fresh HWRNG entropy. */
         bootloader_random_enable();esp_fill_random(random,sizeof(random));bootloader_random_disable();
@@ -308,6 +317,7 @@ status_code_t ffst_auth_input_gcode(char *line)
 }
 void ffst_auth_init(void)
 {
+    reset_session(false);
     for(unsigned i=0;i<32;i++)key[i]=ffst_key_record[sizeof("FFST_SHAREDKEY1:")-1+i];
     rt_queue=xQueueCreate(4,sizeof(rt_packet_t));
     // Fail closed if no queue: line authentication works; realtime frames are discarded.

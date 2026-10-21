@@ -1,0 +1,21 @@
+test_fresh_authenticated_security_report (__main__.SecurityReportTests.test_fresh_authenticated_security_report) ... ok
+test_incomplete_protection_rejected (__main__.SecurityReportTests.test_incomplete_protection_rejected) ... ok
+test_old_security_response_rejected (__main__.SecurityReportTests.test_old_security_response_rejected) ... ok
+test_wrong_application_hash_rejected (__main__.SecurityReportTests.test_wrong_application_hash_rejected) ... ok
+test_customer_client_does_not_embed_firmware (__main__.Tests.test_customer_client_does_not_embed_firmware) ... ok
+test_distinct_boards_get_distinct_keys (__main__.Tests.test_distinct_boards_get_distinct_keys) ... ok
+test_existing_security_prevents_burn (__main__.Tests.test_existing_security_prevents_burn) ... ok
+test_initial_sequence_keys_backup_then_write_no_boot (__main__.Tests.test_initial_sequence_keys_backup_then_write_no_boot) ... ok
+test_missing_backup_prevents_burn (__main__.Tests.test_missing_backup_prevents_burn) ... ok
+test_overlapping_backup_rejected (__main__.Tests.test_overlapping_backup_rejected) ... ok
+test_owner_key_matches_built_image (__main__.Tests.test_owner_key_matches_built_image) ... ok
+test_owner_private_key_not_optional (__main__.Tests.test_owner_private_key_not_optional) ... ok
+test_protected_bin_refused_in_reversible_mode (__main__.Tests.test_protected_bin_refused_in_reversible_mode) ... ok
+test_signed_full_image_validates (__main__.Tests.test_signed_full_image_validates) ... ok
+test_update_only_writes_encrypted_application (__main__.Tests.test_update_only_writes_encrypted_application) ... ok
+test_wrong_local_key_blocks_update (__main__.Tests.test_wrong_local_key_blocks_update) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.681s
+
+OK

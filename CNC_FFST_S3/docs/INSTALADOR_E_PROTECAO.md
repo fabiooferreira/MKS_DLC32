@@ -5,7 +5,7 @@ Destinado exclusivamente à DevKit **ESP32-S3 N16R8** e carrier CNC_FFST S3 R2. 
 ## Abrir no Windows
 
 1. Instalar Python 3.12 com Tkinter (incluído no instalador oficial).
-2. Extrair completamente o ZIP `CNC_FFST_S3_Instalador_0.2.1.zip` em uma pasta local com permissão de escrita. Manter a pasta `CNC_FFST_S3` de fontes.
+2. Extrair completamente o ZIP `CNC_FFST_S3_Instalador_0.2.2.zip` em uma pasta local com permissão de escrita. Manter a pasta `CNC_FFST_S3` de fontes.
 3. Abrir `Instalador_CNC_FFST_S3.py`, ou executar `py -3.12 Instalador_CNC_FFST_S3.py` no PowerShell da pasta extraída.
 4. Clicar em **Instalar dependências**. Requer internet: esptool 4.8.1, bitstring 4.3.1 e pyserial 3.5.
 5. Usar a **USB/serial da DevKit**, fechar outros programas que usam a porta e deixar motores, laser e spindle fisicamente sem alimentação.
@@ -19,7 +19,7 @@ O programa de controle estava identificado como `CNC_FFST_Unico.py`. O pacote ag
 - Executar `INSTALAR_DEPENDENCIAS_CONTROLE.cmd` uma vez para instalar pyserial/Pillow.
 - Executar `ABRIR_FABRICACAO_FRESA_LASER.cmd` para abrir o controle.
 - Fechar o instalador antes de conectar no controle. Selecionar/digitar a porta, por exemplo COM8, e usar 115200 baud.
-- O programa da raiz é para o BIN **UART reversível 0.1.1** fornecido. A placa sem o condicionamento da carrier pode indicar limites/emergência ativos; não desativar essas proteções para movimentar.
+- O programa da raiz é para o BIN **UART reversível 0.1.2** fornecido. A placa sem o condicionamento da carrier pode indicar limites/emergência ativos; não desativar essas proteções para movimentar.
 - Para o perfil protegido, preparar o firmware com sua chave e usar `python/PROTECTED/Fabricação Fresa Laser.py` gerado na mesma preparação. Sua credencial e identificação estarão embutidas; o BIN protegido completo não estará no programa de controle.
 
 ## Opção Reversível

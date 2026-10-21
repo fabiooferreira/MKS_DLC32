@@ -54,7 +54,7 @@ def icon_path(saved_path):
     return RESOURCE_DIR / filename
 
 
-APP_VERSION = 'S3 0.1.1 — Controlador PCB autenticado'
+APP_VERSION = 'S3 0.1.2 — Controlador PCB autenticado'
 DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
     {'name': 'Laser OFF', 'command': 'M5'},
     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}
@@ -1473,6 +1473,10 @@ class App:
     def update_indicators(self):
         port = self.stream.port
         if self.stream.simulation: connection = 'Serial: simulação (sem conexão)'
+        elif port and port.is_open and getattr(port, '_recovering', False):
+            connection = f'Serial: {port.port} — renovando autenticação, movimento bloqueado'
+        elif port and port.is_open and not getattr(port, 'authenticated', True):
+            connection = f'Serial: {port.port} — autenticação inválida; reconecte'
         elif port and port.is_open:
             age = time.monotonic()-self.stream.status_time
             state = self.stream.machine_state or 'aguardando status'

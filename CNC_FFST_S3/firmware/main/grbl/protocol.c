@@ -508,6 +508,7 @@ bool protocol_exec_rt_system (void)
                     report_realtime_status(hal.stream.write_all, &hal.stream.report);
                 }
 
+                ffst_auth_poll(); // Foreground session notification; no motion bypass.
                 protocol_poll_cmd();
                 task_execute(false);
             }

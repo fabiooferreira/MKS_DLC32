@@ -11,11 +11,11 @@ EXCLUDED_NAMES = {'ffst_key.generated.h', 'compile_commands.json', 'imagens_loca
 
 
 def main():
-    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.1.zip'
+    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.2.zip'
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         archive.write(ROOT/'installer/Instalador_CNC_FFST_S3.py', 'Instalador_CNC_FFST_S3.py')
-        archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin',
-                      'CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin')
+        archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin',
+                      'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin')
         archive.write(ROOT/'python/UART/Fabricação Fresa Laser.py', 'Fabricação Fresa Laser.py')
         archive.writestr('ABRIR_FABRICACAO_FRESA_LASER.cmd', '@echo off\r\nchcp 65001 >nul\r\npy -3.12 "%~dp0Fabricação Fresa Laser.py"\r\npause\r\n')
         archive.writestr('INSTALAR_DEPENDENCIAS_CONTROLE.cmd', '@echo off\r\npy -3.12 -m pip install pyserial==3.5 pillow==11.3.0\r\npause\r\n')
@@ -32,15 +32,16 @@ def main():
         assert archive.testzip() is None
         assert all('.private' not in Path(name).parts and not name.lower().endswith('.pem') for name in archive.namelist())
         assert not any('/PROTECTED/' in name for name in archive.namelist())
-    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.1_Correcao.zip'
+    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.2_Correcao.zip'
     with zipfile.ZipFile(output) as source, zipfile.ZipFile(controller, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in ['Fabricação Fresa Laser.py', 'ABRIR_FABRICACAO_FRESA_LASER.cmd', 'INSTALAR_DEPENDENCIAS_CONTROLE.cmd',
-                     'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.1_UART_FULL_16MB.bin']:
+                     'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin']:
             archive.writestr(name, source.read(name))
         archive.writestr('LEIA_PRIMEIRO.txt',
-            'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.1.\n'
-            'Correção de CR/LF descartados na recepção serial. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
-            'Gravar o BIN UART 0.1.1 pelo instalador atualizado, no modo Reversível, e usar o programa deste pacote.\n'
+            'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.2.\n'
+            'Autenticação ao abrir a porta, mantida na conexão e renovada após reset sem repetir movimentos. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
+            'Antes de gravar, salve as configurações com $$: este BIN completo substitui as configurações na flash.\n'
+            'Gravar o BIN UART 0.1.2 pelo instalador atualizado, no modo Reversível, e usar o programa deste pacote.\n'
             'Se a placa já estiver protegida, NÃO tentar provisionar novamente: exige atualização específica com as chaves existentes.\n'
             'Requer Python 3.12. Execute INSTALAR_DEPENDENCIAS_CONTROLE.cmd uma vez, depois ABRIR_FABRICACAO_FRESA_LASER.cmd.\n'
             'Feche o instalador/outros programas da porta antes de conectar. Use sua COM (exemplo COM8) e 115200 baud.\n'

@@ -48,7 +48,9 @@ class RawPort:
             if data.startswith(b'\xf8'):
                 self.lib.host_frame(data,len(data))
                 for line in self.lib.host_output().splitlines():self.rx.put(line+b'\n')
-            elif data==b'\x18':self.lib.host_reset()
+            elif data==b'\x18':
+                self.lib.host_reset();self.lib.host_frame(b'',0)
+                for line in self.lib.host_output().splitlines():self.rx.put(line+b'\n')
             elif data==b'?':self.rx.put(b'<Idle|MPos:1,2,3,4|WCO:0,0,0,0|FS:0,0>\n')
             elif data in [b'!',b'\x84',b'\x85']:pass
             else:
@@ -61,7 +63,7 @@ def main(builder_path):
     try:
         with tempfile.TemporaryDirectory(prefix='ffst-s3-gui-') as directory:
             base=Path(directory);identity=base/'identity.json'
-            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.1','app_image_sha256':HASH}))
+            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.2','app_image_sha256':HASH}))
             def open_fn(page):
                 def connect(name,baud):
                     AuthTests.lib.host_init();raw=RawPort(AuthTests.lib);ports.append(raw)
@@ -88,6 +90,14 @@ def main(builder_path):
                             while app.stream.probe_result is None and time.monotonic()<limit:
                                 root.update();time.sleep(.01)
                             assert app.stream.probe_result==((1.0,2.0,3.0),True),app.stream.probe_result
+                            signed=app.stream.port
+                            previous=signed._generation
+                            signed.write(b'\x18')
+                            deadline=time.monotonic()+4
+                            while time.monotonic()<deadline and not (signed._generation>previous and signed.authenticated):
+                                root.update();time.sleep(.01)
+                            assert signed.authenticated and signed._generation>previous
+                            assert signed.is_open
                             assert not error.called,error.call_args_list
                             assert not errors,errors
                         finally:
