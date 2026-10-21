@@ -1,16 +1,14 @@
-# CNC_FFST S3 — firmware 0.1.2 e placa-base R2
+# CNC_FFST S3 — firmware 0.1.3 e placa-base R2
 
-[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.2_Jog.zip)
+[**Baixar revisão UART 0.1.3 — BIN completo + Fabricação Fresa Laser + instalador**](artifacts/CNC_FFST_S3_UART_0.1.3_Revisao.zip)
 
-[Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote de correção UART 0.1.2 fornece o modo reversível, sem proteção de leitura.
+[Relatório da revisão, mudanças, testes e instalação](docs/REVISAO_0.1.3.md).
 
-[**Baixar Python — Conferência de Posicionamento e Ajuste Fino XYZ + BIN UART 0.1.2**](artifacts/CNC_FFST_S3_UART_0.1.2_Jog.zip)
+Esta entrega usa BIN e Python novos juntos. Corrige leitura fragmentada e realtime, adiciona recuperação de confirmação autenticada sem repetir movimento e mantém os ajustes XYZ durante a conferência. O histórico não bloqueia os campos Comando/Resposta. Antes de gravar o BIN completo, salve `$$` e `$#`: a imagem substitui configurações na flash. Validação física ainda pendente.
 
-[Correção de bloqueio de leitura](docs/CORRECAO_STREAMING.md). [Correção de escritas concorrentes](docs/CORRECAO_ESCRITA_SERIAL.md): se já está usando o BIN 0.1.2, atualize somente o Python. Ainda depende de validação física do timeout relatado.
+[**Baixar kit completo com fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.3_Revisao.zip)
 
-**Sessão 0.1.2:** autentica a cada abertura da porta, mantém autenticação após erros GRBL comuns e renova a sessão após reset na mesma conexão, sem repetir movimentos. [Detalhes](docs/SESSAO_0.1.2.md).
-
-**Correção serial preservada:** o filtro serial descartava CR/LF e impedia concluir comandos, inclusive `$FFINFO`, mesmo com mensagens de emergência sendo transmitidas. Use o pacote de correção com BIN e Python correspondentes. A emergência continua bloqueando movimentos; a correção não altera GPIOs ou proteções. [Detalhes e limites](docs/CORRECAO_SERIAL_0.1.1.md).
+[Proteção e atualizações](docs/INSTALADOR_E_PROTECAO.md). O protegido deve ser compilado localmente com a chave do proprietário e ainda exige ensaio em hardware. Não gravar o BIN reversível em placa já protegida.
 
 [**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
 
@@ -18,7 +16,7 @@ Proposta de esquema funcional para revisão visual: placa-base (carrier) onde se
 
 **Ainda não é esquema liberado para fabricação.** Não há PCB roteada ou arquivo KiCad/netlist. Há agora firmware compilado para testes de bancada, sem validação física.
 
-O pacote UART 0.1.0 anterior foi substituído pelo pacote de correção acima.
+Os pacotes anteriores ficam preservados no histórico; use o BIN/Python correspondentes da revisão acima.
 
 [Instruções de gravação, compilação e limitações](docs/FIRMWARE_S3.md). A USB nativa é uma alternativa separada; grave somente o perfil da porta escolhida. Autenticação HMAC preservada; Wi-Fi e criptografia da flash não estão ativados nesta versão de bancada.
 

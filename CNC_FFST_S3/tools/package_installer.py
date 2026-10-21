@@ -11,15 +11,16 @@ EXCLUDED_NAMES = {'ffst_key.generated.h', 'compile_commands.json', 'imagens_loca
 
 
 def main():
-    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.2_Jog.zip'
+    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.3_Revisao.zip'
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         archive.write(ROOT/'installer/Instalador_CNC_FFST_S3.py', 'Instalador_CNC_FFST_S3.py')
-        archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin',
-                      'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin')
+        archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin',
+                      'CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin')
         archive.write(ROOT/'python/UART/Fabricação Fresa Laser.py', 'Fabricação Fresa Laser.py')
         archive.writestr('ABRIR_FABRICACAO_FRESA_LASER.cmd', '@echo off\r\nchcp 65001 >nul\r\npy -3.12 "%~dp0Fabricação Fresa Laser.py"\r\npause\r\n')
         archive.writestr('INSTALAR_DEPENDENCIAS_CONTROLE.cmd', '@echo off\r\npy -3.12 -m pip install pyserial==3.5 pillow==11.3.0\r\npause\r\n')
-        archive.write(ROOT/'docs/INSTALADOR_E_PROTECAO.md', 'LEIA_PRIMEIRO.md')
+        archive.write(ROOT/'docs/REVISAO_0.1.3.md', 'LEIA_PRIMEIRO.md')
+        archive.write(ROOT/'docs/INSTALADOR_E_PROTECAO.md', 'PROTECAO_E_ATUALIZACOES.md')
         archive.writestr('ABRIR_INSTALADOR.cmd', '@echo off\r\npy -3.12 "%~dp0Instalador_CNC_FFST_S3.py"\r\npause\r\n')
         for path in sorted(ROOT.rglob('*')):
             relative = path.relative_to(ROOT)
@@ -32,30 +33,26 @@ def main():
         assert archive.testzip() is None
         assert all('.private' not in Path(name).parts and not name.lower().endswith('.pem') for name in archive.namelist())
         assert not any('/PROTECTED/' in name for name in archive.namelist())
-    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.2_Jog.zip'
+    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.3_Revisao.zip'
     with zipfile.ZipFile(output) as source, zipfile.ZipFile(controller, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in ['Fabricação Fresa Laser.py', 'ABRIR_FABRICACAO_FRESA_LASER.cmd', 'INSTALAR_DEPENDENCIAS_CONTROLE.cmd',
-                     'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin']:
+                     'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin']:
             archive.writestr(name, source.read(name))
         archive.write(ROOT/'docs/CONFERENCIA_POSICIONAMENTO_XYZ.md', 'GUIA_AJUSTE_XYZ.md')
+        archive.write(ROOT/'docs/REVISAO_0.1.3.md', 'REVISAO_E_INSTALACAO.md')
         archive.writestr('LEIA_PRIMEIRO.txt',
-            'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.2.\n'
-            'Pausa para Conferência de Posicionamento e Ajuste Fino: M0 sozinho no arquivo habilita movimentos/macros XYZ.\n'
-            'Fechar o aviso mantém a pausa. Pressione Retornar na janela principal para continuar.\n'
-            'Pausa gerenciada pelo Python, placa Idle e M5. G92 mantém coordenadas de trabalho; posição física continua contada.\n'
-            'A origem G92 pode persistir conforme configurações do grblHAL. Leia GUIA_AJUSTE_XYZ.md antes de testar.\n'
-            'Correção: jog na conferência aguarda Idle após o ACK do $J, antes de G4 e G92, evitando erro 9.\n'
-            'A correção de Destravar e a limpeza do estado na reconexão estão incluídas.\n'
-            'Se já usa BIN 0.1.2, substitua APENAS o Python, sem regravar.\n'
-            'Correção Python: leitura de ACK/status não fica presa na trava do envio. Inclui a correção de escritas simultâneas. Sem mudança do firmware 0.1.2. Se ele já está gravado, atualize somente o Python. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
-            'Antes de gravar, salve as configurações com $$: este BIN completo substitui as configurações na flash.\n'
-            'Gravar o BIN UART 0.1.2 pelo instalador atualizado, no modo Reversível, e usar o programa deste pacote.\n'
-            'Se a placa já estiver protegida, NÃO tentar provisionar novamente: exige atualização específica com as chaves existentes.\n'
-            'Requer Python 3.12. Execute INSTALAR_DEPENDENCIAS_CONTROLE.cmd uma vez, depois ABRIR_FABRICACAO_FRESA_LASER.cmd.\n'
-            'Feche o instalador/outros programas da porta antes de conectar. Use sua COM (exemplo COM8) e 115200 baud.\n'
-            'Não usar com DLC32 clássica ou BIN protegido: o controle deve corresponder ao firmware.\n'
-            'Para o protegido, use o programa gerado localmente em python/PROTECTED/Fabricação Fresa Laser.py.\n'
-            'Movimento, sonda e segurança física ainda exigem testes na placa.\n')
+            'CNC_FFST-S3 UART 0.1.3 — BIN e Python correspondentes. Leia REVISAO_E_INSTALACAO.md.\n'
+            'Salve $$ e $# da placa ANTES de gravar: o BIN completo de 16 MB substitui as configurações na flash.\n'
+            'Grave CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin no modo Reversível; depois feche o instalador e use o Python deste pacote.\n'
+            'Esta revisão EXIGE BIN 0.1.3 e Python novos juntos. O BIN 0.1.2 não tem a recuperação ACK1.\n'
+            'Não gravar imagem reversível em placa já protegida; protegido exige atualização própria com suas chaves existentes.\n'
+            'Não aumenta velocidade, muda pinagem ou desativa proteções. Testar primeiro sem potência nas ferramentas.\n'
+            'Pausa para Conferência de Posicionamento e Ajuste Fino: fechar aviso mantém pausa; pressione Retornar para continuar.\n'
+            'Ajustes XYZ por movimentos/macros existentes usam G92; confira persistência $384 e a referência em $#.\n'
+            'Correções incluem leituras fragmentadas, status realtime, confirmação perdida sem reenviar comando, interface e macros assíncronas.\n'
+            'Requer Python 3.12: execute INSTALAR_DEPENDENCIAS_CONTROLE.cmd e depois ABRIR_FABRICACAO_FRESA_LASER.cmd.\n'
+            'Use a USB CH343, sua COM (exemplo COM8) e 115200 baud. Perfil USB nativo é separado.\n'
+            'Testes simulados passaram; motor, sonda, limites, emergência e PWM físicos ainda precisam ser validados.\n')
     print('Installer package:', output.name, output.stat().st_size, 'bytes; private keys/protected binaries excluded.')
     print('Controller package:', controller.name)
 

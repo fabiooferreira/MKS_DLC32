@@ -1,0 +1,9 @@
+PASS legacy_on_fast: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=1, fragments=False, lost_ack=False, off_at_pause=False, recovered=0, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS legacy_off_realtime: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=0, fragments=False, lost_ack=False, off_at_pause=False, recovered=2, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS fragmented: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=1, fragments=True, lost_ack=False, off_at_pause=False, recovered=0, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS reset_pause: reset cancels pause; no automatic continuation.
+PASS hold_pause: hold cancels pause; no automatic continuation.
+PASS lost_m5_ack: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=1, fragments=False, lost_ack=True, off_at_pause=False, recovered=1, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS lost_m5_ack_fragmented: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=0, fragments=True, lost_ack=True, off_at_pause=False, recovered=1, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS lost_restore_m5_ack: real core/auth, 200 moves, M3/M5, M0, XYZ jog, G92, Retornar; $39=1, fragments=False, lost_ack=True, off_at_pause=True, recovered=1, seq=223, final WPos=(8.0, 0.0, 0.0).
+PASS native_macro_pause: asynchronous macro, real native M0, pending receipt and signed resume with $39=0.

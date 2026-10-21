@@ -54,7 +54,7 @@ def icon_path(saved_path):
     return RESOURCE_DIR / filename
 
 
-APP_VERSION = 'S3 0.1.2 — Controlador PCB autenticado — M0 XYZ'
+APP_VERSION = 'S3 0.1.3 — Controlador PCB autenticado — M0 XYZ'
 DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
     {'name': 'Laser OFF', 'command': 'M5'},
     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}
@@ -524,6 +524,8 @@ class Streamer:
         self.port = None
         self.lock = threading.Lock()
         self._send_lock = threading.Lock()
+        self._display_lock = threading.Lock()
+        self.latest_command = self.latest_response = ''
         self._worker_lock = threading.Lock()
         self._workers = []
         self.running = False
@@ -538,6 +540,7 @@ class Streamer:
         self._m0_anchor = None
         self._m0_modal = []
         self.cancel = False
+        self.cancel_reason = ''
         self.limit = 128
         self.inflight = []
         # Eventos: a thread serial acorda a sondagem sem polling de 20 ms.
@@ -575,6 +578,7 @@ class Streamer:
         self.simulation = False
         self.port = open_authenticated(name, baud)
         self.cancel = False
+        self.cancel_reason = ''
         self._m0_resume.clear()
         self.command_ack_event.clear()
         self.probe_received_event.clear()
@@ -645,17 +649,22 @@ class Streamer:
         self.machine_state = ''
         self.status_time = self.status_version = self.last_status = 0
         self.settings.clear()
+        with self._display_lock:
+            self.latest_command = self.latest_response = ''
 
     def read_loop(self):
         port = self.port
         while self.port is port and port.is_open:
             try:
                 response = port.readline().decode('utf-8', 'replace').strip()
-            except (serial.SerialException, OSError):
+            except (serial.SerialException, OSError) as exc:
+                self.cancel_reason = str(getattr(port, 'failure', None) or exc)
                 break
             if not response:
                 continue
             if not response.startswith('<'):
+                with self._display_lock:
+                    self.latest_response = response
                 self.emit('log', '< ' + response)
             low = response.lower()
             if response.startswith('[GC:'):
@@ -691,6 +700,7 @@ class Streamer:
                     allowed = ('idle', 'run', 'jog') if self._m0_editing else ('idle',)
                     if fields[0].lower() not in allowed:
                         self.cancel = True
+                        self.cancel_reason = 'Estado ' + fields[0] + ' durante a conferência'
                         self.m0_alignment_ready = False
                 self.status_time = time.monotonic()
                 if self.m0_waiting and fields[0].lower() == 'hold:0':
@@ -733,6 +743,7 @@ class Streamer:
                 if item is not None:
                     number, _ = item
                     if low.startswith('error:'):
+                        self.cancel_reason = response + ' após ' + (self.latest_command or 'comando pendente')
                         self.cancel = True
                         self.emit('error', number, response)
                     else:
@@ -740,17 +751,21 @@ class Streamer:
                     # Sempre notificar a thread que enviou o comando.
                     self.command_ack_event.set()
             if low.startswith('alarm:'):
+                self.cancel_reason = response
                 self.cancel = True
                 self.command_ack_event.set()
                 self.probe_received_event.set()
                 self.emit('fault', response)
         if self.port is port:
+            # Best-effort hold before closing a transport that lost its confirmations.
+            try: port.write(b'!')
+            except Exception: pass
             try: port.close()
             except Exception: pass
             self.cancel = True
-            self.emit('fault', 'Conexão serial encerrada.')
+            self.emit('fault', 'Conexão serial encerrada. ' + self.cancel_reason)
 
-    def send_payload(self, payload, number=None, exclusive=False, probe=False):
+    def send_payload(self, payload, number=None, exclusive=False, probe=False, ack_timeout=None):
         # Preserve send order without holding the lock used by the reader for ACKs.
         with self._send_lock:
             item = (number, len(payload))
@@ -764,7 +779,13 @@ class Streamer:
                         self.probe_received_event.clear()
                 self.inflight.append(item)
             try:
-                self.port.write(payload)
+                timed_write = getattr(self.port, 'write_with_timeout', None)
+                if ack_timeout is not None and timed_write:
+                    timed_write(payload, ack_timeout)
+                else:
+                    self.port.write(payload)
+                with self._display_lock:
+                    self.latest_command = payload.decode('ascii').strip()
                 self.emit('command', payload.decode('ascii').strip())
             except Exception:
                 with self.lock:
@@ -783,12 +804,19 @@ class Streamer:
         if self.cancel:
             raise RuntimeError('Operação cancelada.')
         is_probe = bool(re.search(r'\bG38\.[2345]\b', command.upper()))
-        self.send_payload((command + '\n').encode('ascii'), exclusive=True, probe=is_probe)
+        self.send_payload((command + '\n').encode('ascii'), exclusive=True, probe=is_probe, ack_timeout=timeout)
         self.emit('log', '> ' + command)
         deadline = time.monotonic() + timeout
+        barrier = command.replace(' ', '').upper() == 'G4P0.01'
+        last_progress = getattr(self.port, 'last_motion_progress', 0)
         while True:
+            progress = getattr(self.port, 'last_motion_progress', 0)
+            paused = getattr(self.port, 'acknowledgement_wait_is_paused', None)
+            if (barrier and progress > last_progress) or (paused and paused()):
+                deadline = time.monotonic() + timeout
+            last_progress = progress
             if self.cancel:
-                raise RuntimeError('Operação cancelada ou erro da controladora.')
+                raise RuntimeError('Operação cancelada ou erro da controladora. ' + self.cancel_reason)
             with self.lock:
                 pending = bool(self.inflight)
             if not pending:
@@ -796,8 +824,9 @@ class Streamer:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 self.cancel = True
-                self.realtime(b'!')
-                raise RuntimeError('Tempo de resposta excedido; feed hold enviado. Pare/reset antes de continuar.')
+                try: self.realtime(b'!')
+                except Exception: pass
+                raise RuntimeError('Tempo de resposta excedido; tentativa de feed hold enviada. Pare/reset antes de continuar.')
             # Acorda imediatamente no ACK; intervalo apenas para detectar desconexão/cancelamento.
             self.command_ack_event.wait(min(remaining, 0.10))
         if is_probe:
@@ -811,11 +840,17 @@ class Streamer:
                 raise RuntimeError('G38 concluído sem resposta [PRB:] válida; retração automática não autorizada.')
 
     def fresh_status(self, timeout=3):
-        version=self.status_version
-        self.realtime(b'?')
-        end=time.monotonic()+timeout
-        while self.status_version==version:
-            if self.cancel or time.monotonic()>end: raise RuntimeError('Sem resposta de status da controladora.')
+        version = self.status_version
+        deadline = time.monotonic() + timeout
+        next_poll = 0
+        while self.status_version == version:
+            now = time.monotonic()
+            if self.cancel or now >= deadline:
+                raise RuntimeError('Sem resposta de status da controladora. ' + self.cancel_reason)
+            if now >= next_poll:
+                # Status is read-only; retry a coalesced/lost poll, never a motion command.
+                self.realtime(b'?')
+                next_poll = now + .25
             time.sleep(.02)
 
     def wait_idle(self, timeout=4):
@@ -1292,6 +1327,7 @@ class Streamer:
 
     def start_m0_alignment(self, command):
         lines = self.m0_macro_lines(command)  # Validate the whole macro before any motion.
+        self.validate_serial_lines(enumerate(lines, 1))
         with self._m0_lock:
             if not self.m0_alignment_ready or self._m0_editing or self.cancel:
                 raise RuntimeError('M0: ajuste indisponível ou outro ajuste em execução.')
@@ -1342,6 +1378,18 @@ class Streamer:
                 self._m0_editing = False
             self.emit('m0_adjusted')
 
+    @staticmethod
+    def validate_serial_lines(commands, limit=None):
+        for number, line in commands:
+            try:
+                payload = line.encode('ascii')
+            except UnicodeEncodeError as exc:
+                raise ValueError(f'Linha {number}: comandos GRBL devem conter apenas ASCII.') from exc
+            if not 1 <= len(payload) <= 200:
+                raise ValueError(f'Linha {number}: comando excede o limite de 200 caracteres.')
+            if limit is not None and len(payload) + 1 > limit:
+                raise ValueError(f'Linha {number}: comando excede o buffer configurado.')
+
     def send_manual(self, command):
         if self.m0_alignment_ready and not self.simulation:
             self.start_m0_alignment(command)
@@ -1359,17 +1407,14 @@ class Streamer:
             return
         if not self.port or not self.port.is_open:
             raise RuntimeError('Conecte a controladora primeiro.')
-        if any(re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', clean(raw), re.I)
-               for raw in command.splitlines()):
-            self.running = True
-            self.cancel = False
-            self.start_worker(self.manual_sequence, (command,))
+        lines = [clean(line) for line in command.splitlines() if clean(line)]
+        self.validate_serial_lines(enumerate(lines, 1))
+        if not lines:
             return
-        for raw in command.splitlines():
-            line = clean(raw)
-            if line:
-                self.send_payload((line + '\n').encode('ascii'))
-                self.emit('log', '> ' + line)
+        self.running = True
+        self.cancel = False
+        self.cancel_reason = ''
+        self.start_worker(self.manual_sequence, ('\n'.join(lines),))
 
     def manual_sequence(self, command):
         succeeded = False
@@ -1392,7 +1437,9 @@ class Streamer:
                 is_m0 = bool(re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line, re.I))
                 if is_m0:
                     self.prepare_m0('macro_m0')
-                self.send_payload((line + '\n').encode('ascii'), 'macro_m0' if is_m0 else None)
+                native_pause = re.fullmatch(r'(?:N\d+\s*)?M0+(?:\.0+)?', line) is not None
+                self.send_payload((line + '\n').encode('ascii'), 'macro_m0' if is_m0 else None,
+                                  ack_timeout=math.inf if native_pause else None)
                 self.emit('log', '> ' + line)
                 if is_m0:
                     self.wait_m0_complete('macro_m0')
@@ -1428,6 +1475,7 @@ class Streamer:
         commands = [(i, clean(s)) for i, s in enumerate(lines, 1) if clean(s)]
         if not commands:
             raise RuntimeError('Arquivo sem comandos.')
+        self.validate_serial_lines(commands, limit)
         for number, line in commands:
             if re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line) and not re.fullmatch(r'(?:N\d+\s*)?M0+(?:\.0+)?', line):
                 raise RuntimeError(f'Linha {number}: coloque M0 sozinho em uma linha para permitir ajuste XYZ.')
@@ -1710,6 +1758,11 @@ class App:
             if age > 3: connection += ' — aguardando resposta'
         else: connection = 'Serial: desconectada'
         self.connection_label.set(connection)
+        with self.stream._display_lock:
+            command = self.stream.latest_command
+            response = self.stream.latest_response
+        self.last_command.set('Comando: ' + (command or '—'))
+        self.last_response.set('Resposta: ' + (response or '—'))
         elapsed = time.monotonic()-self.job_started if self.job_started is not None else self.job_elapsed
         def clock(seconds):
             seconds = max(0,int(seconds)); return f'{seconds//3600:02d}:{seconds//60%60:02d}:{seconds%60:02d}'
@@ -2759,7 +2812,7 @@ class App:
                 raise RuntimeError(f'O arquivo {Path(item["path"]).name} não possui comandos.')
             limit = int(self.buffer.get())
             if not 16 <= limit <= 4096:
-                raise RuntimeError('Informe um buffer entre 16 e 4096 bytes. GRBL clássico usa 128.')
+                raise RuntimeError('Informe um buffer entre 16 e 4096 bytes. Cada comando pode ter até 200 caracteres.')
             simulated = not self.port.get().strip() or self.stream.simulation
             if simulated:
                 if self.stream.port:
@@ -3209,6 +3262,8 @@ class App:
         if not ATIVAR_LOG:
             return
         try:
+            if DIAGNOSTIC_LOG.exists() and DIAGNOSTIC_LOG.stat().st_size > 10 * 1024 * 1024:
+                DIAGNOSTIC_LOG.replace(DIAGNOSTIC_LOG.with_suffix('.log.1'))
             with DIAGNOSTIC_LOG.open('a', encoding='utf-8') as diagnostic:
                 diagnostic.write(time.strftime('%Y-%m-%d %H:%M:%S') + ' ' + record + '\n')
         except OSError as exc:
@@ -3219,8 +3274,12 @@ class App:
                                        parent=self.root)
 
     def poll(self):
+        # Yield to Tk regularly, even when a fast sender keeps producing log events.
+        deadline = time.monotonic() + .012
         try:
-            while True:
+            for _ in range(100):
+                if time.monotonic() >= deadline:
+                    break
                 event = self.events.get_nowait()
                 kind = event[0]
                 if kind == 'heightmap':
@@ -3275,10 +3334,8 @@ class App:
                     self.status.set('Conferência de posicionamento: ajustando XYZ...' if self.stream._m0_editing else
                                     ('Conferência de posicionamento: movimentos/macros ativos; pressione Retornar para continuar' if self.stream.m0_alignment_ready else 'Conferência de posicionamento encerrada'))
                 elif kind == 'command':
-                    self.last_command.set('Comando: ' + event[1])
+                    self.write_diagnostic('TX ' + event[1])
                 elif kind == 'log':
-                    if str(event[1]).startswith('< '):
-                        self.last_response.set('Resposta: ' + str(event[1])[2:])
                     # Registro persistente para identificar ALARM:3, PRB e resets
                     # após a falha, sem modificar a sequência de movimento.
                     self.write_diagnostic(event[1])
@@ -3330,6 +3387,9 @@ class App:
                             messagebox.showwarning('Avisos do preview', '\n'.join(event[4]))
                 elif kind == 'fault':
                     self.close_m0_notice()
+                    diagnostics = getattr(self.stream.port, 'communication_diagnostics', None)
+                    if diagnostics:
+                        self.write_diagnostic(diagnostics())
                     self.write_diagnostic('FALHA ' + repr(event))
                     self.finish_timer()
                     self.status.set(event[1])

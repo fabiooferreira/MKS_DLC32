@@ -22,6 +22,7 @@ class ModelPort:
         except queue.Empty:return b''
     def reply(self,line):self.rx.put((line+'\n').encode())
     def write(self,data):
+        data=data.replace(b'\x80',b'?').replace(b'\x82',b'!')
         text=data.decode().strip();self.writes.append(text)
         if text=='?':
             self.reply('<'+self.state+'|MPos:'+','.join(map(str,self.machine))+'|WCO:'+','.join(map(str,self.offset))+'|FS:0,0>')
@@ -127,7 +128,7 @@ class M0Tests(unittest.TestCase):
         self.assertEqual(self.port.scale,25.4)
     def test_normal_manual_motion_updates_coordinates_outside_pause(self):
         self.stream.send_manual('G1X12F100')
-        self.wait(lambda:not self.stream.inflight)
+        self.wait(lambda:not self.stream.running)
         self.stream.fresh_status()
         self.assertEqual(self.stream.work_position,(12.,20.,5.))
         self.assertFalse(any(w.startswith('G92') for w in self.port.writes))
@@ -185,6 +186,39 @@ class M0Tests(unittest.TestCase):
         self.assertFalse(any(w.startswith('G92') for w in self.port.writes))
         self.assertNotIn('G1X12',self.port.writes)
         self.assertEqual(self.port.tool,'M5')
+    def test_manual_macro_does_not_block_ui_and_cancel_stops_following_line(self):
+        entered=threading.Event();release=threading.Event();original=self.port.write
+        def delayed(data):
+            if data.startswith(b'G4'):
+                entered.set();release.wait(2)
+            return original(data)
+        self.port.write=delayed
+        try:
+            self.stream.send_manual('G4 P10\nG1X99F100')
+            self.assertTrue(entered.wait(1))
+            self.assertTrue(self.stream.running)
+            self.stream.cancel=True
+        finally:release.set()
+        self.wait(lambda:not self.stream.running)
+        self.assertNotIn('G1X99F100',self.port.writes)
+    def test_file_and_macro_long_lines_are_rejected_before_any_write(self):
+        for commands in [['G1X1F100','G1X'+'1'*201],['G1X1F100','G1X1 Ç']]:
+            with self.assertRaises(ValueError):self.stream.start(commands,4096,[])
+            self.assertFalse(self.port.writes)
+            with self.assertRaises(ValueError):self.stream.send_manual('\n'.join(commands))
+            self.assertFalse(self.port.writes)
+    def test_fresh_status_retries_readonly_poll_if_first_one_was_coalesced(self):
+        original=self.port.write;polls=[]
+        def coalesced(data):
+            if data in (b'?',b'\x80'):
+                polls.append(data)
+                if len(polls)==1:return len(data)
+            return original(data)
+        self.port.write=coalesced
+        self.stream.fresh_status(timeout=.8)
+        self.assertGreaterEqual(len(polls),2)
+        self.assertEqual(self.stream.machine_state,'Idle')
+        self.assertTrue(all(w=='?' for w in self.port.writes))
     def test_no_adjustment_is_available_outside_m0(self):
         with self.assertRaises(RuntimeError):self.stream.start_m0_alignment('G91X.1F100')
         self.assertFalse(self.port.writes)

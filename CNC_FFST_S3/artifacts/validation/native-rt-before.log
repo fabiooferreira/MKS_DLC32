@@ -1,0 +1,42 @@
+SEND $X
+SEND $13=0
+SEND $39=0
+SEND G21G90G94
+SEND G0X0Y0Z0
+PAUSE False True 
+FINAL False True None 
+('command', '$X')
+('log', '> $X')
+('log', '< ok')
+('ack', None)
+('command', '$13=0')
+('log', '> $13=0')
+('log', '< ok')
+('ack', None)
+('command', '$39=0')
+('log', '> $39=0')
+('log', '< ok')
+('ack', None)
+('command', 'G21G90G94')
+('log', '> G21G90G94')
+('log', '< ok')
+('ack', None)
+('command', 'G0X0Y0Z0')
+('log', '> G0X0Y0Z0')
+('log', '< ok')
+('ack', None)
+('command', '$32=1')
+('log', '> $32=1')
+('log', '< ok')
+('ack', None)
+('log', 'Modo automático: LASER ($32=1)')
+('command', 'G1X10F600')
+('progress', 1, 4)
+('log', '< ok')
+('ack', 1)
+('command', 'G4 P0.01')
+('log', '> G4 P0.01')
+('log', '< error:78')
+('error', None, 'error:78')
+('fault', 'Envio do arquivo interrompido: Operação cancelada ou erro da controladora. Nenhum comando sera repetido. Confira a parada da maquina.')
+SIMLOG 

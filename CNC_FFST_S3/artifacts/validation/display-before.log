@@ -1,0 +1,18 @@
+test_fields_continue_after_retornar (__main__.StatusDisplayTests.test_fields_continue_after_retornar) ... ok
+test_live_fields_are_current_despite_old_log_backlog (__main__.StatusDisplayTests.test_live_fields_are_current_despite_old_log_backlog) ... FAIL
+
+======================================================================
+FAIL: test_live_fields_are_current_despite_old_log_backlog (__main__.StatusDisplayTests.test_live_fields_are_current_despite_old_log_backlog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_status_display.py", line 25, in test_live_fields_are_current_despite_old_log_backlog
+    self.assertEqual(self.app.last_command.get(),'Comando: G1 X20 F100')
+AssertionError: 'Comando: M5' != 'Comando: G1 X20 F100'
+- Comando: M5
++ Comando: G1 X20 F100
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.268s
+
+FAILED (failures=1)

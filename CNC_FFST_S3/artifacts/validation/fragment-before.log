@@ -1,0 +1,51 @@
+test_alarm_and_estop_still_block_signed_gcode (__main__.AuthTests.test_alarm_and_estop_still_block_signed_gcode) ... ok
+test_close_session_invalidates_old_signed_packets (__main__.AuthTests.test_close_session_invalidates_old_signed_packets) ... ok
+test_existing_python_client_round_trip (__main__.AuthTests.test_existing_python_client_round_trip) ... ok
+test_fragmented_serial_lines_keep_handshake_and_ack (__main__.AuthTests.test_fragmented_serial_lines_keep_handshake_and_ack) ... ERROR
+test_guards_present_in_real_core_entry_points (__main__.AuthTests.test_guards_present_in_real_core_entry_points) ... ok
+test_handshake_does_not_unlock_unsigned_motion (__main__.AuthTests.test_handshake_does_not_unlock_unsigned_motion) ... ok
+test_identity_matches_exact_firmware (__main__.AuthTests.test_identity_matches_exact_firmware) ... ok
+test_overlong_frame_never_executes (__main__.AuthTests.test_overlong_frame_never_executes) ... ok
+test_public_configuration_is_limited (__main__.AuthTests.test_public_configuration_is_limited) ... ok
+test_public_safety_commands_remain_allowed (__main__.AuthTests.test_public_safety_commands_remain_allowed) ... ok
+test_raw_command_cannot_inherit_long_running_signed_scope (__main__.AuthTests.test_raw_command_cannot_inherit_long_running_signed_scope) ... ok
+test_raw_motion_tool_homing_jog_probe_blocked (__main__.AuthTests.test_raw_motion_tool_homing_jog_probe_blocked) ... ok
+test_replay_bad_mac_and_sequence_rejected (__main__.AuthTests.test_replay_bad_mac_and_sequence_rejected) ... ok
+test_reset_invalidates_old_proof_and_commands (__main__.AuthTests.test_reset_invalidates_old_proof_and_commands) ... ok
+test_reset_invalidates_out_of_band_packet (__main__.AuthTests.test_reset_invalidates_out_of_band_packet) ... ok
+test_reset_notice_is_single_and_discards_stale_realtime (__main__.AuthTests.test_reset_notice_is_single_and_discards_stale_realtime) ... ok
+test_same_nonce_cannot_reauthenticate_and_rewind (__main__.AuthTests.test_same_nonce_cannot_reauthenticate_and_rewind) ... ok
+test_serial_handshake_keeps_unsigned_motion_blocked (__main__.AuthTests.test_serial_handshake_keeps_unsigned_motion_blocked) ... ok
+test_serial_identification_remains_available_in_estop (__main__.AuthTests.test_serial_identification_remains_available_in_estop) ... ok
+test_serial_line_endings_reach_command_parser (__main__.AuthTests.test_serial_line_endings_reach_command_parser) ... ok
+test_serial_writes_do_not_overlap_status_or_stop (__main__.AuthTests.test_serial_writes_do_not_overlap_status_or_stop) ... ok
+test_signed_motion_including_axis_a (__main__.AuthTests.test_signed_motion_including_axis_a) ... ok
+test_signed_out_of_band_resume_and_replay (__main__.AuthTests.test_signed_out_of_band_resume_and_replay) ... ok
+test_unsigned_realtime_resume_blocked_even_after_auth (__main__.AuthTests.test_unsigned_realtime_resume_blocked_even_after_auth) ... ok
+
+======================================================================
+ERROR: test_fragmented_serial_lines_keep_handshake_and_ack (__main__.AuthTests.test_fragmented_serial_lines_keep_handshake_and_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_auth.py", line 257, in test_fragmented_serial_lines_keep_handshake_and_ack
+    raw=Raw();port=client.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/python/cnc_ffst_auth_source.py", line 110, in __init__
+    self._authenticate()
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/python/cnc_ffst_auth_source.py", line 129, in _authenticate
+    image_hash = verify_firmware(self.raw, self._identity_path, writer=self._write_raw)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/python/cnc_ffst_auth_source.py", line 46, in verify_firmware
+    lines = exchange(port, '$FFINFO', writer=writer)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_auth.py", line 237, in <lambda>
+    client.exchange=lambda *args,**kwargs: original_exchange(*args,timeout=.4,**kwargs)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/python/cnc_ffst_auth_source.py", line 74, in exchange
+    raise TimeoutError(f'A placa não respondeu na etapa {stage}. '
+TimeoutError: A placa não respondeu na etapa $FFINFO. Confira o BIN CNC_FFST 0.3.0, a porta e 115200 baud.
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.850s
+
+FAILED (errors=1)

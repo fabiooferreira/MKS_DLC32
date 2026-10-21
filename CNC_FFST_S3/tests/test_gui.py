@@ -51,8 +51,8 @@ class RawPort:
             elif data==b'\x18':
                 self.lib.host_reset();self.lib.host_frame(b'',0)
                 for line in self.lib.host_output().splitlines():self.rx.put(line+b'\n')
-            elif data==b'?':self.rx.put(b'<Idle|MPos:1,2,3,4|WCO:0,0,0,0|FS:0,0>\n')
-            elif data in [b'!',b'\x84',b'\x85']:pass
+            elif data in (b'?',b'\x80'):self.rx.put(b'<Idle|MPos:1,2,3,4|WCO:0,0,0,0|FS:0,0>\n')
+            elif data in [b'!',b'\x82',b'\x84',b'\x85']:pass
             else:
                 self.lib.host_serial_bytes(data,len(data))
                 for response in self.lib.host_output().splitlines():self.rx.put(response+b'\n')
@@ -63,7 +63,7 @@ def main(builder_path):
     try:
         with tempfile.TemporaryDirectory(prefix='ffst-s3-gui-') as directory:
             base=Path(directory);identity=base/'identity.json'
-            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.2','app_image_sha256':HASH}))
+            identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.3','app_image_sha256':HASH}))
             def open_fn(page):
                 def connect(name,baud):
                     AuthTests.lib.host_init();raw=RawPort(AuthTests.lib);ports.append(raw)
@@ -88,6 +88,9 @@ def main(builder_path):
                             # An interrupted file can leave its selection metadata behind.
                             app.active_file=0
                             app.run_macro({'command':'$X'})
+                            deadline=time.monotonic()+2
+                            while app.stream.running and time.monotonic()<deadline:time.sleep(.01)
+                            app.update_macro_availability()
                             assert all(str(b.cget('state'))=='normal' for b in app.macro_buttons), 'Unlock disabled macros although no job is running'
                             app.stream.running=True
                             app.update_macro_availability()
@@ -121,6 +124,9 @@ def main(builder_path):
                             assert app.stream.port.authenticated and app.stream.port is not signed
                             assert not app.stream.running and not app.stream.cancel
                             app.run_macro({'command':'$X'})
+                            deadline=time.monotonic()+2
+                            while app.stream.running and time.monotonic()<deadline:time.sleep(.01)
+                            app.update_macro_availability()
                             assert all(str(b.cget('state'))=='normal' for b in app.macro_buttons)
                             assert not error.called,error.call_args_list
                             assert not errors,errors

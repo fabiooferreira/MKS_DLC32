@@ -1,5 +1,5 @@
 {
-  "firmware": "CNC_FFST-S3-0.1.2",
+  "firmware": "CNC_FFST-S3-0.1.3",
   "profile": "USB",
   "environment": "cnc_ffst_s3_n16r8_usb",
   "chip": "esp32s3",
@@ -7,9 +7,9 @@
   "psram_mb": 8,
   "step_pulse_us": 5,
   "direction_setup_delay_us": 2,
-  "file": "CNC_FFST_S3_0.1.2_USB_FULL_16MB.bin",
+  "file": "CNC_FFST_S3_0.1.3_USB_FULL_16MB.bin",
   "offset": 0,
-  "sha256": "959797b4843eac1e25e2bb9bda34f29bfee225a8ef7b345981cb1b25bef5f70f",
+  "sha256": "33609765e946838abee9032e6db6b16b7138b5c522589bf913e1351959edcec1",
   "application_offset": 65536,
   "partition_offset": 32768,
   "authentication": "FFST HMAC v1, shared existing credential",
@@ -22,6 +22,7 @@
   "update_sha256": null,
   "hardware_tested": false,
   "protocol": 1,
-  "app_image_sha256": "c4b028271f970e453a1cec406e278c9a22e1d6921d519ca6e201318c16fa6df3",
-  "application_file_sha256": "7756ef666d03e2fd8799a2772837cd809e4adeb86dced46ee6d75cf92ac4b532"
+  "receipt_recovery": "ACK1",
+  "app_image_sha256": "13bd0f5ea5689ba58398533c4b086bf375c00c64984e041ddfe9cdaeeacc6f62",
+  "application_file_sha256": "d38c2aa4ddff1e2a35f93090a5bcd79898e7f93a757c111124b9b83c0c8ec7df"
 }

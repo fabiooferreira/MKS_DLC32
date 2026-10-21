@@ -1,0 +1,21 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspace/ffst-s3-build/simulator/build
+gmake[1]: Entering directory '/workspace/ffst-s3-build/simulator/build'
+gmake[2]: Entering directory '/workspace/ffst-s3-build/simulator/build'
+gmake[3]: Entering directory '/workspace/ffst-s3-build/simulator/build'
+Scanning dependencies of target grblHAL_sim
+gmake[3]: Leaving directory '/workspace/ffst-s3-build/simulator/build'
+gmake[3]: Entering directory '/workspace/ffst-s3-build/simulator/build'
+[  1%] Building C object CMakeFiles/grblHAL_sim.dir/src/driver.c.o
+[  3%] Building C object CMakeFiles/grblHAL_sim.dir/src/ffst_auth.c.o
+[  5%] Building C object CMakeFiles/grblHAL_sim.dir/src/sim_auth_env.c.o
+[  5%] Building C object CMakeFiles/grblHAL_sim.dir/src/grbl/gcode.c.o
+[  7%] Building C object CMakeFiles/grblHAL_sim.dir/src/grbl/protocol.c.o
+[  9%] Building C object CMakeFiles/grblHAL_sim.dir/src/grbl/system.c.o
+[ 10%] Linking C executable grblHAL_sim
+gmake[3]: Leaving directory '/workspace/ffst-s3-build/simulator/build'
+[100%] Built target grblHAL_sim
+gmake[2]: Leaving directory '/workspace/ffst-s3-build/simulator/build'
+gmake[1]: Leaving directory '/workspace/ffst-s3-build/simulator/build'
+NATIVE_SIMULATOR=/workspace/ffst-s3-build/simulator/build/grblHAL_sim

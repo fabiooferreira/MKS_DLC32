@@ -1,0 +1,92 @@
+esptool.py v4.8.1
+SHA digest in image updated
+Wrote 0x1000000 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/UART/CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin, ready to flash to offset 0x0
+Packaged UART bc7e25754bc40637715daa971ce563946d0add684a17cfeb8ec9261520fbea18
+esptool.py v4.8.1
+SHA digest in image updated
+Wrote 0x1000000 bytes to file /workspace/MKS_DLC32/CNC_FFST_S3/artifacts/USB/CNC_FFST_S3_0.1.3_USB_FULL_16MB.bin, ready to flash to offset 0x0
+Packaged USB 13bd0f5ea5689ba58398533c4b086bf375c00c64984e041ddfe9cdaeeacc6f62
+Processing cnc_ffst_s3_n16r8_uart (platform: espressif32@5.3.0; framework: espidf; board: esp32-s3-devkitc-1)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CNC_FFST: common application credential retained; no value displayed.
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-s3-devkitc-1.html
+PLATFORM: Espressif 32 (5.3.0) > Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)
+HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
+DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-espidf @ 3.40403.0 (4.4.3) 
+ - tool-cmake @ 3.16.4 
+ - tool-esptoolpy @ 1.40400.0 (4.4.0) 
+ - tool-ninja @ 1.7.1 
+ - toolchain-esp32ulp @ 1.23500.220830 (2.35.0) 
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
+ - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Reading CMake configuration...
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 0 compatible libraries
+Scanning dependencies...
+No dependencies
+Building in release mode
+Compiling .pio/build/cnc_ffst_s3_n16r8_uart/main/ffst_auth.o
+Linking .pio/build/cnc_ffst_s3_n16r8_uart/firmware.elf
+Retrieving maximum program size .pio/build/cnc_ffst_s3_n16r8_uart/firmware.elf
+Checking size .pio/build/cnc_ffst_s3_n16r8_uart/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   8.1% (used 26448 bytes from 327680 bytes)
+Flash: [=         ]   6.5% (used 410901 bytes from 6291456 bytes)
+Building .pio/build/cnc_ffst_s3_n16r8_uart/firmware.bin
+esptool.py v4.4
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+========================= [SUCCESS] Took 8.18 seconds =========================
+
+Environment             Status    Duration
+----------------------  --------  ------------
+cnc_ffst_s3_n16r8_uart  SUCCESS   00:00:08.181
+========================= 1 succeeded in 00:00:08.181 =========================
+Processing cnc_ffst_s3_n16r8_usb (platform: espressif32@5.3.0; framework: espidf; board: esp32-s3-devkitc-1)
+--------------------------------------------------------------------------------
+Verbose mode can be enabled via `-v, --verbose` option
+CNC_FFST: common application credential retained; no value displayed.
+CONFIGURATION: https://docs.platformio.org/page/boards/espressif32/esp32-s3-devkitc-1.html
+PLATFORM: Espressif 32 (5.3.0) > Espressif ESP32-S3-DevKitC-1-N8 (8 MB QD, No PSRAM)
+HARDWARE: ESP32S3 240MHz, 320KB RAM, 8MB Flash
+DEBUG: Current (esp-builtin) On-board (esp-builtin) External (cmsis-dap, esp-bridge, esp-prog, iot-bus-jtag, jlink, minimodule, olimex-arm-usb-ocd, olimex-arm-usb-ocd-h, olimex-arm-usb-tiny-h, olimex-jtag-tiny, tumpa)
+PACKAGES: 
+ - framework-espidf @ 3.40403.0 (4.4.3) 
+ - tool-cmake @ 3.16.4 
+ - tool-esptoolpy @ 1.40400.0 (4.4.0) 
+ - tool-ninja @ 1.7.1 
+ - toolchain-esp32ulp @ 1.23500.220830 (2.35.0) 
+ - toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 
+ - toolchain-xtensa-esp32s3 @ 8.4.0+2021r2-patch5
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Reading CMake configuration...
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 0 compatible libraries
+Scanning dependencies...
+No dependencies
+Building in release mode
+Compiling .pio/build/cnc_ffst_s3_n16r8_usb/main/ffst_auth.o
+Linking .pio/build/cnc_ffst_s3_n16r8_usb/firmware.elf
+Retrieving maximum program size .pio/build/cnc_ffst_s3_n16r8_usb/firmware.elf
+Checking size .pio/build/cnc_ffst_s3_n16r8_usb/firmware.elf
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   9.8% (used 32128 bytes from 327680 bytes)
+Flash: [=         ]   6.8% (used 430525 bytes from 6291456 bytes)
+Building .pio/build/cnc_ffst_s3_n16r8_usb/firmware.bin
+esptool.py v4.4
+Creating esp32s3 image...
+Merged 2 ELF sections
+Successfully created esp32s3 image.
+========================= [SUCCESS] Took 8.48 seconds =========================
+
+Environment            Status    Duration
+---------------------  --------  ------------
+cnc_ffst_s3_n16r8_usb  SUCCESS   00:00:08.481
+========================= 1 succeeded in 00:00:08.481 =========================

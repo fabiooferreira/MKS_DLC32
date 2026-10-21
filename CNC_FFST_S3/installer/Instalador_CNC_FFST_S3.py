@@ -18,9 +18,9 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, simpledialog, ttk
 
 TITLE = 'Instalador CNC_FFST — ESP32-S3 N16R8'
-BIN_NAME = 'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin'
+BIN_NAME = 'CNC_FFST_S3_0.1.3_UART_FULL_16MB.bin'
 # BEGIN KNOWN IMAGES
-KNOWN_IMAGES = {'42e91bbc517a302f48a134fee4b21a294f1f26a07c9e63a18d3538da8d7fc892': {'protected': False, 'app_offset': 65536, 'partition_offset': 32768, 'app_image_sha256': '21a3759a96a55d5022f0f6e647bb67f44d354be5a6a622462e19bba99207c979'}, '959797b4843eac1e25e2bb9bda34f29bfee225a8ef7b345981cb1b25bef5f70f': {'protected': False, 'app_offset': 65536, 'partition_offset': 32768, 'app_image_sha256': 'c4b028271f970e453a1cec406e278c9a22e1d6921d519ca6e201318c16fa6df3'}}
+KNOWN_IMAGES = {'2bf3213b0818843ef23842b2ee4f353b70b8b18407ec24f1931b69caeb112d18': {'protected': False, 'app_offset': 65536, 'partition_offset': 32768, 'app_image_sha256': 'bc7e25754bc40637715daa971ce563946d0add684a17cfeb8ec9261520fbea18'}, '33609765e946838abee9032e6db6b16b7138b5c522589bf913e1351959edcec1': {'protected': False, 'app_offset': 65536, 'partition_offset': 32768, 'app_image_sha256': '13bd0f5ea5689ba58398533c4b086bf375c00c64984e041ddfe9cdaeeacc6f62'}}
 # END KNOWN IMAGES
 REGISTRY_PATH = Path(__file__).resolve().with_name('imagens_locais.json')
 

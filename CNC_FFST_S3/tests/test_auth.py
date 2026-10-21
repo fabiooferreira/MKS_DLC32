@@ -76,7 +76,7 @@ class AuthTests(unittest.TestCase):
         self.assertFalse(self.lib.host_rt_allowed(ord('~')))
     def test_identity_matches_exact_firmware(self):
         self.assertEqual(self.line('$FFINFO'),0)
-        self.assertIn('[FFFW:CNC_FFST-S3-0.1.2:'+HASH+']',self.output())
+        self.assertIn('[FFFW:CNC_FFST-S3-0.1.3:'+HASH+']',self.output())
     def test_raw_motion_tool_homing_jog_probe_blocked(self):
         for line in ['G0X1','G1A1F1','M3S100','G38.2Z-1F1','$H','$J=G91X1F1','$N0=G0X1','$I=FAKE']:
             self.assertNotEqual(self.line(line),0,line)
@@ -163,13 +163,13 @@ class AuthTests(unittest.TestCase):
                 elif data==b'\x18':
                     lib.host_reset();lib.host_frame(b'',0)
                     for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
-                elif data==b'?':self.rx.put(b'<Idle|MPos:0,0,0,0|FS:0,0>\n')
+                elif data in (b'?',b'\x80'):self.rx.put(b'<Idle|MPos:0,0,0,0|FS:0,0>\n')
                 else:
                     lib.host_serial_bytes(data,len(data))
                     for response in lib.host_output().splitlines():self.rx.put(response+b'\n')
                 return len(data)
         identity=Path(self.temp.name)/'identity.json'
-        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.2','app_image_sha256':HASH}))
+        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.3','app_image_sha256':HASH}))
         raw=RawPort();port=client.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
         try:
             port.write(b'G1A45F10\n')
@@ -230,6 +230,60 @@ class AuthTests(unittest.TestCase):
         self.assertFalse(overlap)
         self.assertEqual(port._write_raw(b'?'),1)
         self.assertEqual(writes[-1],b'?')
+    def test_fragmented_serial_lines_keep_handshake_and_ack(self):
+        spec=importlib.util.spec_from_file_location('fragmented_client',ROOT/'python/cnc_ffst_auth_source.py')
+        client=importlib.util.module_from_spec(spec);spec.loader.exec_module(client)
+        original_exchange=client.exchange
+        client.exchange=lambda *args,**kwargs: original_exchange(*args,timeout=.4,**kwargs)
+        lib=self.lib
+        class Raw:
+            is_open=True
+            def __init__(self):self.rx=queue.Queue();self.writes=[]
+            def close(self):self.is_open=False
+            def reset_input_buffer(self):
+                while not self.rx.empty():self.rx.get_nowait()
+            def readline(self):
+                try:return self.rx.get(timeout=.01)
+                except queue.Empty:return b''
+            def write(self,data):
+                self.writes.append(data);lib.host_clear();lib.host_serial_bytes(data,len(data))
+                output=lib.host_output()
+                # Serial timeout can split even 'ok' and CR/LF; empty reads do not end a line.
+                for value in output:
+                    self.rx.put(bytes([value]));self.rx.put(b'')
+                return len(data)
+        identity=Path(self.temp.name)/'fragmented_identity.json'
+        identity.write_text(json.dumps({'firmware':'CNC_FFST-S3-0.1.3','app_image_sha256':HASH}))
+        raw=Raw();port=client.SignedPort(raw,KEY,boot_wait=0,identity_path=identity)
+        try:
+            for command in [b'M5\n',b'G1X2F100\n']:
+                port.write(command)
+                deadline=time.monotonic()+1;reply=b''
+                while not reply and time.monotonic()<deadline:reply=port.readline()
+                self.assertEqual(reply,b'ok\r\n')
+                self.assertTrue(port.authenticated)
+            self.assertEqual(len([w for w in raw.writes if w.startswith(b'$FFCMD=')]),2)
+            self.assertEqual(lib.host_last_command(),b'G1X2F100')
+            lib.host_state(2)
+            port.write(b'G0X3\n')
+            reply=b'';deadline=time.monotonic()+1
+            while not reply and time.monotonic()<deadline:reply=port.readline()
+            self.assertEqual(reply,b'error:9\r\n')
+            self.assertEqual(lib.host_last_command(),b'G1X2F100')
+        finally:port.close()
+    def test_status_and_hold_use_canonical_bytes_independent_of_legacy_setting(self):
+        import threading
+        spec=importlib.util.spec_from_file_location('rt_wire_client',ROOT/'python/cnc_ffst_auth_source.py')
+        client=importlib.util.module_from_spec(spec);spec.loader.exec_module(client)
+        class Raw:
+            is_open=True
+            def __init__(self):self.writes=[]
+            def write(self,data):self.writes.append(data);return len(data)
+        port=client.SignedPort.__new__(client.SignedPort)
+        port.raw=Raw();port._closed=False;port._recovering=False;port._raw_tx=threading.Lock()
+        self.assertEqual(port.write(b'?'),1)
+        self.assertEqual(port.write(b'!\x18'),2)
+        self.assertEqual(port.raw.writes,[b'\x80',b'\x82\x18'])
     def test_close_session_invalidates_old_signed_packets(self):
         self.hello();packet=self.envelope('G0X1')
         self.assertEqual(self.line('$FFBYE'),0)

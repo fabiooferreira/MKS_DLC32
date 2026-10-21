@@ -1,0 +1,7 @@
+test_fields_continue_after_retornar (__main__.StatusDisplayTests.test_fields_continue_after_retornar) ... ok
+test_live_fields_are_current_despite_old_log_backlog (__main__.StatusDisplayTests.test_live_fields_are_current_despite_old_log_backlog) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.402s
+
+OK

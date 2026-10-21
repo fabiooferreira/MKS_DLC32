@@ -1,0 +1,8 @@
+test_pending_item_exists_before_immediate_ack (__main__.StreamingTests.test_pending_item_exists_before_immediate_ack) ... ok
+test_reader_keeps_processing_status_while_next_write_waits (__main__.StreamingTests.test_reader_keeps_processing_status_while_next_write_waits) ... ok
+test_write_failure_removes_only_its_pending_item (__main__.StreamingTests.test_write_failure_removes_only_its_pending_item) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.068s
+
+OK

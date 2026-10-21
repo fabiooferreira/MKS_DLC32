@@ -35,6 +35,10 @@ static uint8_t key[32];
 static char image_hash[65], nonce[65];
 static uint32_t sequence, rt_sequence;
 static volatile bool authenticated, session_notice;
+static bool completed_valid;
+static uint32_t completed_sequence;
+static status_code_t completed_status;
+static char completed_tag[65];
 static volatile uint32_t epoch;
 static TaskHandle_t owner;
 static unsigned trusted_depth, command_active;
@@ -102,7 +106,7 @@ static void IRAM_ATTR reset_session(bool notify)
 {
     if(xPortInIsrContext()) portENTER_CRITICAL_ISR(&mux); else portENTER_CRITICAL(&mux);
     session_notice=notify ? (session_notice || authenticated) : false;
-    authenticated=false;nonce[0]=0;epoch++;frame.active=false;
+    authenticated=false;completed_valid=false;nonce[0]=0;epoch++;frame.active=false;
     if(xPortInIsrContext()) portEXIT_CRITICAL_ISR(&mux); else portEXIT_CRITICAL(&mux);
 }
 void IRAM_ATTR ffst_auth_reset(void) {reset_session(true);}
@@ -238,9 +242,34 @@ bool ffst_auth_system(char *line,status_code_t *result)
         *result=Status_OK;return true;
     }
 #endif
+    /* Read-only receipt query. It never calls the parser, increments a sequence,
+     * changes authentication, or repeats an operation. Proof is bound to this
+     * session, client challenge, command sequence and original command MAC. */
+    if(!strncmp(line,"$FFACK=",7)) {
+        if(!authenticated) return true;
+        char *query_seq=line+7,*challenge=strchr(query_seq,',');
+        uint32_t requested;uint8_t random[16];
+        if(!challenge) return true;
+        *challenge++=0;
+        if(!number(query_seq,&requested)||!decode(challenge,random,sizeof(random))) return true;
+        char session[65],tag[65],status[16],message[256],proof[65];uint8_t digest_value[32];
+        uint32_t checked;bool done;status_code_t saved_status=Status_OK;
+        portENTER_CRITICAL(&mux);
+        checked=epoch;memcpy(session,nonce,sizeof(session));
+        done=completed_valid&&completed_sequence==requested;
+        if(done) {memcpy(tag,completed_tag,sizeof(tag));saved_status=completed_status;}
+        portEXIT_CRITICAL(&mux);
+        if(done) {snprintf(status,sizeof(status),"%u",(unsigned)saved_status);snprintf(message,sizeof(message),"ack|%s|%s|%s|%s|%s",session,challenge,query_seq,tag,status);}
+        else {strcpy(status,"PENDING");snprintf(message,sizeof(message),"ack|%s|%s|%s|PENDING",session,challenge,query_seq);}
+        if(!digest(message,digest_value)||!authenticated||checked!=epoch) return true;
+        hex(digest_value,proof,32);
+        hal.stream.write("[FFACK:");hal.stream.write(query_seq);hal.stream.write(":");hal.stream.write(challenge);
+        hal.stream.write(":");hal.stream.write(status);hal.stream.write(":");hal.stream.write(proof);hal.stream.write("]\r\n");
+        *result=Status_OK;return true;
+    }
     if(!strcmp(line,"$FFINFO")) {
         if(!get_hash()) return true;
-        hal.stream.write("[FFFW:" FFST_FIRMWARE_VERSION ":");hal.stream.write(image_hash);hal.stream.write("]\r\n");
+        hal.stream.write("[FFFW:" FFST_FIRMWARE_VERSION ":");hal.stream.write(image_hash);hal.stream.write("]\r\n[FFCAP:ACK1]\r\n");
         *result=Status_OK;return true;
     }
     if(!strcmp(line,"$FFBYE")) {reset_session(false);*result=Status_OK;return true;}
@@ -279,6 +308,7 @@ bool ffst_auth_system(char *line,status_code_t *result)
     if(!number(seq,&value)||value!=sequence||!length||length>400||length%2) return true;
     char msg[490];snprintf(msg,sizeof(msg),"%s|%s|%s",nonce,seq,payload);
     if(!valid(msg,tag)) return true;
+    char request_tag[65];memcpy(request_tag,tag,sizeof(request_tag));
     char decoded[201];
     if(!decode(payload,(uint8_t *)decoded,length/2)) return true;
     decoded[length/2]=0;
@@ -296,6 +326,12 @@ bool ffst_auth_system(char *line,status_code_t *result)
     } else if(decoded[0]=='$') *result=system_execute_line(decoded,hal.stream.write);
     else if(state_get()&(STATE_ALARM|STATE_ESTOP|STATE_JOG)) *result=Status_SystemGClock;
     else *result=gc_execute_block(decoded);
+    portENTER_CRITICAL(&mux);
+    if(authenticated&&checked==epoch) {
+        completed_sequence=value;completed_status=*result;
+        memcpy(completed_tag,request_tag,sizeof(completed_tag));completed_valid=true;
+    }
+    portEXIT_CRITICAL(&mux);
     command_active--;trusted_depth--;if(!trusted_depth) owner=NULL;
     return true;
 }

@@ -1,0 +1,24 @@
+test_bare_query_ok_without_header_never_confirms_missing_command (__main__.ReceiptTests.test_bare_query_ok_without_header_never_confirms_missing_command) ... ok
+test_dwell_uses_declared_duration_without_unbounded_wait (__main__.ReceiptTests.test_dwell_uses_declared_duration_without_unbounded_wait) ... ok
+test_explicit_operation_budget_is_used_for_a_long_probe (__main__.ReceiptTests.test_explicit_operation_budget_is_used_for_a_long_probe) ... ok
+test_forged_proof_blocks_connection (__main__.ReceiptTests.test_forged_proof_blocks_connection) ... ok
+test_indefinite_budget_is_only_accepted_for_explicit_native_pause (__main__.ReceiptTests.test_indefinite_budget_is_only_accepted_for_explicit_native_pause) ... ok
+test_late_original_ack_and_query_ack_produce_one_ack (__main__.ReceiptTests.test_late_original_ack_and_query_ack_produce_one_ack) ... ok
+test_lost_ack_recovers_without_resending_command (__main__.ReceiptTests.test_lost_ack_recovers_without_resending_command) ... ok
+test_malformed_query_is_denied (__main__.ReceiptTests.test_malformed_query_is_denied) ... ok
+test_missing_command_is_not_replayed_and_times_out_even_without_next_write (__main__.ReceiptTests.test_missing_command_is_not_replayed_and_times_out_even_without_next_write) ... ok
+test_missing_query_terminator_is_not_mistaken_for_success (__main__.ReceiptTests.test_missing_query_terminator_is_not_mistaken_for_success) ... ok
+test_progress_and_fresh_hold_extend_wait_but_stationary_run_does_not (__main__.ReceiptTests.test_progress_and_fresh_hold_extend_wait_but_stationary_run_does_not) ... ok
+test_receipt_is_bound_to_sequence_tag_and_challenge (__main__.ReceiptTests.test_receipt_is_bound_to_sequence_tag_and_challenge) ... ok
+test_recovered_safety_error_remains_error (__main__.ReceiptTests.test_recovered_safety_error_remains_error) ... ok
+test_repeated_queries_never_execute_or_consume_command_sequence (__main__.ReceiptTests.test_repeated_queries_never_execute_or_consume_command_sequence) ... ok
+test_reset_invalidates_receipt (__main__.ReceiptTests.test_reset_invalidates_receipt) ... ok
+test_safety_error_is_retained_without_becoming_success (__main__.ReceiptTests.test_safety_error_is_retained_without_becoming_success) ... ok
+test_short_query_write_stops_without_retransmission (__main__.ReceiptTests.test_short_query_write_stops_without_retransmission) ... ok
+test_unauthenticated_query_is_denied (__main__.ReceiptTests.test_unauthenticated_query_is_denied) ... ok
+test_unknown_sequence_has_authenticated_pending_receipt (__main__.ReceiptTests.test_unknown_sequence_has_authenticated_pending_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 1.863s
+
+OK
