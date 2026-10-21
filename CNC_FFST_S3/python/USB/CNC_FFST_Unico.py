@@ -4151,7 +4151,7 @@ def icon_path(saved_path):
     return RESOURCE_DIR / filename
 
 
-APP_VERSION = 'S3 0.1.2 — Controlador PCB autenticado'
+APP_VERSION = 'S3 0.1.2 — Controlador PCB autenticado — M0 XYZ'
 DEFAULT = {'baud': 115200, 'buffer': 128, 'macros': [
     {'name': 'Laser OFF', 'command': 'M5'},
     {'name': 'Ir X0 Y0', 'command': 'G90\nG0 X0 Y0'}], 'sim_speed': '1.0'}
@@ -4625,6 +4625,13 @@ class Streamer:
         self.paused = False
         self.m0_waiting = False
         self.m0_stopped = threading.Event()
+        self.m0_alignment_ready = False
+        self._m0_managed = False
+        self._m0_editing = False
+        self._m0_lock = threading.Lock()
+        self._m0_resume = threading.Event()
+        self._m0_anchor = None
+        self._m0_modal = []
         self.cancel = False
         self.limit = 128
         self.inflight = []
@@ -4684,6 +4691,9 @@ class Streamer:
     def disconnect(self):
         self.cancel = True
         self.running = False
+        self.m0_alignment_ready = False
+        self.m0_waiting = False
+        self._m0_resume.set()
         if self.port:
             try:
                 self.port.close()
@@ -4714,11 +4724,14 @@ class Streamer:
                     self.probe_received_event.set()
                 except ValueError:
                     self.cancel = True
+            if response == '[FFSESSION:RESET]' and self.m0_waiting:
+                self.cancel = True
+                self.m0_alignment_ready = False
             if low.startswith('grbl'):
                 self.work_offset = None
                 self.modal = None
                 self.work_position = None
-                self.cancel = True if self.probing else self.cancel
+                self.cancel = True if self.probing or self.m0_waiting else self.cancel
                 self.command_ack_event.set()
                 self.probe_received_event.set()
                 self.emit('map_invalid', 'Reset da controladora')
@@ -4731,6 +4744,11 @@ class Streamer:
                     self.emit('log', '< ' + response)
                 fields = response[1:-1].split('|')
                 self.machine_state = fields[0]
+                if self.m0_waiting and self._m0_managed:
+                    allowed = ('idle', 'run', 'jog') if self._m0_editing else ('idle',)
+                    if fields[0].lower() not in allowed:
+                        self.cancel = True
+                        self.m0_alignment_ready = False
                 self.status_time = time.monotonic()
                 if self.m0_waiting and fields[0].lower() == 'hold:0':
                     self.m0_stopped.set()
@@ -4757,8 +4775,11 @@ class Streamer:
                     else:
                         xy = None
                     if xy is not None:
-                        self.work_position = tuple(xy)
-                        self.emit('position', xy[0], xy[1], fields[0])
+                        if self._m0_editing and self._m0_anchor is not None:
+                            self.work_position = self._m0_anchor
+                        else:
+                            self.work_position = tuple(xy)
+                            self.emit('position', xy[0], xy[1], fields[0])
                 except (ValueError, IndexError):
                     pass
                 self.status_version += 1
@@ -5237,7 +5258,134 @@ class Streamer:
         self.m0_stopped.clear()
         self.m0_waiting = True
 
+    @staticmethod
+    def m0_macro_lines(command):
+        lines = [clean(line) for line in command.splitlines() if clean(line)]
+        if not lines:
+            raise ValueError('Macro sem movimentos.')
+        word = re.compile(r'([A-Z])([+-]?(?:\d+(?:\.\d*)?|\.\d+))')
+        for line in lines:
+            text = line[3:] if line.startswith('$J=') else line
+            words = word.findall(text)
+            if not words or word.sub('', text).strip():
+                raise ValueError('Em M0 use somente movimentos XYZ, G0/G1, G90/G91, G20/G21 e F.')
+            for letter, value in words:
+                number = float(value)
+                if not math.isfinite(number) or letter not in 'GXYZFM':
+                    raise ValueError('Macro M0: comando não permitido; nenhuma linha foi enviada.')
+                if letter == 'G' and number not in (0, 1, 20, 21, 90, 91, 94):
+                    raise ValueError('Macro M0: sondagem, arcos, homing e alteração de origem não são permitidos.')
+                if letter == 'M' and number != 5:
+                    raise ValueError('Macro de ajuste: somente M5 é permitido; ferramenta deve ficar desligada.')
+                if letter == 'F' and number <= 0:
+                    raise ValueError('Macro M0: avanço deve ser positivo.')
+        return lines
+
+    def m0_restore_modes(self):
+        # Restore the file's modes and feed without re-arming its spindle/laser.
+        allowed = {'G0', 'G1', 'G2', 'G3', 'G17', 'G18', 'G19', 'G20', 'G21',
+                   'G90', 'G91', 'G93', 'G94', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59'}
+        words = [v for v in self._m0_modal if v in allowed or v.startswith('F')]
+        if words:
+            self.sync_command(' '.join(words))
+
+    def pause_m0_alignment(self, number):
+        # Host-managed M0: drain actual motion, then remain Idle with M5.
+        paused_port = self.port
+        while not self.cancel:
+            with self.lock:
+                pending = bool(self.inflight)
+            if not pending:
+                break
+            time.sleep(.01)
+        if self.cancel:
+            raise RuntimeError('M0 cancelado antes da parada.')
+        self.sync_command('G4 P0.01', 120)
+        self.wait_idle()
+        self.modal = None
+        self.sync_command('$G')
+        self._m0_modal = list(self.modal or [])
+        if not self._m0_modal:
+            raise RuntimeError('M0: estado modal não confirmado.')
+        self.sync_command('M5')
+        self.sync_command('$$')
+        if self.settings.get('13') != 0:
+            raise RuntimeError('M0: configure $13=0 para coordenadas em mm.')
+        self.fresh_status()
+        if not self.work_position or not all(math.isfinite(v) for v in self.work_position):
+            raise RuntimeError('M0: posição XYZ não confirmada.')
+        self._m0_anchor = tuple(self.work_position)
+        with self._m0_lock:
+            self.m0_waiting = True
+            self._m0_managed = True
+            self.m0_alignment_ready = True
+            self._m0_resume.clear()
+        self.emit('log', f'M0 linha {number}: parado, M5; ajuste XYZ por movimentos/macros e clique Retornar.')
+        self.emit('m0_alignment', number)
+        while not self.cancel and not self._m0_resume.wait(.05):
+            if self.port is not paused_port or not self.port or not self.port.is_open or getattr(self.port, 'failure', None):
+                self.cancel = True
+        with self._m0_lock:
+            self.m0_alignment_ready = False
+            self.m0_waiting = False
+            self._m0_managed = False
+        if self.cancel or self.port is not paused_port:
+            self.cancel = True
+            raise RuntimeError('M0 interrompido; trabalho não retomado.')
+        self.wait_idle()
+        self.m0_restore_modes()
+        # Only the explicit Retornar action can restore the file's tool state.
+        spindle = next((v for v in self._m0_modal if v in ('M3', 'M4', 'M5')), 'M5')
+        speed = next((v for v in self._m0_modal if v.startswith('S')), 'S0')
+        self.sync_command(spindle + ' ' + speed)
+        self.emit('log', 'M0: retomada manual, alinhamento XYZ preservado por G92.')
+
+    def resume_m0_alignment(self):
+        with self._m0_lock:
+            if not self.m0_alignment_ready or self._m0_editing or self.cancel:
+                raise RuntimeError('M0: aguarde o término do ajuste antes de retornar.')
+            self.m0_alignment_ready = False
+            self._m0_resume.set()
+
+    def start_m0_alignment(self, command):
+        lines = self.m0_macro_lines(command)  # Validate the whole macro before any motion.
+        with self._m0_lock:
+            if not self.m0_alignment_ready or self._m0_editing or self.cancel:
+                raise RuntimeError('M0: ajuste indisponível ou outro ajuste em execução.')
+            self._m0_editing = True
+        self.emit('m0_busy')
+        threading.Thread(target=self.m0_alignment_loop, args=(lines,), daemon=True).start()
+
+    def m0_alignment_loop(self, lines):
+        try:
+            self.wait_idle()
+            self.sync_command('M5')
+            self.sync_command('G94')
+            for line in lines:
+                self.sync_command(line, 120)
+            self.sync_command('G4 P0.01', 120)
+            self.wait_idle()
+            self.sync_command('G21 G90 G94')
+            x, y, z = self._m0_anchor
+            self.sync_command(f'G92 X{x:.6f} Y{y:.6f} Z{z:.6f}')
+            self.m0_restore_modes()
+            self.fresh_status()
+            self.emit('log', 'M0: ajuste XYZ concluído; coordenadas de trabalho preservadas.')
+        except Exception as exc:
+            self.cancel = True
+            self.m0_alignment_ready = False
+            try: self.realtime(b'!')
+            except Exception: pass
+            self.emit('fault', 'Ajuste M0 interrompido: ' + str(exc) + '. Confira a posição antes de novo trabalho.')
+        finally:
+            with self._m0_lock:
+                self._m0_editing = False
+            self.emit('m0_adjusted')
+
     def send_manual(self, command):
+        if self.m0_alignment_ready and not self.simulation:
+            self.start_m0_alignment(command)
+            return
         if self.running:
             raise RuntimeError('Pare ou conclua o arquivo antes de executar macros.')
         if self.simulation:
@@ -5320,6 +5468,15 @@ class Streamer:
         commands = [(i, clean(s)) for i, s in enumerate(lines, 1) if clean(s)]
         if not commands:
             raise RuntimeError('Arquivo sem comandos.')
+        for number, line in commands:
+            if re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line) and not re.fullmatch(r'(?:N\d+\s*)?M0+(?:\.0+)?', line):
+                raise RuntimeError(f'Linha {number}: coloque M0 sozinho em uma linha para permitir ajuste XYZ.')
+        after_pause = False
+        for number, line in commands:
+            if re.fullmatch(r'(?:N\d+\s*)?M0+(?:\.0+)?', line):
+                after_pause = True
+            elif after_pause and (re.search(r'G(?:10|92)(?:\.\d+)?(?![\d.])', line) or line.startswith('$H')):
+                raise RuntimeError(f'Linha {number}: alteração de origem/homing após a pausa pode desfazer o ajuste fino. Revise o arquivo.')
         # A resposta ao G4 chega após o esvaziamento do planejador de movimentos.
         # Assim o fim do arquivo significa que a máquina terminou, não só que recebeu as linhas.
         commands.append((-1, 'G4 P0.01'))
@@ -5431,15 +5588,13 @@ class Streamer:
             self.settings['32'] = float(grbl_mode)
             self.emit('log', 'Modo automático: ' + ('LASER ($32=1)' if grbl_mode else 'SPINDLE/FRESA ($32=0)'))
             for number, line in commands:
-                if re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line, re.I):
-                    while not self.cancel:
-                        with self.lock:
-                            outstanding = bool(self.inflight)
-                        if not outstanding and not self.paused:
-                            break
-                        time.sleep(.015)
+                if re.fullmatch(r'(?:N\d+\s*)?M0+(?:\.0+)?', line):
+                    self.pause_m0_alignment(number)
                     if self.cancel:
                         break
+                    self.emit('progress', sent + 1, count)
+                    sent += 1
+                    continue
                 payload = (line + '\n').encode('ascii')
                 if len(payload) > self.limit:
                     raise RuntimeError(f'Linha {number} excede o buffer configurado.')
@@ -5476,6 +5631,9 @@ class Streamer:
             self.emit('fault', 'Envio do arquivo interrompido: ' + str(exc) +
                       ' Nenhum comando sera repetido. Confira a parada da maquina.')
         finally:
+            self.m0_alignment_ready = False
+            self._m0_managed = False
+            self.m0_waiting = False
             self.running = False
 
 
@@ -6537,6 +6695,7 @@ class App:
             messagebox.showerror('Conexão', str(exc), parent=self.root.winfo_toplevel())
 
     def disconnect(self):
+        self.close_m0_notice()
         self.finish_timer()
         self.stream.disconnect()
         self.clear_heightmap()
@@ -6665,12 +6824,48 @@ class App:
             except Exception as exc:
                 messagebox.showerror('Pausa', str(exc))
 
+    def close_m0_notice(self):
+        window = getattr(self, '_m0_notice', None)
+        if window is not None:
+            try: window.destroy()
+            except tk.TclError: pass
+        self._m0_notice = None
+
+    def show_m0_notice(self):
+        self.close_m0_notice()
+        window = tk.Toplevel(self.root)
+        self._m0_notice = window
+        window.title('Pausa para Conferência de Posicionamento e Ajuste Fino')
+        window.transient(self.root.winfo_toplevel())
+        window.resizable(False, False)
+        ttk.Label(window, text='Pausa para Conferência de Posicionamento e Ajuste Fino', font=('Segoe UI', 12, 'bold'), wraplength=510).pack(padx=20, pady=(18, 10))
+        text = ('A máquina está parada.\n'
+                'Comandos de posição e macros estão ativos para ajuste fino de X, Y e Z.\n'
+                'Os ajustes preservam as coordenadas de trabalho.\n'
+                'Laser/spindle permanecem desligados durante o ajuste.\n\n'
+                if self.stream._m0_managed else 'A execução está pausada.\n\n')
+        text += 'Pressione Retornar na janela principal para continuar o trabalho.'
+        ttk.Label(window, text=text, justify='left', wraplength=510).pack(padx=20, pady=(0, 14))
+        ttk.Button(window, text='Fechar aviso (manter pausa)', command=self.close_m0_notice).pack(pady=(0, 18))
+        # Modeless: no grab/wait_window; movement and macro buttons remain accessible.
+        window.protocol('WM_DELETE_WINDOW', self.close_m0_notice)
+
     def resume(self):
+        if self.stream._m0_managed and not self.stream.simulation:
+            try:
+                self.stream.resume_m0_alignment()
+                self.close_m0_notice()
+                self.update_macro_availability()
+                self.status.set('Retomando após ajuste M0...')
+            except Exception as exc:
+                messagebox.showerror('Retomar', str(exc))
+            return
         if self.stream.running:
             try:
                 self.stream.realtime(b'~')
                 self.stream.paused = False
                 self.stream.m0_waiting = False
+                self.close_m0_notice()
                 self.status.set('Enviando')
             except Exception as exc:
                 messagebox.showerror('Retomar', str(exc))
@@ -6690,6 +6885,7 @@ class App:
             self.finish_timer()
             self.stream.cancel = True
             self.stream.paused = False
+            self.close_m0_notice()
             try:
                 self.stream.realtime(b'!\x18')
                 # O reset descarta a fila GRBL; respostas tardias não pertencem ao próximo arquivo.
@@ -6727,8 +6923,8 @@ class App:
             axis = axis.upper()
             if axis not in ('X', 'Y', 'Z') or direction not in (-1, 1):
                 raise ValueError('Comando de movimento inválido.')
-            if self.stream.running:
-                raise RuntimeError('Pare ou conclua o arquivo antes de movimentar manualmente.')
+            if self.stream.running and not self.stream.m0_alignment_ready:
+                raise RuntimeError('Movimento manual permitido apenas em M0 pronto para ajuste.')
 
             step = self.jog_step_value(axis) * direction
             feed = self.jog_feed_value(axis)
@@ -6739,7 +6935,7 @@ class App:
                 command = f'G91\nG1 {axis}{step:.4f} F{feed:g}\nG90'
             else:
                 # $J não altera permanentemente o estado modal G90/G91 do programa.
-                command = f'$J=G91 {axis}{step:.4f} F{feed:g}'
+                command = f'$J=G21 G91 {axis}{step:.4f} F{feed:g}'
 
             self.stream.send_manual(command)
             self.status.set(f'Jog {axis}: {step:+.4f} mm')
@@ -6838,7 +7034,7 @@ class App:
         self.update_macro_availability()
 
     def update_macro_availability(self):
-        available = self.active_file is None and not self.awaiting_idle and not self.stream.running
+        available = (self.active_file is None and not self.awaiting_idle and not self.stream.running) or (self.stream.m0_alignment_ready and not self.stream._m0_editing and not self.stream.cancel)
         for button in getattr(self, 'macro_buttons', []):
             button.configure(state='normal' if available else 'disabled')
 
@@ -7082,6 +7278,14 @@ class App:
                             self.height_status.set('Marcar Zero interrompido; mapa guardado, compensação desativada até redefinir Z0.')
                         self._mark_zero_in_progress = False
                     self.update_macro_availability()
+                elif kind in ('m0_alignment', 'm0_busy', 'm0_adjusted'):
+                    if kind == 'm0_alignment':
+                        self.show_m0_notice()
+                    if self.stream.cancel:
+                        self.close_m0_notice()
+                    self.update_macro_availability()
+                    self.status.set('Conferência de posicionamento: ajustando XYZ...' if self.stream._m0_editing else
+                                    ('Conferência de posicionamento: movimentos/macros ativos; pressione Retornar para continuar' if self.stream.m0_alignment_ready else 'Conferência de posicionamento encerrada'))
                 elif kind == 'command':
                     self.last_command.set('Comando: ' + event[1])
                 elif kind == 'log':
@@ -7103,15 +7307,8 @@ class App:
                     else:
                         self.status.set(f'Enviadas {event[1]}/{event[2]} linhas; aguardando confirmações')
                 elif kind == 'm0':
-                    self.status.set(f'Pausa M0: {event[1]}')
-                    if messagebox.showinfo('Pausa M0', 'Programa pausado em M0.\n\nClique OK para continuar.', parent=self.root) == 'ok' and not self.stream.cancel:
-                        try:
-                            if not self.stream.simulation:
-                                self.stream.realtime(b'~')
-                            self.stream.m0_waiting = False
-                            self.status.set('Enviando')
-                        except Exception as exc:
-                            messagebox.showerror('Retomar', str(exc))
+                    self.status.set('Pausa para Conferência de Posicionamento e Ajuste Fino')
+                    self.show_m0_notice()
                 elif kind == 'error':
                     self.write_diagnostic('ERRO ' + repr(event))
                     self.status.set(f'Erro GRBL na linha {event[1]}: {event[2]}')
@@ -7144,6 +7341,7 @@ class App:
                         if event[4]:
                             messagebox.showwarning('Avisos do preview', '\n'.join(event[4]))
                 elif kind == 'fault':
+                    self.close_m0_notice()
                     self.write_diagnostic('FALHA ' + repr(event))
                     self.finish_timer()
                     self.status.set(event[1])

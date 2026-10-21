@@ -1,10 +1,10 @@
 # CNC_FFST S3 — firmware 0.1.2 e placa-base R2
 
-[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.2_Comando_Resposta.zip)
+[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.2_Conferencia_XYZ.zip)
 
 [Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote de correção UART 0.1.2 fornece o modo reversível, sem proteção de leitura.
 
-[**Baixar Python atualizado — Comando e Resposta ao lado da serial + BIN UART 0.1.2**](artifacts/CNC_FFST_S3_UART_0.1.2_Comando_Resposta.zip)
+[**Baixar Python — Conferência de Posicionamento e Ajuste Fino XYZ + BIN UART 0.1.2**](artifacts/CNC_FFST_S3_UART_0.1.2_Conferencia_XYZ.zip)
 
 [Correção de bloqueio de leitura](docs/CORRECAO_STREAMING.md). [Correção de escritas concorrentes](docs/CORRECAO_ESCRITA_SERIAL.md): se já está usando o BIN 0.1.2, atualize somente o Python. Ainda depende de validação física do timeout relatado.
 
@@ -23,6 +23,8 @@ O pacote UART 0.1.0 anterior foi substituído pelo pacote de correção acima.
 [Instruções de gravação, compilação e limitações](docs/FIRMWARE_S3.md). A USB nativa é uma alternativa separada; grave somente o perfil da porta escolhida. Autenticação HMAC preservada; Wi-Fi e criptografia da flash não estão ativados nesta versão de bancada.
 
 A revisão R2 substitui a R1: corrige a seleção das ferramentas para comutar alimentação, mantendo o PWM nas duas entradas.
+
+[Como funciona a pausa e o ajuste XYZ, restrições e testes](docs/CONFERENCIA_POSICIONAMENTO_XYZ.md).
 
 ## Requisitos incorporados
 
