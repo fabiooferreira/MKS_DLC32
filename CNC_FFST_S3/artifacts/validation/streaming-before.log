@@ -1,0 +1,14 @@
+test_reader_keeps_processing_status_while_next_write_waits (__main__.StreamingTests.test_reader_keeps_processing_status_while_next_write_waits) ... FAIL
+
+======================================================================
+FAIL: test_reader_keeps_processing_status_while_next_write_waits (__main__.StreamingTests.test_reader_keeps_processing_status_while_next_write_waits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_streaming.py", line 44, in test_reader_keeps_processing_status_while_next_write_waits
+    self.assertGreater(stream.status_version,0,'Reader blocked behind sender: no status processed')
+AssertionError: 0 not greater than 0 : Reader blocked behind sender: no status processed
+
+----------------------------------------------------------------------
+Ran 1 test in 1.053s
+
+FAILED (failures=1)

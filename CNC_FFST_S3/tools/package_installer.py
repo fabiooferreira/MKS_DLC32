@@ -11,7 +11,7 @@ EXCLUDED_NAMES = {'ffst_key.generated.h', 'compile_commands.json', 'imagens_loca
 
 
 def main():
-    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.2_Serial.zip'
+    output = ROOT/'artifacts/CNC_FFST_S3_Instalador_0.2.2_Streaming.zip'
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         archive.write(ROOT/'installer/Instalador_CNC_FFST_S3.py', 'Instalador_CNC_FFST_S3.py')
         archive.write(ROOT/'artifacts/UART/CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin',
@@ -32,14 +32,14 @@ def main():
         assert archive.testzip() is None
         assert all('.private' not in Path(name).parts and not name.lower().endswith('.pem') for name in archive.namelist())
         assert not any('/PROTECTED/' in name for name in archive.namelist())
-    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.2_Serial.zip'
+    controller = ROOT/'artifacts/CNC_FFST_S3_UART_0.1.2_Streaming.zip'
     with zipfile.ZipFile(output) as source, zipfile.ZipFile(controller, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in ['Fabricação Fresa Laser.py', 'ABRIR_FABRICACAO_FRESA_LASER.cmd', 'INSTALAR_DEPENDENCIAS_CONTROLE.cmd',
                      'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin']:
             archive.writestr(name, source.read(name))
         archive.writestr('LEIA_PRIMEIRO.txt',
             'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.2.\n'
-            'Correção Python: impede escritas simultâneas de status e comandos. Sem mudança do firmware 0.1.2. Se ele já está gravado, atualize somente o Python. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
+            'Correção Python: leitura de ACK/status não fica presa na trava do envio. Inclui a correção de escritas simultâneas. Sem mudança do firmware 0.1.2. Se ele já está gravado, atualize somente o Python. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
             'Antes de gravar, salve as configurações com $$: este BIN completo substitui as configurações na flash.\n'
             'Gravar o BIN UART 0.1.2 pelo instalador atualizado, no modo Reversível, e usar o programa deste pacote.\n'
             'Se a placa já estiver protegida, NÃO tentar provisionar novamente: exige atualização específica com as chaves existentes.\n'

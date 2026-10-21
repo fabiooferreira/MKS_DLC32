@@ -4620,6 +4620,7 @@ class Streamer:
         self.events = events
         self.port = None
         self.lock = threading.Lock()
+        self._send_lock = threading.Lock()
         self.running = False
         self.paused = False
         self.m0_waiting = False
@@ -4676,9 +4677,7 @@ class Streamer:
         if self.port is not port or not port.is_open or self.running:
             return
         try:
-            with self.lock:
-                port.write(b'$$\n')
-                self.inflight.append((None, 3))
+            self.send_payload(b'$$\n')
         except (serial.SerialException, OSError):
             pass
 
@@ -4787,6 +4786,29 @@ class Streamer:
             self.cancel = True
             self.emit('fault', 'Conexão serial encerrada.')
 
+    def send_payload(self, payload, number=None, exclusive=False, probe=False):
+        # Preserve send order without holding the lock used by the reader for ACKs.
+        with self._send_lock:
+            item = (number, len(payload))
+            with self.lock:
+                if exclusive:
+                    if self.inflight:
+                        raise RuntimeError('Aguarde os comandos anteriores.')
+                    self.command_ack_event.clear()
+                    if probe:
+                        self.probe_result = None
+                        self.probe_received_event.clear()
+                self.inflight.append(item)
+            try:
+                self.port.write(payload)
+            except Exception:
+                with self.lock:
+                    for index, pending in enumerate(self.inflight):
+                        if pending is item:
+                            self.inflight.pop(index)
+                            break
+                raise
+
     def sync_command(self, command, timeout=10):
         """Aguarda evento de ACK; para G38 aguarda também o PRB da mesma sondagem.
 
@@ -4796,20 +4818,7 @@ class Streamer:
         if self.cancel:
             raise RuntimeError('Operação cancelada.')
         is_probe = bool(re.search(r'\bG38\.[2345]\b', command.upper()))
-        with self.lock:
-            if self.inflight:
-                raise RuntimeError('Aguarde os comandos anteriores.')
-            self.command_ack_event.clear()
-            if is_probe:
-                self.probe_result = None
-                self.probe_received_event.clear()
-            # Guardar na fila antes que a thread leitora possa receber o ok.
-            self.inflight.append((None, len(command) + 1))
-            try:
-                self.port.write((command + '\n').encode('ascii'))
-            except Exception:
-                self.inflight.pop()
-                raise
+        self.send_payload((command + '\n').encode('ascii'), exclusive=True, probe=is_probe)
         self.emit('log', '> ' + command)
         deadline = time.monotonic() + timeout
         while True:
@@ -5250,9 +5259,7 @@ class Streamer:
         for raw in command.splitlines():
             line = clean(raw)
             if line:
-                with self.lock:
-                    self.port.write((line + '\n').encode('ascii'))
-                    self.inflight.append((None, len(line) + 1))
+                self.send_payload((line + '\n').encode('ascii'))
                 self.emit('log', '> ' + line)
 
     def manual_sequence(self, command):
@@ -5276,9 +5283,7 @@ class Streamer:
                 is_m0 = bool(re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line, re.I))
                 if is_m0:
                     self.prepare_m0('macro_m0')
-                with self.lock:
-                    self.port.write((line + '\n').encode('ascii'))
-                    self.inflight.append(('macro_m0' if is_m0 else None, len(line) + 1))
+                self.send_payload((line + '\n').encode('ascii'), 'macro_m0' if is_m0 else None)
                 self.emit('log', '> ' + line)
                 if is_m0:
                     self.wait_m0_complete('macro_m0')
@@ -5448,9 +5453,7 @@ class Streamer:
                 is_m0 = bool(re.search(r'(?<![A-Z])M0+(?:\.0+)?(?![\d.])', line, re.I))
                 if is_m0:
                     self.prepare_m0(number)
-                with self.lock:
-                    self.port.write(payload)
-                    self.inflight.append((number, len(payload)))
+                self.send_payload(payload, number)
                 if number != -1:
                     sent += 1
                     self.emit('progress', sent, count)
