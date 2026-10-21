@@ -3634,7 +3634,7 @@ def _create_embedded_auth():
             raise RuntimeError('BIN correspondente ausente/inválido. Use o pacote Python completo.') from exc
 
 
-    def verify_firmware(port, identity_path=None):
+    def verify_firmware(port, identity_path=None, writer=None):
         path = Path(identity_path) if identity_path is not None else None
         try:
             identity = json.loads(path.read_text(encoding="utf-8")) if path else _firmware_identity
@@ -3642,7 +3642,7 @@ def _create_embedded_auth():
             version = identity['firmware']
         except (OSError, ValueError, KeyError) as exc:
             raise RuntimeError('Manifesto do firmware ausente/inválido. Use o pacote Python completo.') from exc
-        lines = exchange(port, '$FFINFO')
+        lines = exchange(port, '$FFINFO', writer=writer)
         if '[FFFW:' + version + ':' + expected + ']' not in lines:
             raise RuntimeError('A placa não está com o BIN CNC_FFST esperado por este programa.')
         return expected
@@ -3652,8 +3652,8 @@ def _create_embedded_auth():
         return hmac.new(key, message.encode('ascii'), hashlib.sha256).hexdigest()
 
 
-    def exchange(port, command, timeout=8):
-        port.write(command.encode('ascii') + b'\n')
+    def exchange(port, command, timeout=8, writer=None):
+        (writer or port.write)(command.encode('ascii') + b'\n')
         lines = []
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline:
@@ -3691,6 +3691,7 @@ def _create_embedded_auth():
             self.rtseq = 0
             self._rt_tx = threading.Lock()
             self._wire = threading.Lock()
+            self._raw_tx = threading.Lock()
             self.nonce = None
             self.failure = None
             self._closed = False
@@ -3712,9 +3713,20 @@ def _create_embedded_auth():
             self._reader = threading.Thread(target=self._pump, daemon=True)
             self._reader.start()
 
+        def _write_raw(self, data):
+            # Windows pyserial uses one overlapped-write structure per port.
+            # Never let status polling race a command/handshake write.
+            status_only = bool(data) and all(c == ord('?') for c in data)
+            if not self._raw_tx.acquire(blocking=not status_only):
+                return len(data)  # A later poll will request fresh status.
+            try:
+                return self.raw.write(data)
+            finally:
+                self._raw_tx.release()
+
         def _authenticate(self):
-            image_hash = verify_firmware(self.raw, self._identity_path)
-            lines = exchange(self.raw, '$FFHELLO')
+            image_hash = verify_firmware(self.raw, self._identity_path, writer=self._write_raw)
+            lines = exchange(self.raw, '$FFHELLO', writer=self._write_raw)
             matches = [re.fullmatch(r'\[FFNONCE:([0-9a-f]{64}):([0-9a-f]{64})\]', s)
                        for s in lines]
             match = next((m for m in matches if m), None)
@@ -3723,7 +3735,7 @@ def _create_embedded_auth():
             self.nonce = match[1]
             if not hmac.compare_digest(mac(self.key, 'server|' + self.nonce + '|' + image_hash), match[2]):
                 raise RuntimeError('A placa não corresponde à chave local.')
-            reply = exchange(self.raw, '$FFAUTH=' + mac(self.key, 'client|' + self.nonce + '|' + image_hash))
+            reply = exchange(self.raw, '$FFAUTH=' + mac(self.key, 'client|' + self.nonce + '|' + image_hash), writer=self._write_raw)
             if '[FFAUTH:OK]' not in reply:
                 raise RuntimeError('Autenticação não confirmada.')
             self.seq = self.rtseq = 0
@@ -3846,14 +3858,14 @@ def _create_embedded_auth():
                         if generation != self._generation or self._recovering:
                             self._kind = None
                             raise SessionChanged('Sessão renovada; comando não enviado. Confirme o estado antes de tentar novamente.')
-                        if self.raw.write(wire) != len(wire):
+                        if self._write_raw(wire) != len(wire):
                             raise OSError('Escrita incompleta; não repetir movimento.')
                         self.seq += 1
                 except SessionChanged:
                     self._ready.set()
                     raise
-                except Exception:
-                    self.failure = OSError('Falha de envio. Reconecte; comando não será repetido.')
+                except Exception as exc:
+                    self.failure = OSError('Falha de envio: ' + str(exc) + '. Reconecte; comando não será repetido.')
                     self._ready.set()
                     raise
 
@@ -3865,7 +3877,7 @@ def _create_embedded_auth():
                 # Stop/status/reset bypass HMAC and the pending-command queue.
                 if self._recovering and all(c == ord('?') for c in data):
                     return len(data)
-                result = self.raw.write(data)
+                result = self._write_raw(data)
                 # Firmware reports session reset; reader renews it without resending moves.
                 return result
             if len(data) == 1 and (data[0] >= 0x80 or data == b'~'):
@@ -3894,7 +3906,7 @@ def _create_embedded_auth():
                 with self._wire:
                     if generation != self._generation or self._recovering:
                         raise RuntimeError('Sessão renovada; retomada não enviada.')
-                    if self.raw.write(wire) != len(wire):
+                    if self._write_raw(wire) != len(wire):
                         self.failure = OSError('Falha de envio realtime; não repetir automaticamente.')
                         raise self.failure
                     self.rtseq += 1
@@ -3903,7 +3915,7 @@ def _create_embedded_auth():
             self._closed = True
             try:
                 with self._wire:
-                    if self.raw.is_open:self.raw.write(b'$FFBYE\n')
+                    if self.raw.is_open:self._write_raw(b'$FFBYE\n')
             except Exception:
                 pass
             self._ready.set()
@@ -5277,7 +5289,12 @@ class Streamer:
             self.running = False
             self.emit('done', 'Interrompido' if self.cancel else 'Arquivo confirmado pela controladora')
         except Exception as exc:
-            self.emit('fault', str(exc))
+            self.cancel = True
+            # Best effort only: a USB write failure cannot guarantee a physical stop.
+            try: self.realtime(b'!')
+            except Exception: pass
+            self.emit('fault', 'Envio do arquivo interrompido: ' + str(exc) +
+                      ' Nenhum comando sera repetido. Confira a parada da maquina.')
         finally:
             self.running = False
 

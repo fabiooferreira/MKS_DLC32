@@ -1,0 +1,28 @@
+test_alarm_and_estop_still_block_signed_gcode (__main__.AuthTests.test_alarm_and_estop_still_block_signed_gcode) ... ok
+test_close_session_invalidates_old_signed_packets (__main__.AuthTests.test_close_session_invalidates_old_signed_packets) ... ok
+test_existing_python_client_round_trip (__main__.AuthTests.test_existing_python_client_round_trip) ... ok
+test_guards_present_in_real_core_entry_points (__main__.AuthTests.test_guards_present_in_real_core_entry_points) ... ok
+test_handshake_does_not_unlock_unsigned_motion (__main__.AuthTests.test_handshake_does_not_unlock_unsigned_motion) ... ok
+test_identity_matches_exact_firmware (__main__.AuthTests.test_identity_matches_exact_firmware) ... ok
+test_overlong_frame_never_executes (__main__.AuthTests.test_overlong_frame_never_executes) ... ok
+test_public_configuration_is_limited (__main__.AuthTests.test_public_configuration_is_limited) ... ok
+test_public_safety_commands_remain_allowed (__main__.AuthTests.test_public_safety_commands_remain_allowed) ... ok
+test_raw_command_cannot_inherit_long_running_signed_scope (__main__.AuthTests.test_raw_command_cannot_inherit_long_running_signed_scope) ... ok
+test_raw_motion_tool_homing_jog_probe_blocked (__main__.AuthTests.test_raw_motion_tool_homing_jog_probe_blocked) ... ok
+test_replay_bad_mac_and_sequence_rejected (__main__.AuthTests.test_replay_bad_mac_and_sequence_rejected) ... ok
+test_reset_invalidates_old_proof_and_commands (__main__.AuthTests.test_reset_invalidates_old_proof_and_commands) ... ok
+test_reset_invalidates_out_of_band_packet (__main__.AuthTests.test_reset_invalidates_out_of_band_packet) ... ok
+test_reset_notice_is_single_and_discards_stale_realtime (__main__.AuthTests.test_reset_notice_is_single_and_discards_stale_realtime) ... ok
+test_same_nonce_cannot_reauthenticate_and_rewind (__main__.AuthTests.test_same_nonce_cannot_reauthenticate_and_rewind) ... ok
+test_serial_handshake_keeps_unsigned_motion_blocked (__main__.AuthTests.test_serial_handshake_keeps_unsigned_motion_blocked) ... ok
+test_serial_identification_remains_available_in_estop (__main__.AuthTests.test_serial_identification_remains_available_in_estop) ... ok
+test_serial_line_endings_reach_command_parser (__main__.AuthTests.test_serial_line_endings_reach_command_parser) ... ok
+test_serial_writes_do_not_overlap_status_or_stop (__main__.AuthTests.test_serial_writes_do_not_overlap_status_or_stop) ... ok
+test_signed_motion_including_axis_a (__main__.AuthTests.test_signed_motion_including_axis_a) ... ok
+test_signed_out_of_band_resume_and_replay (__main__.AuthTests.test_signed_out_of_band_resume_and_replay) ... ok
+test_unsigned_realtime_resume_blocked_even_after_auth (__main__.AuthTests.test_unsigned_realtime_resume_blocked_even_after_auth) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.473s
+
+OK

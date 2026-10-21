@@ -199,6 +199,37 @@ class AuthTests(unittest.TestCase):
             self.assertEqual(port.readline(),b'ok\n')
             self.assertEqual(lib.host_last_command(),b'G0X2')
         finally:port.close()
+    def test_serial_writes_do_not_overlap_status_or_stop(self):
+        import threading
+        spec=importlib.util.spec_from_file_location('serial_writer_test',ROOT/'python/cnc_ffst_auth_source.py')
+        client=importlib.util.module_from_spec(spec);spec.loader.exec_module(client)
+        entered=threading.Event();release=threading.Event();writes=[];overlap=[]
+        class Raw:
+            active=False
+            def write(self,data):
+                if self.active:overlap.append(data)
+                self.active=True;writes.append(data)
+                if data==b'command':entered.set();release.wait(2)
+                self.active=False
+                return len(data)
+        port=client.SignedPort.__new__(client.SignedPort)
+        port.raw=Raw();port._raw_tx=threading.Lock()
+        command=threading.Thread(target=port._write_raw,args=(b'command',))
+        stop=threading.Thread(target=port._write_raw,args=(b'!',))
+        command.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            self.assertEqual(port._write_raw(b'?'),1)
+            self.assertEqual(writes,[b'command'])
+            stop.start()
+            self.assertFalse(overlap)
+        finally:
+            release.set();command.join(2)
+            if stop.ident is not None:stop.join(2)
+        self.assertEqual(writes,[b'command',b'!'])
+        self.assertFalse(overlap)
+        self.assertEqual(port._write_raw(b'?'),1)
+        self.assertEqual(writes[-1],b'?')
     def test_close_session_invalidates_old_signed_packets(self):
         self.hello();packet=self.envelope('G0X1')
         self.assertEqual(self.line('$FFBYE'),0)

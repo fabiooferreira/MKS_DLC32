@@ -1368,7 +1368,12 @@ class Streamer:
             self.running = False
             self.emit('done', 'Interrompido' if self.cancel else 'Arquivo confirmado pela controladora')
         except Exception as exc:
-            self.emit('fault', str(exc))
+            self.cancel = True
+            # Best effort only: a USB write failure cannot guarantee a physical stop.
+            try: self.realtime(b'!')
+            except Exception: pass
+            self.emit('fault', 'Envio do arquivo interrompido: ' + str(exc) +
+                      ' Nenhum comando sera repetido. Confira a parada da maquina.')
         finally:
             self.running = False
 

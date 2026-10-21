@@ -1,10 +1,12 @@
 # CNC_FFST S3 — firmware 0.1.2 e placa-base R2
 
-[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.2.zip)
+[**Baixar instalador gráfico + fontes — Reversível e Protegido com atualizações**](artifacts/CNC_FFST_S3_Instalador_0.2.2_Serial.zip)
 
 [Como instalar, preparar sua assinatura, proteger e atualizar](docs/INSTALADOR_E_PROTECAO.md). O modo protegido deve ser compilado localmente com sua chave e ainda não foi ensaiado em hardware. O pacote de correção UART 0.1.2 fornece o modo reversível, sem proteção de leitura.
 
-[**Baixar correção de conexão — BIN UART reversível 0.1.2 + Fabricação Fresa Laser**](artifacts/CNC_FFST_S3_UART_0.1.2_Correcao.zip)
+[**Baixar correção de escrita serial — Python + BIN UART 0.1.2**](artifacts/CNC_FFST_S3_UART_0.1.2_Serial.zip)
+
+[Correção de escritas concorrentes](docs/CORRECAO_ESCRITA_SERIAL.md): se já está usando o BIN 0.1.2, atualize somente o Python. Ainda depende de validação física do timeout relatado.
 
 **Sessão 0.1.2:** autentica a cada abertura da porta, mantém autenticação após erros GRBL comuns e renova a sessão após reset na mesma conexão, sem repetir movimentos. [Detalhes](docs/SESSAO_0.1.2.md).
 
