@@ -5361,6 +5361,7 @@ class App:
         self.status = tk.StringVar(value='Desconectado')
         self.coordinates = tk.StringVar(value='Posição: aguardando controladora ou simulação')
         self.connection_label = tk.StringVar(value='Serial: desconectada')
+        self.last_log_message = tk.StringVar(value='')
         self.time_label = tk.StringVar(value='Total estimado: --:--:--   |   Tempo corrido: 00:00:00')
         self.job_started = None; self.job_elapsed = 0.0; self.job_estimate = None
         self.camera_index = tk.StringVar(value=str(self.config.get('camera_index', '0')))
@@ -5467,7 +5468,11 @@ class App:
         ttk.Button(top, text='Conectar', command=self.connect).grid(row=0, column=7, padx=(12, 6))
         ttk.Button(top, text='Desconectar', command=self.disconnect).grid(row=0, column=8)
 
-        ttk.Label(top, textvariable=self.connection_label, style='Muted.TLabel').grid(row=1,column=0,columnspan=9,sticky='w',pady=(6,0))
+        serial_line = ttk.Frame(top)
+        serial_line.grid(row=1, column=0, columnspan=9, sticky='ew', pady=(6, 0))
+        ttk.Label(serial_line, textvariable=self.connection_label, style='Muted.TLabel').pack(side='left')
+        ttk.Label(serial_line, textvariable=self.last_log_message, style='Muted.TLabel',
+                  anchor='e', width=1).pack(side='right', fill='x', expand=True, padx=(16, 0))
 
         bar = ttk.Frame(shell)
         bar.pack(fill='x', pady=(0, 10))
@@ -6894,6 +6899,8 @@ class App:
                         self._mark_zero_in_progress = False
                     self.update_macro_availability()
                 elif kind == 'log':
+                    lines = str(event[1]).splitlines()
+                    self.last_log_message.set(lines[-1] if lines else '')
                     # Registro persistente para identificar ALARM:3, PRB e resets
                     # após a falha, sem modificar a sequência de movimento.
                     self.write_diagnostic(event[1])
