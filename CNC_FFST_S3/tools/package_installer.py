@@ -37,8 +37,14 @@ def main():
         for name in ['Fabricação Fresa Laser.py', 'ABRIR_FABRICACAO_FRESA_LASER.cmd', 'INSTALAR_DEPENDENCIAS_CONTROLE.cmd',
                      'Instalador_CNC_FFST_S3.py', 'ABRIR_INSTALADOR.cmd', 'CNC_FFST_S3_0.1.2_UART_FULL_16MB.bin']:
             archive.writestr(name, source.read(name))
+        archive.write(ROOT/'docs/CONFERENCIA_POSICIONAMENTO_XYZ.md', 'GUIA_AJUSTE_XYZ.md')
         archive.writestr('LEIA_PRIMEIRO.txt',
             'Fabricação Fresa Laser — ESP32-S3, BIN UART reversível 0.1.2.\n'
+            'Pausa para Conferência de Posicionamento e Ajuste Fino: M0 sozinho no arquivo habilita movimentos/macros XYZ.\n'
+            'Fechar o aviso mantém a pausa. Pressione Retornar na janela principal para continuar.\n'
+            'Pausa gerenciada pelo Python, placa Idle e M5. G92 mantém coordenadas de trabalho; posição física continua contada.\n'
+            'A origem G92 pode persistir conforme configurações do grblHAL. Leia GUIA_AJUSTE_XYZ.md antes de testar.\n'
+            'Se já usa BIN 0.1.2, substitua APENAS o Python, sem regravar.\n'
             'Correção Python: leitura de ACK/status não fica presa na trava do envio. Inclui a correção de escritas simultâneas. Sem mudança do firmware 0.1.2. Se ele já está gravado, atualize somente o Python. O Emergency Stop continua ativo se a entrada de emergência estiver acionada.\n'
             'Antes de gravar, salve as configurações com $$: este BIN completo substitui as configurações na flash.\n'
             'Gravar o BIN UART 0.1.2 pelo instalador atualizado, no modo Reversível, e usar o programa deste pacote.\n'
