@@ -524,6 +524,8 @@ class Streamer:
         self.port = None
         self.lock = threading.Lock()
         self._send_lock = threading.Lock()
+        self._worker_lock = threading.Lock()
+        self._workers = []
         self.running = False
         self.paused = False
         self.m0_waiting = False
@@ -568,8 +570,14 @@ class Streamer:
 
     def connect(self, name, baud):
         self.disconnect()
+        if self.running:
+            raise RuntimeError('A operação anterior ainda está encerrando. Aguarde e conecte novamente.')
         self.simulation = False
         self.port = open_authenticated(name, baud)
+        self.cancel = False
+        self._m0_resume.clear()
+        self.command_ack_event.clear()
+        self.probe_received_event.clear()
         self.inflight = []
         self.work_offset = None
         self.work_position = None
@@ -577,9 +585,8 @@ class Streamer:
         self.probe_state = None
         self.status_time = 0.0
         self.settings.clear()
-        self.reader = threading.Thread(target=self.read_loop, daemon=True)
-        self.reader.start()
-        threading.Thread(target=self.query_settings, args=(self.port,), daemon=True).start()
+        self.reader = self.start_worker(self.read_loop)
+        self.start_worker(self.query_settings, (self.port,))
         self.emit('log', f'Conectado e autenticado: {name} @ {baud}')
 
     def query_settings(self, port):
@@ -591,20 +598,53 @@ class Streamer:
         except (serial.SerialException, OSError):
             pass
 
+    def start_worker(self, target, args=()):
+        with self._worker_lock:
+            self._workers = [w for w in self._workers if w.is_alive()]
+            worker = threading.Thread(target=target, args=args, daemon=True)
+            self._workers.append(worker)
+            worker.start()
+        return worker
+
     def disconnect(self):
         self.cancel = True
-        self.running = False
         self.m0_alignment_ready = False
         self.m0_waiting = False
         self._m0_resume.set()
-        if self.port:
-            try:
-                self.port.close()
-            except Exception:
-                pass
-        self.port = None
-        self.inflight = []
+        self.command_ack_event.set()
+        self.probe_received_event.set()
+        port, self.port = self.port, None
+        if port:
+            try: port.close()
+            except Exception: pass
+        # Do not attach a fresh port to a still-running operation from the old session.
+        with self._worker_lock:
+            workers = list(self._workers)
+        deadline = time.monotonic() + 2
+        for worker in workers:
+            if worker is not threading.current_thread():
+                worker.join(max(0, deadline - time.monotonic()))
+        with self._worker_lock:
+            self._workers = [w for w in self._workers if w.is_alive()]
+            pending = bool(self._workers)
+        self.running = pending
+        self.paused = False
+        self._m0_managed = False
+        self._m0_editing = False
+        self._m0_anchor = None
+        self._m0_modal = []
+        with self.lock:
+            self.inflight.clear()
         self.simulation = False
+        self.probing = False
+        self.probe_result = None
+        self.probe_state = None
+        self.modal = None
+        self.work_offset = None
+        self.work_position = None
+        self.machine_state = ''
+        self.status_time = self.status_version = self.last_status = 0
+        self.settings.clear()
 
     def read_loop(self):
         port = self.port
@@ -795,7 +835,7 @@ class Streamer:
             raise RuntimeError('Conecte a controladora primeiro.')
         if not math.isfinite(feed) or feed <= 0: raise ValueError('Avanço Z inválido.')
         self.running=True; self.probing=True; self.cancel=False
-        threading.Thread(target=self.z_zero_loop,args=(feed,),daemon=True).start()
+        self.start_worker(self.z_zero_loop, (feed,))
 
     def z_zero_loop(self, feed):
         original=None
@@ -860,7 +900,7 @@ class Streamer:
         self.running = True
         self.probing = True
         self.cancel = False
-        threading.Thread(target=self.mark_zero_three_loop, args=(params,), daemon=True).start()
+        self.start_worker(self.mark_zero_three_loop, (params,))
 
     def mark_zero_three_loop(self, p):
         original = None
@@ -964,7 +1004,7 @@ class Streamer:
         if self.running or self.inflight: raise RuntimeError('Aguarde os comandos anteriores.')
         if not self.port or not self.port.is_open or self.simulation: raise RuntimeError('Conecte a máquina; probing não é simulado.')
         self.running=True; self.probing=True; self.cancel=False
-        threading.Thread(target=self.probe_loop,args=(params,test),daemon=True).start()
+        self.start_worker(self.probe_loop, (params, test))
 
     def probe_loop(self, p, test):
         original=None
@@ -1257,7 +1297,7 @@ class Streamer:
                 raise RuntimeError('M0: ajuste indisponível ou outro ajuste em execução.')
             self._m0_editing = True
         self.emit('m0_busy')
-        threading.Thread(target=self.m0_alignment_loop, args=(lines,), daemon=True).start()
+        self.start_worker(self.m0_alignment_loop, (lines,))
 
     def m0_alignment_loop(self, lines):
         try:
@@ -1298,7 +1338,7 @@ class Streamer:
             self.running = True
             self.cancel = False
             self.paused = False
-            threading.Thread(target=self.simulate, args=(command.splitlines(), True), daemon=True).start()
+            self.start_worker(self.simulate, (command.splitlines(), True))
             return
         if not self.port or not self.port.is_open:
             raise RuntimeError('Conecte a controladora primeiro.')
@@ -1306,7 +1346,7 @@ class Streamer:
                for raw in command.splitlines()):
             self.running = True
             self.cancel = False
-            threading.Thread(target=self.manual_sequence, args=(command,), daemon=True).start()
+            self.start_worker(self.manual_sequence, (command,))
             return
         for raw in command.splitlines():
             line = clean(raw)
@@ -1359,7 +1399,7 @@ class Streamer:
             self.running = True
             self.paused = False
             self.cancel = False
-            threading.Thread(target=self.simulate, args=(lines, False), daemon=True).start()
+            self.start_worker(self.simulate, (lines, False))
             return
         if not self.port or not self.port.is_open:
             raise RuntimeError('Conecte a controladora primeiro.')
@@ -1389,7 +1429,7 @@ class Streamer:
         self.paused = False
         # A escolha ocorre para CADA arquivo iniciado, inclusive na fila.
         grbl_mode = grbl_mode_from_z(lines)
-        threading.Thread(target=self.stream_loop, args=(commands, grbl_mode), daemon=True).start()
+        self.start_worker(self.stream_loop, (commands, grbl_mode))
 
     def simulate(self, lines, macro=False):
         """Executa movimentos G-code no preview respeitando F e o fator de velocidade."""
@@ -2568,6 +2608,8 @@ class App:
 
     def connect(self):
         try:
+            self.stream.disconnect()
+            self.reset_execution_view()
             self.clear_heightmap()
             self.write_diagnostic('CONECTAR: início da tentativa')
             if not self.port.get().strip():
@@ -2597,10 +2639,35 @@ class App:
             self.write_diagnostic('CONECTAR: ' + type(exc).__name__ + ': ' + str(exc))
             messagebox.showerror('Conexão', str(exc), parent=self.root.winfo_toplevel())
 
-    def disconnect(self):
+    def reset_execution_view(self):
         self.close_m0_notice()
-        self.finish_timer()
+        self.active_file = None
+        self.awaiting_idle = False
+        self.tracking_started = False
+        self.processed_index = 0
+        self.job_started = None
+        self.job_elapsed = 0.0
+        self.job_estimate = None
+        self.position = None
+        self.controller_state = ''
+        self.progress['value'] = 0
+        self.last_command.set('Comando: —')
+        self.last_response.set('Resposta: —')
+        self.coordinates.set('Posição: aguardando controladora ou simulação')
+        for item in self.files:
+            item['completed'] = False
+        # Drop old execution events after workers have stopped; retain the visible log.
+        try:
+            while True: self.events.get_nowait()
+        except queue.Empty:
+            pass
+        self.refresh_file_list()
+        self.draw()
+        self.update_macro_availability()
+
+    def disconnect(self):
         self.stream.disconnect()
+        self.reset_execution_view()
         self.clear_heightmap()
         self.status.set('Desconectado')
 
@@ -2937,7 +3004,8 @@ class App:
         self.update_macro_availability()
 
     def update_macro_availability(self):
-        available = (self.active_file is None and not self.awaiting_idle and not self.stream.running) or (self.stream.m0_alignment_ready and not self.stream._m0_editing and not self.stream.cancel)
+        # active_file is selection/progress metadata and can outlive a cancelled job.
+        available = (not self.awaiting_idle and not self.stream.running and not self.stream._m0_editing) or (self.stream.m0_alignment_ready and not self.stream._m0_editing and not self.stream.cancel)
         for button in getattr(self, 'macro_buttons', []):
             button.configure(state='normal' if available else 'disabled')
 
@@ -3269,6 +3337,7 @@ class App:
             except Exception:
                 pass
         self.update_indicators()
+        self.update_macro_availability()
         self.root.after(50, self.poll)
 
     def build_camera_tab(self, parent):

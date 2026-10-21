@@ -139,6 +139,21 @@ class M0Tests(unittest.TestCase):
         self.pause();self.stream.send_manual('M5');self.wait(lambda:not self.stream._m0_editing)
         self.assertFalse(self.stream.cancel)
         self.assertEqual(self.port.tool,'M5')
+    def test_disconnect_ends_worker_and_clears_execution_state(self):
+        ended=threading.Event()
+        def operation():
+            while not self.stream.cancel:time.sleep(.01)
+            ended.set()
+        self.stream.running=True;self.stream.paused=True
+        self.stream.m0_waiting=True;self.stream._m0_managed=True
+        self.stream._m0_anchor=(1.,2.,3.)
+        worker=self.stream.start_worker(operation)
+        self.stream.disconnect()
+        self.assertTrue(ended.is_set());self.assertFalse(worker.is_alive())
+        self.assertIsNone(self.stream.port);self.assertFalse(self.port.is_open)
+        self.assertFalse(self.stream.running or self.stream.paused or self.stream.m0_waiting)
+        self.assertFalse(self.stream._workers or self.stream.inflight)
+        self.assertIsNone(self.stream._m0_anchor)
     def test_no_adjustment_is_available_outside_m0(self):
         with self.assertRaises(RuntimeError):self.stream.start_m0_alignment('G91X.1F100')
         self.assertFalse(self.port.writes)

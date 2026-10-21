@@ -85,6 +85,15 @@ def main(builder_path):
                             assert app.stream.port and app.stream.port.is_open
                             app.update_indicators();root.update()
                             assert 'USB_SIM' in app.connection_label.get()
+                            # An interrupted file can leave its selection metadata behind.
+                            app.active_file=0
+                            app.run_macro({'command':'$X'})
+                            assert all(str(b.cget('state'))=='normal' for b in app.macro_buttons), 'Unlock disabled macros although no job is running'
+                            app.stream.running=True
+                            app.update_macro_availability()
+                            assert all(str(b.cget('state'))=='disabled' for b in app.macro_buttons)
+                            app.stream.running=False;app.active_file=None
+                            app.update_macro_availability()
                             ports[-1].rx.put(b'[PRB:1.0,2.0,3.0,4.0:1]\n')
                             limit=time.monotonic()+3
                             while app.stream.probe_result is None and time.monotonic()<limit:
@@ -98,6 +107,21 @@ def main(builder_path):
                                 root.update();time.sleep(.01)
                             assert signed.authenticated and signed._generation>previous
                             assert signed.is_open
+                            app.active_file=0;app.awaiting_idle=True
+                            app.stream.paused=True;app.stream.m0_waiting=True
+                            app.stream._m0_anchor=(1.,2.,3.)
+                            app.progress['value']=70;app.job_elapsed=12
+                            app.disconnect()
+                            assert app.active_file is None and not app.awaiting_idle
+                            assert not app.stream.paused and not app.stream.m0_waiting
+                            assert not app.stream.inflight and app.stream._m0_anchor is None
+                            assert app.job_elapsed==0 and float(app.progress['value'])==0
+                            with patch.object(page,'open_authenticated',open_fn(page)):
+                                button(root,'Conectar').invoke()
+                            assert app.stream.port.authenticated and app.stream.port is not signed
+                            assert not app.stream.running and not app.stream.cancel
+                            app.run_macro({'command':'$X'})
+                            assert all(str(b.cget('state'))=='normal' for b in app.macro_buttons)
                             assert not error.called,error.call_args_list
                             assert not errors,errors
                         finally:

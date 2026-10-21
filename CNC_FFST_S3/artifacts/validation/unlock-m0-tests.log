@@ -1,0 +1,17 @@
+test_alarm_before_adjustment_cancels_job_without_motion (__main__.M0Tests.test_alarm_before_adjustment_cancels_job_without_motion) ... ok
+test_disconnect_ends_worker_and_clears_execution_state (__main__.M0Tests.test_disconnect_ends_worker_and_clears_execution_state) ... ok
+test_existing_offset_is_preserved_and_incremented (__main__.M0Tests.test_existing_offset_is_preserved_and_incremented) ... ok
+test_file_origin_change_after_pause_is_rejected_before_sending (__main__.M0Tests.test_file_origin_change_after_pause_is_rejected_before_sending) ... ok
+test_jog_step_is_mm_even_when_file_uses_inches (__main__.M0Tests.test_jog_step_is_mm_even_when_file_uses_inches) ... ok
+test_no_adjustment_is_available_outside_m0 (__main__.M0Tests.test_no_adjustment_is_available_outside_m0) ... ok
+test_normal_manual_motion_updates_coordinates_outside_pause (__main__.M0Tests.test_normal_manual_motion_updates_coordinates_outside_pause) ... ok
+test_reset_cancels_pause_without_rearming_tool (__main__.M0Tests.test_reset_cancels_pause_without_rearming_tool) ... ok
+test_resume_during_adjustment_is_rejected (__main__.M0Tests.test_resume_during_adjustment_is_rejected) ... ok
+test_safe_tool_off_macro_is_allowed (__main__.M0Tests.test_safe_tool_off_macro_is_allowed) ... ok
+test_unsafe_macro_is_rejected_whole_without_motion (__main__.M0Tests.test_unsafe_macro_is_rejected_whole_without_motion) ... ok
+test_xyz_macros_and_jog_preserve_work_position_and_shift_remainder (__main__.M0Tests.test_xyz_macros_and_jog_preserve_work_position_and_shift_remainder) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.275s
+
+OK

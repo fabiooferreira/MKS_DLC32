@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_gui.py", line 146, in <module>
+    main(parser.parse_args().builder)
+  File "/workspace/MKS_DLC32/CNC_FFST_S3/tests/test_gui.py", line 91, in main
+    assert all(str(b.cget('state'))=='normal' for b in app.macro_buttons), 'Unlock disabled macros although no job is running'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Unlock disabled macros although no job is running
