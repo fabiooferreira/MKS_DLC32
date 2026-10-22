@@ -12,7 +12,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf'
+OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf'
 PAGE_W, PAGE_H = landscape(A3)
 MM = 72 / 25.4
 INK = colors.HexColor('#162b3d')
@@ -50,7 +50,7 @@ assert not {0,3,45,46,35,36,37,38,48,19,20,43,44}.intersection(p[1] for p in PIN
 assert all(gpio < 32 for _, gpio, _, _ in PINS[:10])
 
 C = canvas.Canvas(str(OUT), pagesize=(PAGE_W, PAGE_H))
-C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R2')
+C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R3')
 C.setAuthor('Projeto CNC_FFST')
 C.setSubject('Placa-base para ESP32-S3 N16R8 dual USB encaixável e quatro DRV8825')
 
@@ -106,11 +106,11 @@ def header(page,title):
     txt(12,13,'CNC_FFST S3',20,True)
     txt(92,13,title,15,True)
     line(12,18,408,18,BLUE,1.3)
-    txt(12,25,'R2 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
-    txt(12,31,'20/10/2026 • Placa-base para DevKit ESP32-S3 N16R8 dual USB • X/Y/Z/A • DRV8825 • 24 V',9)
+    txt(12,25,'R3 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
+    txt(12,31,'22/10/2026 • Placa-base para DevKit ESP32-S3 N16R8 dual USB • X/Y/Z/A • DRV8825 • 24 V',9)
     line(12,280,408,280,BLUE)
     txt(12,286,'Pontos com [PENDENTE] exigem dimensionamento/validação. Rótulos iguais representam a mesma rede.',8)
-    txt(360,286,f'Folha {page} / 5',9,True)
+    txt(360,286,f'Folha {page} / 7',9,True)
 
 def end():C.showPage()
 
@@ -139,7 +139,7 @@ for i,(signal,gpio,kind,detail) in enumerate([p for p in PINS if p[2]!='reserved
 note(15,221,210,'Placa de desenvolvimento N16R8: 16 MB flash / 8 MB PSRAM. O anúncio não pôde ser acessado. A posição física, quantidade de pinos e distância entre fileiras precisam ser conferidas na unidade real antes do footprint.',9,color=RED)
 note(15,245,210,'Não usar GPIO35/36/37 (PSRAM octal), GPIO0/3/45/46 (straps), GPIO19/20 (USB nativa), GPIO43/44 (USB/serial) ou GPIO38/48 (possível RGB integrado). Sem LED endereçável usando RMT.',9)
 note(242,230,165,'STEP/DIR/ENABLE continuam diretos. Os quatro STEP usam os quatro canais RMT TX internos. TOOL_ARM foi movido para GPIO42 para evitar o RGB de algumas variantes. Não é um ENABLE separado dos drivers.',9)
-note(242,252,165,'Só conectar aos pinos que tiverem essas marcações na placa real. Não confundir número GPIO com posição do conector. Mapa grblHAL próprio e firmware S3 ainda pendentes.',9,color=RED)
+note(242,252,165,'Só conectar aos pinos que tiverem essas marcações na placa real. Não confundir número GPIO com posição do conector. Firmware 0.1.3 compilado; mapa elétrico R2 preservado. Validação física pendente.',9,color=RED)
 end()
 
 # 2 — complete functional socket connections, not a physical top view.
@@ -233,7 +233,7 @@ def sensor(x,y,signal,gpio,nc=False,probe=False):
 for args in [(12,43,'LIMIT_X',1,True,False),(216,43,'LIMIT_Y',2,True,False),
              (12,111,'LIMIT_Z',14,True,False),(216,111,'LIMIT_A',15,True,False),
              (12,179,'PROBE',16,False,True),(216,179,'FEED_HOLD',39,False,False)]:sensor(*args)
-note(15,250,187,'CYCLE_START → GPIO40 usa o mesmo circuito de FEED_HOLD, com contato NO. Limites NC: cabo rompido deve gerar limite. A inversão do firmware deve corresponder ao condicionamento, e será verificada em bancada.',8.5)
+note(15,250,187,'CYCLE_START → GPIO40 usa o mesmo circuito de FEED_HOLD, com contato NO. Limites NC: cabo rompido deve gerar limite. Polaridades e pulls internos: folha 7. Circuito completo de CYCLE_START: folha 6.',8.5)
 note(216,250,190,'Reservar proteção ESD na entrada dos conectores; MPN a selecionar. A sonda é contato elétrico com GND: validar a referência elétrica da ferramenta/PCB antes da ligação. Histerese e filtro não substituem ensaios de ruído e repetibilidade.',8.5,color=RED)
 end()
 
@@ -266,14 +266,44 @@ line(273,211,322,211);txt(324,212,'PWM_SPINDLE',8,color=BLUE)
 txt(248,225,'Mesmo PWM 3V3 simultâneo; referências GND compatíveis.',8)
 txt(248,233,'Chave externa atua somente na alimentação das ferramentas.',8)
 note(15,247,190,'PWM_OUT chega às duas entradas; a chave comuta a alimentação da ferramenta. Trocar com M5/S0 e movimento parado. A posição da chave não é lida pelo firmware. Validar se a entrada PWM do módulo desligado permite sinal sem causar retroalimentação; condicionamento ainda pendente.',8.3)
-note(219,247,184,'Lógica funcional proposta, sem certificação de segurança. Ainda falta portar a autenticação para grblHAL, preparar criptografia/bootloader e testar o conjunto. O bloqueio físico de energia não depende de o ESP32 executar o firmware.',8.5,color=RED)
+note(219,247,184,'Lógica funcional proposta, sem certificação de segurança. Autenticação implementada; UART/USB 0.1.3 compilados. Perfil protegido opcional 0.2.3 exige chaves do proprietário e teste físico. O bloqueio físico de energia não depende de o ESP32 executar o firmware.',8.5,color=RED)
+end()
+# 6 — explicit second panel input, not merely a repeated-circuit note.
+header(6,'Botões de painel: Pausar e Retomar')
+sensor(15,46,'FEED_HOLD',39,False,False)
+sensor(219,46,'CYCLE_START',40,False,False)
+note(18,121,184,'PAUSAR: contato normalmente aberto (NO) entre J:sinal e GND. Solto: J=3,3 V e GPIO39=0. Pressionado: J=0 V e GPIO39=1. O inversor 74LVC14A muda a polaridade; pull-up externo de 4,7k está no lado do contato.',10)
+note(222,121,179,'RETOMAR: contato normalmente aberto (NO) entre J:sinal e GND. Solto: J=3,3 V e GPIO40=0. Pressionado: J=0 V e GPIO40=1. Repetir filtro, inversor e desacoplamento; não unir GPIO39 e GPIO40.',10)
+box(15,161,389,40,'Pausas do firmware e conferência no Python são diferentes')
+note(19,174,380,'Feed Hold pausa o movimento pelo grblHAL; Cycle Start retoma quando permitido pelo estado da controladora. Na Pausa para Conferência de Posicionamento e Ajuste Fino gerenciada pelo Python, o botão físico não substitui Retornar na interface. Fechar a caixa não continua o arquivo.',10)
+box(15,213,389,43,'Ligação e limites elétricos')
+note(19,227,380,'Circuitos em 3,3 V, GND comum e 100 nF de desacoplamento por CI. Nunca aplicar 5 V ou 24 V ao GPIO. Não ligar o contato direto ao GPIO presumindo acionamento em zero: este BIN espera o condicionamento com inversores. Pull-ups internos não substituem resistores externos, filtros ou emergência física.',10,color=RED)
+end()
+
+# 7 — exact firmware defaults, distinct from external contact-side resistors.
+header(7,'Entradas: polaridade e pulls internos do firmware')
+note(15,42,388,'Referência: CNC_FFST-S3 UART/USB 0.1.3, mapa Carrier R2 (documentação R3), fonte e190011. Valores padrão do BIN, antes de alterações salvas no GRBL. 0 = nível baixo/GND; 1 = nível alto/3,3 V. A coluna GPIO se refere à saída do condicionador, não ao contato no conector.',10)
+cols=[15,70,91,125,159,202,250,291,404]
+labels=['Entrada','GPIO','Inativo','Ativo','Pull-up interno','Pull-down','Contato J','Acionamento no J']
+for a,b,label in zip(cols,cols[1:],labels):
+    box(a,64,b-a,12,fill=GRAY);txt(a+2,72,label,8,True)
+entries=[('Limite X',1,'1','0','SIM','NÃO','NC','Abre / cabo rompe'),('Limite Y',2,'1','0','SIM','NÃO','NC','Abre / cabo rompe'),('Limite Z',14,'1','0','SIM','NÃO','NC','Abre / cabo rompe'),('Limite A',15,'1','0','SIM','NÃO','NC','Abre / cabo rompe'),('Sonda',16,'0','1','SIM','NÃO','NO','Fecha para GND'),('Emergência',17,'0','1','SIM','NÃO','NC','Abre / cabo rompe'),('Pausar',39,'0','1','SIM','NÃO','NO','Fecha para GND'),('Retomar',40,'0','1','SIM','NÃO','NO','Fecha para GND')]
+for i,row in enumerate(entries):
+    y=76+i*10
+    for a,b,value in zip(cols,cols[1:],row):
+        box(a,y,b-a,10);txt(a+2,y+6.5,value,8.5)
+note(15,164,388,'TODAS as oito entradas acima têm pull-up interno habilitado e pull-down interno desabilitado no padrão do programa. Pull-up não define a polaridade ativa: sonda, emergência e botões são ativos em 1 mesmo tendo pull-up. Sem o condicionador, deixar esses GPIOs abertos pode indicar entrada acionada.',10,color=RED)
+note(15,187,388,'Resistores EXTERNOS do esquema: 4,7k a 3V3 no lado dos contatos; filtros série 1k + capacitor e inversor 74LVC14A. Limites/sonda/botões usam um inversor; a emergência usa dois até GPIO17. Esses resistores não são os pulls internos configurados pelo software.',9)
+note(15,207,388,'Configuração padrão: $5=15 (inversão de limites XYZA), $6=0 (sonda), $14=0 (controles); $17=0, $18=0 e $19=0 mantêm os pull-ups de controles, limites e sonda. São valores de referência, NÃO instruções para sobrescrever a configuração da máquina. Leia $$ para conferir os valores atuais.',9)
+note(15,228,388,'Fontes verificadas: boards/my_machine_map.h, platformio.ini, grbl/config.h, grbl/ioports.c e driver.c (gpio_config para ESP32-S3). O PDF não lê a flash da sua placa. Alterações persistentes de inversão/pulls mudam o comportamento; valide entradas com ferramentas sem potência antes de mover.',9)
+note(15,248,388,'GPIO18 (fault), GPIO21 e GPIO41 (porta de segurança) são reservas SEM função de entrada mapeada neste BIN; não há pull/polaridade funcional garantidos para essas reservas. USB19/20, UART43/44, PSRAM e boot não são entradas de comando disponíveis. Emergência física deve cortar energia independentemente do software.',9,color=RED)
 end()
 C.save()
 
-with (ROOT/'hardware/pinagem_carrier_r2.csv').open('w',newline='',encoding='utf-8') as f:
+with (ROOT/'hardware/pinagem_carrier_r3.csv').open('w',newline='',encoding='utf-8') as f:
     w=csv.writer(f);w.writerow(['sinal','gpio','tipo','observacao','posicao_fisica'])
     for signal,gpio,kind,detail in PINS:w.writerow([signal,gpio,kind,detail,'CONFERIR NA DEVKIT REAL'])
-write={'revision':'R2','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
+write={'revision':'R3','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
        'development_board':'ESP32-S3 N16R8 dual USB, modelo exato a conferir',
        'board_removable':True,'development_board_power':'USB da propria DevKit',
        'carrier_has_usb_connector':False,'carrier_has_usb_serial_bridge':False,
@@ -285,12 +315,12 @@ write={'revision':'R2','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
        'tool_selection':'chave externa na alimentacao; nao no PWM',
        'firmware_driver_commit':'0b2d3e1bb7da3b0ae0e03490b71275374eb84c67',
        'core_submodule_commit':'4ec1ae44b857a70d2f9298344feac4b43ed0eb6b',
-       'manufacturing_released':False,'firmware_built':False,
+       'manufacturing_released':False,'firmware_built':True,'firmware_version':'0.1.3','electrical_pinmap_revision':'R2','inputs_default_pull':'UP','inputs_default_pulldown':False,'inputs_active_low':[1,2,14,15],'inputs_active_high':[16,17,39,40],
        'pending':['Foto/pinout e medidas da DevKit real: numero de pinos, espacamento e botoes/USB',
                   'Protecao da entrada de 24V, supervisor e conectores com MPNs e calculos',
                   'Entrada PWM dos modulos sem alimentacao: impedancia e retroalimentacao',
                   'Confirmacao dos GPIOs expostos, do RGB e da alimentacao USB do modelo real',
-                  'Mapa grblHAL N16R8, firmware, autenticacao e criptografia para S3',
+                  'Validacao fisica de firmware, autenticacao e protecao/atualizacao criptografada na S3',
                   'ERC/DRC de projeto EDA, layout e validacao eletrica/termica/EMC/seguranca']}
-(ROOT/'hardware/proposta_carrier_r2.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(ROOT/'hardware/proposta_carrier_r3.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(OUT)

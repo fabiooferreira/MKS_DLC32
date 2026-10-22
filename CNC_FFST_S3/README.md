@@ -10,7 +10,7 @@ Esta entrega usa BIN e Python novos juntos. Corrige leitura fragmentada e realti
 
 [Proteção e atualizações](docs/INSTALADOR_E_PROTECAO.md). O protegido deve ser compilado localmente com a chave do proprietário e ainda exige ensaio em hardware. Não gravar o BIN reversível em placa já protegida.
 
-[**Abrir/baixar o PDF da proposta — 5 folhas A3**](artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf)
+[**Abrir/baixar o PDF atualizado R3 — 7 folhas A3, polaridades e pulls internos**](artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.
 
@@ -76,7 +76,7 @@ Fusível, proteção de inversão, TVS, supervisor, ESD, conectores e suas refer
 
 O driver grblHAL consultado tem geração direta por RMT. Quatro STEP usam os quatro canais TX do S3; o LED endereçável não deve consumir RMT. O mapa S3 genérico tem restrição ao quarto motor: esta placa precisa de mapa próprio.
 
-Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos, incluindo o provisionamento e a atualização protegida descritos no novo instalador. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R2 registra a proposta de hardware anterior a esta implementação; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
+Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos, incluindo o provisionamento e a atualização protegida descritos no novo instalador. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R3 mantém a pinagem elétrica R2 e documenta as oito entradas, polaridades e pulls internos do BIN 0.1.3; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
 
 ## Entradas, PWM e emergência
 
@@ -86,7 +86,7 @@ O circuito de potência da emergência é externo e depende das cargas. A placa-
 
 ## Arquivos e verificações
 
-- `artifacts/CNC_FFST_S3_Carrier_Proposta_R2.pdf`: proposta de esquema para visualizar.
+- `artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf`: proposta de esquema para visualizar.
 - `hardware/pinagem_carrier_r2.csv`: GPIOs, sem posições físicas inventadas.
 - `hardware/proposta_carrier_r2.json`: escopo e pendências estruturados.
 - `tools/gerar_proposta_pdf.py`: fonte da geração vetorial, usando ReportLab e DejaVu.

@@ -92,13 +92,15 @@ O EXE não foi gerado nem testado neste ambiente Linux. O arquivo único Python 
 | Emergência ativa alta | 17 |
 | Feed hold / cycle start | 39 / 40 |
 
-A pinagem supõe o condicionamento com inversores Schmitt do PDF R2. Não ligar contatos diretamente e presumir as mesmas polaridades. Com a placa-base:
+A pinagem supõe o condicionamento com inversores Schmitt do [PDF R3](../artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf) (pinagem elétrica R2). Não ligar contatos diretamente e presumir as mesmas polaridades. Com a placa-base:
 
 - Limites NC: normal fechado gera GPIO alto; acionamento/cabo rompido gera baixo. Máscara de inversão padrão 15.
 - Sonda NO: sem contato gera GPIO baixo; contato com GND antes do inversor gera GPIO alto. Inversão padrão 0.
 - Emergência: normal gera GPIO17 baixo; acionamento/cabo rompido gera alto. `ESTOP_ENABLE=1`, não somente um reset comum.
 - Feed hold/cycle start: inativos baixos; botão NO ativo alto após o inversor.
 - ENABLE comum: GPIO alto desabilita; qualquer eixo solicitado, inclusive A sozinho, habilita o mesmo /EN.
+
+No padrão 0.1.3, as oito entradas têm pull-up interno habilitado e pull-down interno desabilitado: `$17=0`, `$18=0`, `$19=0`. Isso não determina a polaridade ativa. `$5=15`, `$6=0` e `$14=0` são os padrões de inversão. Configurações já salvas podem diferir; confira `$$` sem sobrescrever os parâmetros da máquina. A folha 7 do PDF traz a tabela completa e a folha 6 desenha separadamente Pausar e Retomar.
 
 A DevKit sozinha não fornece esses estados. Entradas com pull-up podem indicar emergência ou sonda ativa. Não desabilitar proteções para ocultar isso: montar o condicionamento ou usar uma bancada controlada que forneça níveis inativos conhecidos, sem cargas.
 
