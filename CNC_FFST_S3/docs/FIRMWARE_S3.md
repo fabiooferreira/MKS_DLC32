@@ -2,7 +2,7 @@
 
 Para o novo instalador com opção de proteção e atualizações, consultar [INSTALADOR_E_PROTECAO.md](INSTALADOR_E_PROTECAO.md). Este documento descreve os BINs reversíveis 0.1.3; suas limitações de criptografia não se aplicam à configuração protegida 0.2.3.
 
-Alvo: **ESP32-S3 N16R8, 16 MB de flash / 8 MB de PSRAM octal**, na placa-base proposta R2. Sem display, DRV8825 encaixáveis, XYZA, STEP/DIR diretos, ENABLE comum e PWM 3,3 V ligado simultaneamente ao laser e ao controlador do spindle. A chave externa seleciona a alimentação das ferramentas.
+Alvo: **ESP32-S3 N16R8, 16 MB de flash / 8 MB de PSRAM octal**, na placa-base proposta R2. Sem display, DRV8825 encaixáveis, XYZA, STEP/DIR diretos, ENABLE comum e PWM 3,3 V no GPIO. A proposta externa R4 converte para TTL 5 V, compartilhado entre laser e estágio MOSFET do spindle. A chave externa seleciona a alimentação das ferramentas.
 
 **Não usar na DLC32 V2.1/ESP32 clássico ou na DLC32 MAX.** São outros hardwares e pinagens. O anúncio da DevKit não pôde ser verificado: conferir as marcações dos GPIOs antes de ligar qualquer carga. As posições físicas dos soquetes ainda não estão definidas.
 
@@ -92,7 +92,7 @@ O EXE não foi gerado nem testado neste ambiente Linux. O arquivo único Python 
 | Emergência ativa alta | 17 |
 | Feed hold / cycle start | 39 / 40 |
 
-A pinagem supõe o condicionamento com inversores Schmitt do [PDF R3](../artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf) (pinagem elétrica R2). Não ligar contatos diretamente e presumir as mesmas polaridades. Com a placa-base:
+A pinagem supõe o condicionamento com inversores Schmitt do [PDF R4](../artifacts/CNC_FFST_S3_Carrier_Proposta_R4.pdf) (pinagem elétrica R2). Não ligar contatos diretamente e presumir as mesmas polaridades. Com a placa-base:
 
 - Limites NC: normal fechado gera GPIO alto; acionamento/cabo rompido gera baixo. Máscara de inversão padrão 15.
 - Sonda NO: sem contato gera GPIO baixo; contato com GND antes do inversor gera GPIO alto. Inversão padrão 0.
@@ -158,3 +158,7 @@ Os ensaios reais de boot, movimento, laser/spindle, limites, emergência, perda 
 ## Sessão de autenticação
 
 Veja [SESSAO_0.1.3.md](SESSAO_0.1.3.md): autenticação a cada abertura, continuidade após erros de comandos e renovação após reset sem repetição automática de movimento.
+
+## Circuito externo R4: TTL 5 V e laser 24 V
+
+O PDF R4 acrescenta SN74LVC1T45DCK após o bloqueio PWM em 3,3 V, gerando PWM_5V. A pinagem e o BIN 0.1.3 permanecem iguais. O laser recebe +24V_LASER selecionado, GND fixo e TTL 5 V. O mesmo PWM_5V comanda o MOSFET N do spindle DC 24 V com escovas. O negativo chaveado do motor não é referência GND do laser. A chave seleciona o positivo da ferramenta após o corte físico por emergência. O buck 24/5 V alimenta apenas 5V_LOGIC, sem conexão ao VBUS da DevKit. Componentes de potência, gate drive e proteção precisam ser dimensionados para o spindle real; o desenho continua sendo proposta para revisão.

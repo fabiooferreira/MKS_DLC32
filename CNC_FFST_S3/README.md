@@ -10,7 +10,7 @@ Esta entrega usa BIN e Python novos juntos. Corrige leitura fragmentada e realti
 
 [Proteção e atualizações](docs/INSTALADOR_E_PROTECAO.md). O protegido deve ser compilado localmente com a chave do proprietário e ainda exige ensaio em hardware. Não gravar o BIN reversível em placa já protegida.
 
-[**Abrir/baixar o PDF atualizado R3 — 7 folhas A3, polaridades e pulls internos**](artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf)
+[**Abrir/baixar o PDF atualizado R4 — 9 folhas A3, entradas, TTL 5 V e laser 24 V**](artifacts/CNC_FFST_S3_Carrier_Proposta_R4.pdf)
 
 Proposta de esquema funcional para revisão visual: placa-base (carrier) onde serão encaixadas a ESP32-S3 N16R8 dual USB e quatro módulos DRV8825. A USB usada será a da própria ESP32. Não haverá outro conector USB ou conversor USB/serial no carrier.
 
@@ -33,7 +33,7 @@ A revisão R2 substitui a R1: corrige a seleção das ferramentas para comutar a
 - Motores em 24 V; NEMA17 informados como 2 A/fase, com ajuste VREF no próprio módulo.
 - STEP/DIR em GPIOs diretos, sem I2S, multiplexação ou expansores externos.
 - ENABLE comum, com inibição por emergência.
-- Uma saída PWM 3,3 V ligada permanentemente às entradas do laser e do controlador do spindle; a chave seleciona a alimentação das ferramentas.
+- Uma saída PWM 3,3 V no ESP32, condicionada e convertida para TTL 5 V na R4, ligada ao laser e ao gate do MOSFET do spindle; a chave seleciona a alimentação das ferramentas.
 - Sem display; limites, sonda, emergência, feed hold e cycle start.
 
 O GPIO42 é uma habilitação lógica auxiliar interna do PWM (`TOOL_ARM`), não um ENABLE individual dos drivers nem outro PWM.
@@ -76,20 +76,22 @@ Fusível, proteção de inversão, TVS, supervisor, ESD, conectores e suas refer
 
 O driver grblHAL consultado tem geração direta por RMT. Quatro STEP usam os quatro canais TX do S3; o LED endereçável não deve consumir RMT. O mapa S3 genérico tem restrição ao quarto motor: esta placa precisa de mapa próprio.
 
-Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos, incluindo o provisionamento e a atualização protegida descritos no novo instalador. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R3 mantém a pinagem elétrica R2 e documenta as oito entradas, polaridades e pulls internos do BIN 0.1.3; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
+Foram implementados mapa próprio, configuração N16R8, quatro eixos e autenticação portada. Os dois perfis USB compilaram; testes de autenticação e interface passaram no computador. Continuam pendentes ensaios físicos, incluindo o provisionamento e a atualização protegida descritos no novo instalador. Os BINs e o gerenciador anteriores da DLC32 V2.1/ESP32 clássico não devem ser usados nessa placa S3. O PDF R4 mantém os GPIOs R2, documenta as oito entradas e acrescenta conversão TTL 5 V, laser 24 V e estágio MOSFET do spindle; consulte também [as alterações do firmware](docs/ALTERACOES_FIRMWARE.md).
 
 ## Entradas, PWM e emergência
 
-As entradas propostas são para contato seco/3,3 V, não para sensores de 12/24 V. A saída PWM assume sinal ativo alto e GND compatível com laser e controlador de spindle. O mesmo PWM fica ligado às duas entradas simultaneamente; a chave externa comuta a alimentação, não o sinal. Sua posição não é lida pelo firmware: trocar com M5/S0 e máquina parada, ajustando o modo pelo software. Validar o comportamento das entradas PWM quando os módulos estiverem sem alimentação para evitar retroalimentação; o condicionamento depende dos circuitos reais. Tensões/correntes da comutação de potência ainda precisam ser conferidas.
+As entradas propostas são para contato seco/3,3 V, não para sensores de 12/24 V. Na R4, o PWM é ativo alto: GPIO13 em 3,3 V, lógica de bloqueio e SN74LVC1T45DCK gerando 5 V. Laser: +24 V selecionado, GND fixo e TTL 5 V. Spindle: motor DC 24 V com escovas, MOSFET N no negativo e diodo de roda livre; não conectar motor AC/VFD nessa saída. O mesmo PWM de 5 V controla TTL do laser e gate do MOSFET; a chave externa comuta a alimentação, não o sinal. Sua posição não é lida pelo firmware: trocar com M5/S0 e máquina parada, ajustando o modo pelo software. Validar o comportamento das entradas PWM quando os módulos estiverem sem alimentação para evitar retroalimentação; o condicionamento depende dos circuitos reais. Tensões/correntes da comutação de potência ainda precisam ser conferidas.
 
 O circuito de potência da emergência é externo e depende das cargas. A placa-base monitora contato auxiliar NC e bloqueia sinais. Não há certificação de segurança nesta proposta. A corrente de fase não é medida pelo ESP32; continua ajustada pelo VREF de cada módulo.
 
 ## Arquivos e verificações
 
-- `artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf`: proposta de esquema para visualizar.
-- `hardware/pinagem_carrier_r2.csv`: GPIOs, sem posições físicas inventadas.
-- `hardware/proposta_carrier_r2.json`: escopo e pendências estruturados.
+- `artifacts/CNC_FFST_S3_Carrier_Proposta_R4.pdf`: proposta de esquema para visualizar.
+- `hardware/pinagem_carrier_r4.csv`: GPIOs, sem posições físicas inventadas.
+- `hardware/proposta_carrier_r4.json`: escopo e pendências estruturados.
 - `tools/gerar_proposta_pdf.py`: fonte da geração vetorial, usando ReportLab e DejaVu.
 - `docs/REFERENCIAS.md`: versão do driver consultado e referências para revisão elétrica.
 
 Foram conferidos conflitos da atribuição de GPIOs, reservas de memória/USB e coerência dos pinos dos DRV8825 com a biblioteca local. O PDF foi renderizado e inspecionado visualmente. Não há validação ERC/DRC, simulação de potência, ensaio físico nem validação do anúncio/modelo exato.
+
+R4: folhas 8/9 mostram o conversor TTL, conectores, resistores de estado inativo, buck 24/5 V separado da USB e seleção positiva de potência. Ainda faltam corrente/tipo do spindle e especificações da entrada TTL para dimensionar componentes de potência e validar retroalimentação. Não houve mudança no firmware.

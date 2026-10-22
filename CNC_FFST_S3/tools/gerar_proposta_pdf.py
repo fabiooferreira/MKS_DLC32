@@ -12,7 +12,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.utils import simpleSplit
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R3.pdf'
+OUT = ROOT / 'artifacts/CNC_FFST_S3_Carrier_Proposta_R4.pdf'
 PAGE_W, PAGE_H = landscape(A3)
 MM = 72 / 25.4
 INK = colors.HexColor('#162b3d')
@@ -31,7 +31,7 @@ PINS = [
  ('X_DIR',8,'out','DIR direto'), ('Y_DIR',9,'out','DIR direto'),
  ('Z_DIR',10,'out','DIR direto'), ('A_DIR',11,'out','DIR direto'),
  ('DRV_EN_REQ_N',12,'out','ENABLE comum, ativo baixo; pull-up 10k'),
- ('PWM_REQ',13,'out','PWM 3V3, ativo alto; pull-down 100k'),
+ ('PWM_REQ',13,'out','PWM GPIO 3V3 antes do conversor TTL 5V; pull-down 100k'),
  ('LIMIT_X',1,'in','Entrada condicionada; contato NC'), ('LIMIT_Y',2,'in','Entrada condicionada; contato NC'),
  ('LIMIT_Z',14,'in','Entrada condicionada; contato NC'), ('LIMIT_A',15,'in','Entrada condicionada; contato NC'),
  ('PROBE',16,'in','Entrada condicionada; contato NO com GND'),
@@ -50,7 +50,7 @@ assert not {0,3,45,46,35,36,37,38,48,19,20,43,44}.intersection(p[1] for p in PIN
 assert all(gpio < 32 for _, gpio, _, _ in PINS[:10])
 
 C = canvas.Canvas(str(OUT), pagesize=(PAGE_W, PAGE_H))
-C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R3')
+C.setTitle('CNC_FFST S3 — Proposta de esquema elétrico R4')
 C.setAuthor('Projeto CNC_FFST')
 C.setSubject('Placa-base para ESP32-S3 N16R8 dual USB encaixável e quatro DRV8825')
 
@@ -106,11 +106,11 @@ def header(page,title):
     txt(12,13,'CNC_FFST S3',20,True)
     txt(92,13,title,15,True)
     line(12,18,408,18,BLUE,1.3)
-    txt(12,25,'R3 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
+    txt(12,25,'R4 — PROPOSTA PARA REVISÃO | NÃO LIBERADA PARA FABRICAÇÃO',10,True,RED)
     txt(12,31,'22/10/2026 • Placa-base para DevKit ESP32-S3 N16R8 dual USB • X/Y/Z/A • DRV8825 • 24 V',9)
     line(12,280,408,280,BLUE)
     txt(12,286,'Pontos com [PENDENTE] exigem dimensionamento/validação. Rótulos iguais representam a mesma rede.',8)
-    txt(360,286,f'Folha {page} / 7',9,True)
+    txt(360,286,f'Folha {page} / 9',9,True)
 
 def end():C.showPage()
 
@@ -202,7 +202,7 @@ box(243,137,161,58,'Alimentação dos primeiros testes')
 txt(248,152,'ESP32: alimentada pela sua própria USB.',9,True)
 txt(248,162,'Motores: fonte de 24 V separada, com proteção.',9,True)
 txt(248,172,'GND comum, com retornos de potência separados da lógica.',8)
-txt(248,182,'Sem fonte de 5 V adicional no carrier nesta revisão.',8.5)
+txt(248,182,'R4: buck 24 V → 5V_LOGIC separado, ver folha 9.',8.5)
 box(243,211,161,41,'BOOT / RESET / manutenção')
 txt(248,226,'Aproveitar os botões e a USB da DevKit.',9)
 txt(248,235,'Não ligar outro TX externo aos pinos ocupados pelo USB/serial.',8)
@@ -258,14 +258,14 @@ txt(219,148,'GPIO13 e GPIO42 com pull-down 100k.',9)
 gate(65,187,'AND','U_PWM2','PWM_ARMED','SAFETY_OK','PWM_OUT')
 txt(15,221,'PWM_OUT = PWM_REQ AND TOOL_ARM AND SAFETY_OK.',9,True)
 txt(15,230,'Portas lógicas em 3V3; 100 nF por CI. Estado inativo do PWM: baixo.',8.5)
-box(243,176,160,62,'PWM comum: dois destinos ligados permanentemente')
-line(248,200,273,200);txt(247,195,'PWM_OUT',8,color=BLUE)
+box(243,176,160,62,'PWM comum: conversão para 5 V na folha 8')
+line(248,200,273,200);txt(247,195,'PWM_5V',8,color=BLUE)
 node(273,200);line(273,190,273,211)
-line(273,190,322,190);txt(324,191,'PWM_LASER',8,color=BLUE)
-line(273,211,322,211);txt(324,212,'PWM_SPINDLE',8,color=BLUE)
-txt(248,225,'Mesmo PWM 3V3 simultâneo; referências GND compatíveis.',8)
+line(273,190,322,190);txt(324,191,'TTL_LASER',8,color=BLUE)
+line(273,211,322,211);txt(324,212,'GATE_SPINDLE',8,color=BLUE)
+txt(248,225,'PWM_OUT=3V3 → conversor → PWM_5V compartilhado.',8)
 txt(248,233,'Chave externa atua somente na alimentação das ferramentas.',8)
-note(15,247,190,'PWM_OUT chega às duas entradas; a chave comuta a alimentação da ferramenta. Trocar com M5/S0 e movimento parado. A posição da chave não é lida pelo firmware. Validar se a entrada PWM do módulo desligado permite sinal sem causar retroalimentação; condicionamento ainda pendente.',8.3)
+note(15,247,190,'PWM_5V controla TTL do laser e MOSFET do spindle (folhas 8/9). A chave comuta alimentação; laser recebe +24V_LASER. Trocar com M5/S0 e movimento parado. A posição da chave não é lida pelo firmware. Validar se a entrada PWM do módulo desligado permite sinal sem causar retroalimentação; condicionamento ainda pendente.',8.3)
 note(219,247,184,'Lógica funcional proposta, sem certificação de segurança. Autenticação implementada; UART/USB 0.1.3 compilados. Perfil protegido opcional 0.2.3 exige chaves do proprietário e teste físico. O bloqueio físico de energia não depende de o ESP32 executar o firmware.',8.5,color=RED)
 end()
 # 6 — explicit second panel input, not merely a repeated-circuit note.
@@ -282,7 +282,7 @@ end()
 
 # 7 — exact firmware defaults, distinct from external contact-side resistors.
 header(7,'Entradas: polaridade e pulls internos do firmware')
-note(15,42,388,'Referência: CNC_FFST-S3 UART/USB 0.1.3, mapa Carrier R2 (documentação R3), fonte e190011. Valores padrão do BIN, antes de alterações salvas no GRBL. 0 = nível baixo/GND; 1 = nível alto/3,3 V. A coluna GPIO se refere à saída do condicionador, não ao contato no conector.',10)
+note(15,42,388,'Referência: CNC_FFST-S3 UART/USB 0.1.3, mapa Carrier R2 (documentação R4), fonte e190011. Valores padrão do BIN, antes de alterações salvas no GRBL. 0 = nível baixo/GND; 1 = nível alto/3,3 V. A coluna GPIO se refere à saída do condicionador, não ao contato no conector.',10)
 cols=[15,70,91,125,159,202,250,291,404]
 labels=['Entrada','GPIO','Inativo','Ativo','Pull-up interno','Pull-down','Contato J','Acionamento no J']
 for a,b,label in zip(cols,cols[1:],labels):
@@ -298,19 +298,72 @@ note(15,207,388,'Configuração padrão: $5=15 (inversão de limites XYZA), $6=0
 note(15,228,388,'Fontes verificadas: boards/my_machine_map.h, platformio.ini, grbl/config.h, grbl/ioports.c e driver.c (gpio_config para ESP32-S3). O PDF não lê a flash da sua placa. Alterações persistentes de inversão/pulls mudam o comportamento; valide entradas com ferramentas sem potência antes de mover.',9)
 note(15,248,388,'GPIO18 (fault), GPIO21 e GPIO41 (porta de segurança) são reservas SEM função de entrada mapeada neste BIN; não há pull/polaridade funcional garantidos para essas reservas. USB19/20, UART43/44, PSRAM e boot não são entradas de comando disponíveis. Emergência física deve cortar energia independentemente do software.',9,color=RED)
 end()
+# 8 — the MKS-style translator, after the existing 3V3 safety gates.
+header(8,'TTL 5 V: conversor e conector do laser 24 V')
+note(15,42,389,'Topologia inspirada na MKS DLC32 V2.1_003, folha MOSFET (7/9). Aqui o sinal já passa por TOOL_ARM e SAFETY_OK antes da conversão. O positivo do laser é 24 V comutado pela seleção/emergência, não 5 V. Pinagem dos conectores abaixo é a proposta CNC_FFST, não a ordem de qualquer laser comercial.',9)
+box(112,75,111,75,'U_TTL — SN74LVC1T45DCK')
+txt(119,92,'6 VCCB = 3V3_DK',10);txt(119,103,'1 VCCA = 5V_LOGIC',10)
+txt(119,114,'4 B = entrada 3V3',10);txt(119,125,'3 A = saída 5 V',10)
+txt(119,136,'5 DIR = GND (B → A)',10);txt(119,145,'2 GND = GND comum',9)
+line(23,114,112,114);txt(23,108,'PWM_OUT (folha 5)',9,True,BLUE)
+node(81,114);line(81,114,81,130);box(79.5,130,3,10);txt(65,145,'100k',8);ground(81,140)
+line(223,125,271,125);txt(230,119,'PWM_5V',10,True,BLUE)
+node(255,125);line(255,125,255,156);txt(259,155,'→ folha 9: R_GATE → Q_SP',9)
+res(271,125,319,'220 Ω');line(319,125,344,125)
+box(344,85,60,61,'J_LASER — 3 pinos')
+txt(348,102,'1  +24V_LASER',9,True);txt(348,113,'2  GND',9);txt(348,126,'3  TTL 5 V',9,True)
+node(330,125);line(330,125,330,146);box(328.5,146,3,10);txt(312,160,'10k',8);ground(330,156)
+line(340,99,344,99);txt(275,94,'+24V_LASER: folha 9',9,True,RED)
+line(340,99,340,102);line(340,102,344,102)
+line(340,113,344,113);ground(340,113)
+note(15,175,187,'Alimentação U_TTL: 100 nF + 1 µF entre VCCA e GND; outros 100 nF + 1 µF entre VCCB e GND, próximos ao CI. Usar o encapsulamento DCK e conferir o datasheet antes do layout. DIR aterrado seleciona B → A: 3,3 V para 5 V, sem inversão.',9)
+note(219,175,184,'Baixo = laser desligado; alto/PWM 5 V = comando ativo, se esse for o padrão do módulo. O resistor série limita correntes de falha, mas NÃO garante ausência de alimentação parasita com o laser sem 24 V. Conferir a entrada TTL do laser real antes de ligar.',9,color=RED)
+box(15,215,389,48,'O que muda e o que permanece')
+note(19,228,380,'GPIO13 continua PWM 3,3 V e GPIO42 continua TOOL_ARM: não há mudança de pinagem ou BIN. Só a etapa externa passa a gerar 5 V. R39/pull-down equivalente mantém B baixo sem comando; 10k mantém TTL baixo se a saída ficar em alta impedância. Não ligar PWM_5V, +24V_LASER ou 5V_LOGIC a um GPIO. GND do laser deve ser GND fixo, nunca o dreno chaveado do spindle.',9)
+end()
+
+# 9 — motor low-side switch and independent positive-side tool selection.
+header(9,'Spindle MOSFET e seleção de potência 24 V')
+box(15,42,389,52,'Alimentação positiva: seleção independente do PWM')
+txt(20,57,'24V_TOOL → F_TOOL → K_ESTOP (contato de potência) → chave LASER / 0 / SPINDLE',10,True)
+txt(20,69,'Saída LASER → F_LASER → +24V_LASER (J_LASER pino 1).',10)
+txt(20,81,'Saída SPINDLE → F_SP → +24V_SP (J_SP pino 1). GND da fonte permanece comum.',10)
+box(15,105,224,105,'Q_SP — MOSFET N, chaveamento no negativo')
+line(162,123,219,123);txt(166,119,'+24V_SP',9,True,RED)
+box(193,123,29,29,'M_SP');txt(197,142,'DC 24 V',8)
+line(207,152,207,165);line(155,165,207,165);txt(160,161,'SP_MINUS',8,True)
+# Abstract MOSFET: gate isolated from the drain/source channel.
+line(155,165,155,176);line(155,176,155,192);line(151,176,151,192)
+line(143,184,151,184);line(155,192,155,199);ground(155,199)
+txt(161,180,'D',8);txt(161,196,'S',8);txt(141,180,'G',8)
+res(33,184,112,'47 Ω');line(112,184,143,184);txt(22,175,'PWM_5V',9,True,BLUE)
+node(127,184);line(127,184,127,192);box(125.5,192,3,8);txt(107,202,'100k',8);ground(127,200)
+# Flyback diode parallel with the motor, cathode positive.
+line(179,123,179,132);line(175,132,183,132);txt(163,130,'K',7)
+pth=C.beginPath();pth.moveTo(175*MM,PAGE_H-141*MM);pth.lineTo(183*MM,PAGE_H-141*MM);pth.lineTo(179*MM,PAGE_H-132*MM);pth.close();C.drawPath(pth,stroke=1,fill=0)
+line(179,141,179,165);node(179,165);txt(164,149,'A',7);txt(164,156,'D_FREE',7)
+box(249,105,155,43,'J_SP — 2 pinos')
+txt(254,121,'1 = +24V_SP selecionado',9,True)
+txt(254,132,'2 = SP_MINUS (dreno de Q_SP)',9,True)
+txt(254,142,'Motor entre 1 e 2; pino 2 NÃO é GND fixo.',8)
+note(249,160,155,'Q_SP: selecionar MOSFET com RDS(on) especificado a VGS=4,5 V e VDS de pelo menos 60 V, com margem para transientes. Corrente, Qg, dissipador, fusível, TVS e D_FREE dependem do spindle real. D_FREE: cátodo no positivo; ânodo no dreno. Validar driver de gate se a carga de gate/frequência exigir.',8.5,color=RED)
+box(15,220,389,43,'U_5V — conversor buck separado para a lógica TTL')
+note(19,232,380,'24 V protegido → buck 24/5 V → 5V_LOGIC → VCCA de U_TTL. Selecionar módulo/CI para a faixa real da fonte e transientes (entrada nominal máxima ≥36 V, conforme dimensionamento). Incluir desacoplamento conforme datasheet. 5V_LOGIC NÃO se conecta ao VBUS/5V da DevKit: a ESP32 segue alimentada pela própria USB. Retornos de motor e laser separados do retorno lógico até a fonte.',8.8)
+note(15,271,389,'Potência ainda não dimensionada: sem corrente/tipo do spindle, este estágio NÃO está liberado para fabricação. É para motor DC com escovas, não saída de VFD ou motor AC. Chave deve abrir antes de fechar; emergência atua fisicamente em K_ESTOP. Trocar somente parado com M5/S0.',8,color=RED)
+end()
 C.save()
 
-with (ROOT/'hardware/pinagem_carrier_r3.csv').open('w',newline='',encoding='utf-8') as f:
-    w=csv.writer(f);w.writerow(['sinal','gpio','tipo','observacao','posicao_fisica'])
+with (ROOT/'hardware/pinagem_carrier_r4.csv').open('w',newline='',encoding='utf-8') as f:
+    w=csv.writer(f,lineterminator='\n');w.writerow(['sinal','gpio','tipo','observacao','posicao_fisica'])
     for signal,gpio,kind,detail in PINS:w.writerow([signal,gpio,kind,detail,'CONFERIR NA DEVKIT REAL'])
-write={'revision':'R3','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
+write={'revision':'R4','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
        'development_board':'ESP32-S3 N16R8 dual USB, modelo exato a conferir',
        'board_removable':True,'development_board_power':'USB da propria DevKit',
        'carrier_has_usb_connector':False,'carrier_has_usb_serial_bridge':False,
        'flash_mb':16,'psram_mb':8,'header_positions_verified':False,
        'listing_url':'https://www.mercadolivre.com.br/p/MLB2069410538',
        'axes':list('XYZA'),'driver':'DRV8825 StepStick 2x8, validar modulo real',
-       'common_enable':True,'motor_supply_v':24,'pwm_v':3.3,
+       'common_enable':True,'motor_supply_v':24,'pwm_gpio_v':3.3,'pwm_output_v':5,'laser_supply_v':24,'ttl_translator':'SN74LVC1T45DCK, DIR=0 B->A','spindle_power_stage':'N-MOS low-side, brushed DC24V; parts/rating pending',
        'pwm_permanently_connected_to':['laser','spindle'],
        'tool_selection':'chave externa na alimentacao; nao no PWM',
        'firmware_driver_commit':'0b2d3e1bb7da3b0ae0e03490b71275374eb84c67',
@@ -322,5 +375,5 @@ write={'revision':'R3','status':'PROPOSTA_CARRIER_NAO_FABRICAR',
                   'Confirmacao dos GPIOs expostos, do RGB e da alimentacao USB do modelo real',
                   'Validacao fisica de firmware, autenticacao e protecao/atualizacao criptografada na S3',
                   'ERC/DRC de projeto EDA, layout e validacao eletrica/termica/EMC/seguranca']}
-(ROOT/'hardware/proposta_carrier_r3.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+(ROOT/'hardware/proposta_carrier_r4.json').write_text(json.dumps(write,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(OUT)
