@@ -1,0 +1,27 @@
+{
+  "module": "TWOTREES TMC2209 V2.0",
+  "release": "B_NATIVO",
+  "physical_measurement": false,
+  "altium_tested": false,
+  "row_pitch_mm": 12.7,
+  "pin_pitch_mm": 2.54,
+  "pcb_estimated_mm": [
+    15.24,
+    20.32,
+    1.6
+  ],
+  "socket_body_estimated_mm": 7,
+  "module_pcb_bottom_z_mm": 8.5,
+  "sink_estimated_mm": [
+    9,
+    10.5,
+    12
+  ],
+  "carrier_drill_proposed_mm": 1,
+  "carrier_pad_proposed_mm": 1.9,
+  "nominal_height_mm": 22.315,
+  "native_pcblib_schlib": true,
+  "native_roundtrip_verified": true,
+  "embedded_step_independently_verified": true,
+  "altium_gui_tested": false
+}

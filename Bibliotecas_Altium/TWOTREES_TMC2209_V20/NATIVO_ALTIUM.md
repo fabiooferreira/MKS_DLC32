@@ -1,0 +1,1 @@
+Bibliotecas nativas .PcbLib/.SchLib com STEP incorporado disponíveis em Nativo_Altium/. Use o ZIP TWOTREES_TMC2209_V20_Altium_Nativo_RevB.zip no diretório superior. A revisão A continua disponível apenas como histórico de intercâmbio EAGLE.

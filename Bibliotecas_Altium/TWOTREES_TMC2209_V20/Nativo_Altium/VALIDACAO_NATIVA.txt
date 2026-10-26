@@ -1,0 +1,30 @@
+PASS: one native footprint and one native schematic symbol
+PASS: 16 through-hole pads and 16 symbol pins
+PASS: pin/pad 1 = EN_N; position, drill, multi-layer
+PASS: pin/pad 2 = MS1; position, drill, multi-layer
+PASS: pin/pad 3 = MS2; position, drill, multi-layer
+PASS: pin/pad 4 = PDN; position, drill, multi-layer
+PASS: pin/pad 5 = USART; position, drill, multi-layer
+PASS: pin/pad 6 = CLK; position, drill, multi-layer
+PASS: pin/pad 7 = STEP; position, drill, multi-layer
+PASS: pin/pad 8 = DIR; position, drill, multi-layer
+PASS: pin/pad 9 = VM; position, drill, multi-layer
+PASS: pin/pad 10 = GND_POWER; position, drill, multi-layer
+PASS: pin/pad 11 = M1B; position, drill, multi-layer
+PASS: pin/pad 12 = M1A; position, drill, multi-layer
+PASS: pin/pad 13 = M2A; position, drill, multi-layer
+PASS: pin/pad 14 = M2B; position, drill, multi-layer
+PASS: pin/pad 15 = VIO; position, drill, multi-layer
+PASS: pin/pad 16 = GND_LOGIC; position, drill, multi-layer
+PASS: symbol linked to footprint
+PASS: all 16 pin-to-pad associations are 1:1
+PASS: embedded STEP bytes match original model
+PASS: 3D body references embedded model
+PASS: .PcbLib has native OLE compound-file header
+PASS: .SchLib has native OLE compound-file header
+Altium GUI validation and physical dimensional verification remain pending.
+
+Independent Python olefile check: both OLE files open without parsing issues.
+PcbLib Library/Models/0 zlib payload exactly matches the original STEP.
+SchLib model record names the native PCBLIB footprint.
+Altium GUI and physical fit remain untested.

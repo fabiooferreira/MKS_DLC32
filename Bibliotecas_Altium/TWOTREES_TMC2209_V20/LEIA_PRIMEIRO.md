@@ -1,3 +1,5 @@
+**Atualização: a revisão B com arquivos nativos .PcbLib/.SchLib e STEP incorporado está em Nativo_Altium/. Este guia abaixo descreve apenas a revisão A de intercâmbio.**
+
 # TWOTREES TMC2209 V2.0 — biblioteca de intercâmbio para Altium, revisão A
 
 ## Identificação e estado
