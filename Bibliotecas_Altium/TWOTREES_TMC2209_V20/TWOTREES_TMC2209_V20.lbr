@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='utf-8'?>
+<eagle version="9.6.2">
+  <drawing>
+    <layers>
+      <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes" />
+      <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes" />
+      <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes" />
+      <layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes" />
+      <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes" />
+      <layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes" />
+      <layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes" />
+      <layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes" />
+      <layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes" />
+      <layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes" />
+    </layers>
+    <library>
+      <description>TWOTREES TMC2209 V2.0 module; nominal StepStick socket. Import into Altium. Mechanical review required.</description>
+      <packages>
+        <package name="TWOTREES_TMC2209_V20_SOCKET_2X8">
+          <pad name="1" x="-6.35" y="8.89" drill="1.0" diameter="1.9" shape="square" />
+          <pad name="2" x="-6.35" y="6.3500000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="3" x="-6.35" y="3.8100000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="4" x="-6.35" y="1.2700000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="5" x="-6.35" y="-1.2699999999999996" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="6" x="-6.35" y="-3.8099999999999987" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="7" x="-6.35" y="-6.35" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="8" x="-6.35" y="-8.89" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="9" x="6.35" y="8.89" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="10" x="6.35" y="6.3500000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="11" x="6.35" y="3.8100000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="12" x="6.35" y="1.2700000000000005" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="13" x="6.35" y="-1.2699999999999996" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="14" x="6.35" y="-3.8099999999999987" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="15" x="6.35" y="-6.35" drill="1.0" diameter="1.9" shape="round" />
+          <pad name="16" x="6.35" y="-8.89" drill="1.0" diameter="1.9" shape="round" />
+          <wire x1="-7.62" y1="-10.16" x2="7.62" y2="-10.16" width=".15" layer="21" />
+          <wire x1="7.62" y1="-10.16" x2="7.62" y2="10.16" width=".15" layer="21" />
+          <wire x1="7.62" y1="10.16" x2="-7.62" y2="10.16" width=".15" layer="21" />
+          <wire x1="-7.62" y1="10.16" x2="-7.62" y2="-10.16" width=".15" layer="21" />
+          <text x="-7.62" y="11.5" size="1" layer="25">&gt;NAME</text>
+          <text x="-7.62" y="-12.8" size="1" layer="27">&gt;VALUE</text>
+          <text x="-5" y="8" size=".8" layer="21">EN</text>
+          <text x="3.6" y="8" size=".8" layer="21">VM</text>
+        </package>
+      </packages>
+      <symbols>
+        <symbol name="TWOTREES_TMC2209_V20">
+          <wire x1="-12.7" y1="-12.7" x2="12.7" y2="-12.7" width=".254" layer="94" />
+          <wire x1="12.7" y1="-12.7" x2="12.7" y2="12.7" width=".254" layer="94" />
+          <wire x1="12.7" y1="12.7" x2="-12.7" y2="12.7" width=".254" layer="94" />
+          <wire x1="-12.7" y1="12.7" x2="-12.7" y2="-12.7" width=".254" layer="94" />
+          <pin name="EN_N" x="-17.78" y="8.89" length="middle" direction="in" rot="R0" />
+          <pin name="MS1" x="-17.78" y="6.3500000000000005" length="middle" direction="in" rot="R0" />
+          <pin name="MS2" x="-17.78" y="3.8100000000000005" length="middle" direction="in" rot="R0" />
+          <pin name="PDN" x="-17.78" y="1.2700000000000005" length="middle" direction="pas" rot="R0" />
+          <pin name="USART" x="-17.78" y="-1.2699999999999996" length="middle" direction="pas" rot="R0" />
+          <pin name="CLK" x="-17.78" y="-3.8099999999999987" length="middle" direction="pas" rot="R0" />
+          <pin name="STEP" x="-17.78" y="-6.35" length="middle" direction="in" rot="R0" />
+          <pin name="DIR" x="-17.78" y="-8.89" length="middle" direction="in" rot="R0" />
+          <pin name="VM" x="17.78" y="8.89" length="middle" direction="pwr" rot="R180" />
+          <pin name="GND_POWER" x="17.78" y="6.3500000000000005" length="middle" direction="pas" rot="R180" />
+          <pin name="M1B" x="17.78" y="3.8100000000000005" length="middle" direction="out" rot="R180" />
+          <pin name="M1A" x="17.78" y="1.2700000000000005" length="middle" direction="out" rot="R180" />
+          <pin name="M2A" x="17.78" y="-1.2699999999999996" length="middle" direction="out" rot="R180" />
+          <pin name="M2B" x="17.78" y="-3.8099999999999987" length="middle" direction="out" rot="R180" />
+          <pin name="VIO" x="17.78" y="-6.35" length="middle" direction="pwr" rot="R180" />
+          <pin name="GND_LOGIC" x="17.78" y="-8.89" length="middle" direction="pas" rot="R180" />
+          <text x="-12.7" y="15.24" size="1.27" layer="95">&gt;NAME</text>
+          <text x="-12.7" y="-15.24" size="1.27" layer="96">&gt;VALUE</text>
+        </symbol>
+      </symbols>
+      <devicesets>
+        <deviceset name="TWOTREES_TMC2209_V20" prefix="U">
+          <gates>
+            <gate name="G$1" symbol="TWOTREES_TMC2209_V20" x="0" y="0" />
+          </gates>
+          <devices>
+            <device name="" package="TWOTREES_TMC2209_V20_SOCKET_2X8">
+              <connects>
+                <connect gate="G$1" pin="EN_N" pad="1" />
+                <connect gate="G$1" pin="MS1" pad="2" />
+                <connect gate="G$1" pin="MS2" pad="3" />
+                <connect gate="G$1" pin="PDN" pad="4" />
+                <connect gate="G$1" pin="USART" pad="5" />
+                <connect gate="G$1" pin="CLK" pad="6" />
+                <connect gate="G$1" pin="STEP" pad="7" />
+                <connect gate="G$1" pin="DIR" pad="8" />
+                <connect gate="G$1" pin="VM" pad="9" />
+                <connect gate="G$1" pin="GND_POWER" pad="10" />
+                <connect gate="G$1" pin="M1B" pad="11" />
+                <connect gate="G$1" pin="M1A" pad="12" />
+                <connect gate="G$1" pin="M2A" pad="13" />
+                <connect gate="G$1" pin="M2B" pad="14" />
+                <connect gate="G$1" pin="VIO" pad="15" />
+                <connect gate="G$1" pin="GND_LOGIC" pad="16" />
+              </connects>
+              <technologies>
+                <technology name="" />
+              </technologies>
+            </device>
+          </devices>
+        </deviceset>
+      </devicesets>
+    </library>
+  </drawing>
+</eagle>

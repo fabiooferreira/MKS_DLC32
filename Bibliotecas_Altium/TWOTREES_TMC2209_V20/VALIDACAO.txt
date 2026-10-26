@@ -1,0 +1,12 @@
+REVISAO A — ESTUDO
+PASS: XML parseavel, 16 pads unicos, 16 pinos e 16 associacoes.
+PASS: pinagem conferida com a foto TWOTREES V2.0 fornecida.
+PASS: STEP reimportado via OpenCascade/CadQuery; todos os solidos validos.
+Modulo: 99 solidos, XY 15.24 x 20.32 mm, Z 2.600 a 22.315 mm.
+Soquetes: 18 solidos, Z -3.000 a 7.000 mm.
+Conjunto: 117 solidos, Z -3.000 a 22.315 mm.
+Dimensoes nominais/estimadas; sem medicao fisica.
+Importacao no Altium NAO ensaiada. EAGLE Importer e associacao manual do STEP requeridos.
+Nao e uma biblioteca nativa .PcbLib/.SchLib pronta; estes arquivos devem ser gerados pelo importador.
+PASS: DXF aberto estruturalmente via ezdxf; gabarito PDF A4 em escala nominal 1:1.
+Fonte da pinagem: foto TWOTREES V2.0 do usuario, rotacionada 180 graus para EN/VM em +Y.
